@@ -24,7 +24,7 @@ namespace Scheduler.Clases
 
              statusAvailableType  - Bool - obligatorio - Predefinido por configuraciones por defecto
              type        - String - obligatorio - Cuenta con un valor por defecto en las configuraciones por defecto 
-             DateTime    - DateTime - opcional 
+             DateTimeSettings     - DateTime - opcional 
              Occurs      - String - obligatorio - definifa por configuraciones por defecto, hasta el momento su unico valor es "Daily" y no se en que influye 
              Every       - Int - obligatorio - Cuenta por un valor por defecto de 0 en la configuraciones por defecto
 
@@ -37,15 +37,15 @@ namespace Scheduler.Clases
                 - si statusAvailableType es false entonces  type = "Once"
                   si statusAvailableType es True y cuento con el valor de type entonces type = valorDeType
                   si no cuento con el valor de type , type = "once" por defecto.
-                - si type es igual a "once" entonces Verificar si cuento con DateTime, de ser asi verificar si tiene el formato correcto con el metodo "validateFormatDate" y verificar que DateTime > currentDate 
+                - si type es igual a "once" entonces Verificar si cuento con DateTimeSettings, de ser asi verificar si tiene el formato correcto con el metodo "validateFormatDate" y verificar que DateTimeSettings > currentDate 
                 - Defino Every , si viene el valor verifico que sea un entero y lo utilizo, de no venir lo igualo a cero
              3. Verifico con que variables cuento en la seccion Limits
                 - Si cuento con StartDate , verifico que sea un formato de fecha adecuado con  "validateFormatDate" 
                 - si cuento con EndDate, verifico que sea del formato de fecha adecuado con "validateFormatDate"
                 - se debe cumplir que EndDate > StartDate para que sean limites validos 
                 - Luego de eso reviso si mi fecha de partida entra en ese rango 
-                - si cuento con DateTime verifico que este en el rango permitido con el metodo "DateRangeValidator"
-                - si no cuento con DateTime verifico que CurrentDate este dentro del rango permitido con el metodo "DateRangeValidator"
+                - si cuento con DateTimeSettings verifico que este en el rango permitido con el metodo "DateRangeValidator"
+                - si no cuento con DateTimeSettings verifico que CurrentDate este dentro del rango permitido con el metodo "DateRangeValidator"
 
             */
         }

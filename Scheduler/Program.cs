@@ -1,37 +1,29 @@
-﻿// Scheduler
-// A skeleton of a C# program
-using System;
+﻿using System;
+using Scheduler.Library;
 
-// Your program starts here:
-Console.WriteLine("Hello world!");
-
-namespace ShedulerManager
+namespace Scheduler.Console
 {
-    //class YourClass
-    //{
-    //}
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            DateTime now = DateTime.Now;
 
-    //struct YourStruct
-    //{
-    //}
+            var settings = new DateSettings
+            {
+                CurrentDate = now.ToLongDateString(),
+                StatusAvailableType = true,
+                //Type = "Recurring",
+                DateTimeSettings = DateTime.Now.AddDays(2),
+                Every = 1,
+                StartDate = now.ToString(),
+                EndDate = now.AddDays(10).ToString(),
+            };
 
-    //interface IYourInterface
-    //{
-    //}
+            var dateService = new DateService();
+            var nextDate = dateService.GenerateNextDate(settings);
 
-    //delegate int YourDelegate();
-
-    //enum YourEnum
-    //{
-    //}
-
-    //namespace YourNestedNamespace
-    //{
-    //    struct YourStruct
-    //    {
-    //    }
-    //}
-
-
-
+            System.Console.WriteLine($"La siguiente fecha es: {nextDate.ToShortDateString()}");
+        }
+    }
 }
