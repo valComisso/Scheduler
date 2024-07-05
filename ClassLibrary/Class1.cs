@@ -12,27 +12,24 @@ namespace Scheduler.Library
         public string CurrentDate { get; set; }
         public bool StatusAvailableType { get; set; }
         public string Type { get; set; }
+        public string Occurs { get; set; }
         public object DateTimeSettings { get; set; }
         public int? Every { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
     }
 
+    public class DateValidationResult 
+    {
+        // representa a una respuesta de validacion de una fecha 
+        public bool IsValid { get; set; }
+        public DateTime? Value { get; set; }
+    }
+
+
 
     public static class DateValidator
     {
-
-        public static DateTime? validateDate( object date)
-        {
-            DateTime? result = null;
-
-            if (ValidateTypeDateTime(date))
-            {
-                result = ConvetToDateTime(date);
-            }
-            return result;
-        }
-
 
         public static bool ValidateFormatDate(string dateString)
         {
@@ -44,57 +41,40 @@ namespace Scheduler.Library
             return date >= startDate && date <= endDate;
         }
 
-        public static bool ValidateTypeDateTime(object valor)
+        public static bool ValidateTypeDateTime(object value)
         {
-            // Intentar convertir el valor a DateTime usando TryParse o Convert.ToDateTime
-            if (valor is DateTime)
-            {
-                // Si el valor ya es un DateTime, devolver true
-                return true;
-            }
-            else if (valor is string)
-            {
-                // Si el valor es una cadena, intentar convertirla a DateTime
-                if (DateTime.TryParse((string)valor, out DateTime result))
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                // Si el valor no es un DateTime ni una cadena, intentar convertirlo usando Convert.ToDateTime
-                try
-                {
-                    DateTime dt = Convert.ToDateTime(valor);
-                    return true;
-                }
-                catch (InvalidCastException)
-                {
-                    // Si no se puede convertir, devolver false
-                    return false;
-                }
-                catch (FormatException)
-                {
-                    // Si hay un error de formato en la conversión, devolver false
-                    return false;
-                }
-            }
+            if (value == null) return false;
 
-            // Si no se pudo convertir a DateTime, devolver false
-            return false;
+            return value switch
+            {
+                DateTime _ => true,
+                string stringValue => DateTime.TryParse(stringValue, out _),
+                _ => TryConvertToDateTime(value)
+            };
         }
 
-
-        public static DateTime ConvetToDateTime(object value)
+        private static bool TryConvertToDateTime(object value)
         {
+            try
+            {
+                Convert.ToDateTime(value);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
-            // Intentar convertir el valor a DateTime usando TryParse o Convert.ToDateTime
+        public static DateTime ConvertToDateTime(object value)
+        {
+            /*
             if (value is DateTime) { 
-                return (DateTime)value; }
+                return (DateTime)value;
+            }
 
             else if (value is string)
             {
-                // Si el valor es una cadena, intentar convertirla a DateTime
                 if (DateTime.TryParse((string)value, out DateTime result))
                 {
                     return result;
@@ -102,15 +82,46 @@ namespace Scheduler.Library
             }
             else
             {
-                // Si el valor no es un DateTime ni una cadena, intentar convertirlo usando Convert.ToDateTime
                     DateTime dt = Convert.ToDateTime(value);
                     return dt;
             }
 
             return (DateTime)value;
+            */
+
+            return value switch
+            {
+                DateTime dateTimeValue => dateTimeValue,
+                string stringValue when DateTime.TryParse(stringValue, out var result) => result,
+                _ => Convert.ToDateTime(value)
+            };
         }
 
+        public static DateValidationResult GetValidDate(object value)
+        {
+            /*
+            var result = new DateValidationResult();
 
+            if (ValidateTypeDateTime(value))
+            {
+                result.IsValid = true;
+                result.Value = ConvertToDateTime(value);
+            }
+            else
+            {
+                result.IsValid = false;
+                result.Value = null;
+            }
+
+            return result;
+            */
+
+            return new DateValidationResult
+            {
+                IsValid = ValidateTypeDateTime(value),
+                Value = ValidateTypeDateTime(value) ? ConvertToDateTime(value) : (DateTime?)null
+            };
+        }
 
     }
 

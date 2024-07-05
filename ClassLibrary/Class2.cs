@@ -10,16 +10,17 @@ namespace Scheduler.Library
             DateTime currentDate;
 
             
-            if (!DateValidator.ValidateFormatDate(settings.CurrentDate))
+            if (!DateValidator.ValidateTypeDateTime(settings.CurrentDate))
             {
                 throw new ArgumentException("CurrentDate tiene un formato incorrecto.");
             }
             else
             {
-                currentDate = DateTime.Parse(settings.CurrentDate);
+                currentDate = DateValidator.ConvertToDateTime(settings.CurrentDate);
             }
 
             string type = "Once";
+            
             if (settings.StatusAvailableType)
             {
                 type = string.IsNullOrEmpty(settings.Type) ? "Once" : settings.Type;
@@ -29,31 +30,15 @@ namespace Scheduler.Library
 
             if ( !(settings.DateTimeSettings == null))
             {
-                DateTime? resultDateValidate = DateValidator.validateDate(settings.DateTimeSettings);
+                DateValidationResult resultValidateDateTimeSettings = DateValidator.GetValidDate(settings.DateTimeSettings);
 
-                if (resultDateValidate == null)
+                if (!resultValidateDateTimeSettings.IsValid )
                 {
                    throw new ArgumentException("DateTimeSettings tiene un formato incorrecto.");
                 }
                 else {
-                    dateTimeSettings = resultDateValidate;
+                    dateTimeSettings = resultValidateDateTimeSettings.Value;
                 }
-
-                //if (DateValidator.ValidateTypeDateTime(settings.DateTimeSettings))
-                //{
-                //    if (settings.DateTimeSettings is DateTime)
-                //    {
-                //        dateTimeSettings = (DateTime)settings.DateTimeSettings;
-                //    }
-                //    else
-                //    {
-                //        dateTimeSettings = DateValidator.ConvetToDateTime(settings.DateTimeSettings);
-                //    }
-                //}
-                //else
-                //{
-                //    throw new ArgumentException("DateTimeSettings tiene un formato incorrecto.");
-                //}
             }
 
 
@@ -65,19 +50,24 @@ namespace Scheduler.Library
                 }
             }
 
+
             int every = settings.Every.HasValue ? settings.Every.Value : 0;
+            string Occurs = settings.Occurs;
 
             DateTime? startDate = null;
 
+
             if (!(settings.StartDate == null))
             {
-                if (!DateValidator.ValidateFormatDate(settings.StartDate))
+                DateValidationResult resultValidateStartDate = DateValidator.GetValidDate(settings.StartDate);
+
+                if (!resultValidateStartDate.IsValid)
                 {
                     throw new ArgumentException("StartDate tiene un formato incorrecto.");
                 }
                 else
                 {
-                    startDate = DateTime.Parse(settings.StartDate);
+                    startDate = resultValidateStartDate.Value;
                 }
             }
           
@@ -86,13 +76,16 @@ namespace Scheduler.Library
 
             if (!(settings.EndDate == null))
             {
-                if (!DateValidator.ValidateFormatDate(settings.EndDate))
+                DateValidationResult resultValidateEndDate = DateValidator.GetValidDate(settings.EndDate);
+
+
+                if (!resultValidateEndDate.IsValid)
                 {
                     throw new ArgumentException("EndDate tiene un formato incorrecto.");
                 }
                 else
                 {
-                    endDate = DateTime.Parse(settings.EndDate);
+                    endDate = resultValidateEndDate.Value;
                 }
 
                 if (startDate != null && endDate <= startDate)
@@ -101,7 +94,11 @@ namespace Scheduler.Library
                 }
             }
 
+
+
             DateTime referenceDate = dateTimeSettings ?? currentDate;
+
+
 
             if (startDate != null && endDate != null)
             {
@@ -111,7 +108,11 @@ namespace Scheduler.Library
                 }
             }
 
-            return referenceDate.AddDays(every);
+            DateTime result = dateTimeSettings ?? currentDate.AddDays(1);
+
+
+            
+            return result;
         }
     }
 }

@@ -9,15 +9,18 @@ namespace Scheduler.Console
         {
             DateTime now = DateTime.Now;
 
+            //[InlineData("2023-07-01", true, "Recurring", "", "2023-07-03", 1, "2023-07-01", "2023-07-10", "2023-07-04")]
+
             var settings = new DateSettings
             {
-                CurrentDate = now.ToLongDateString(),
+                CurrentDate = "2023-07-01",
                 StatusAvailableType = true,
-                //Type = "Recurring",
-                DateTimeSettings = DateTime.Now.AddDays(2),
+                Type = "Recurring",
+                Occurs = "",
+                DateTimeSettings = "2023-07-03",
                 Every = 1,
-                StartDate = now.ToString(),
-                EndDate = now.AddDays(10).ToString(),
+                StartDate = "2023-07-01",
+                EndDate = "2023-07-10",
             };
 
             var dateService = new DateService();
