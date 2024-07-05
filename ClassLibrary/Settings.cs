@@ -1,23 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Scheduler.Library
+﻿namespace SchedulerClassLibrary
 {
+
+    
     public class DateSettings
     {
-        public string CurrentDate { get; set; }
+        public DateTimeOffset CurrentDate { get; set; }
         public bool StatusAvailableType { get; set; }
-        public string Type { get; set; }
-        public string Occurs { get; set; }
-        public object DateTimeSettings { get; set; }
-        public int? Every { get; set; }
-        public string StartDate { get; set; }
-        public string EndDate { get; set; }
+        public enum EventType
+        {
+            Once,
+            Recurring
+        }
+        public EventType Type { get; set; }
+        public enum OccurrenceType
+        {
+            Daily,
+            Weekly,
+            Monthly
+        }
+        public OccurrenceType Occurrence { get; set; }
+        public DateTimeOffset? DateTimeSettings { get; set; }
+        public int Every { get; set; }
+        public DateTimeOffset StartDate { get; set; }
+        public DateTimeOffset? EndDate { get; set; }
     }
+
 
     public class DateValidationResult 
     {

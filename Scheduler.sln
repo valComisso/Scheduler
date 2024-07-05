@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scheduler", "Scheduler\Sche
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestScheduler1", "TestScheduler1\TestScheduler1.csproj", "{90A430CE-1BAD-4018-9D2F-A5F259A274CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary", "ClassLibrary\ClassLibrary.csproj", "{92135D6B-F95D-4D75-B293-EC71892B83D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchedulerClassLibrary", "ClassLibrary\SchedulerClassLibrary.csproj", "{92135D6B-F95D-4D75-B293-EC71892B83D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

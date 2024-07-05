@@ -1,5 +1,5 @@
 ﻿using System;
-using Scheduler.Library;
+using SchedulerClassLibrary;
 
 namespace Scheduler.Console
 {

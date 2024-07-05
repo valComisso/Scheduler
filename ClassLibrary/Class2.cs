@@ -1,5 +1,5 @@
 ﻿
-namespace Scheduler.Library
+namespace SchedulerClassLibrary
 {
     public class DateService
     {
@@ -7,42 +7,36 @@ namespace Scheduler.Library
         
         public DateTime GenerateNextDate(DateSettings settings)
         {
-            DateTime currentDate;
+          
+            var currentDate = settings.CurrentDate;
 
-            
-            if (!DateValidator.ValidateTypeDateTime(settings.CurrentDate))
-            {
-                throw new ArgumentException("CurrentDate tiene un formato incorrecto.");
-            }
-            else
-            {
-                currentDate = DateValidator.ConvertToDateTime(settings.CurrentDate);
-            }
 
-            var type = "Once";
+            var type = DateSettings.EventType.Once;
             
             if (settings.StatusAvailableType)
             {
-                type = string.IsNullOrEmpty(settings.Type) ? "Once" : settings.Type;
+                type = settings.Type;
             }
 
-            DateTime? dateTimeSettings = null;
+
+            DateTimeOffset? dateTimeSettings = settings.DateTimeSettings;
 
             if ( settings.DateTimeSettings != null)
             {
-                var resultValidateDateTimeSettings = DateValidator.GetValidDate(settings.DateTimeSettings);
 
-                if (!resultValidateDateTimeSettings.IsValid )
+                if (!(settings.DateTimeSettings is DateTimeOffset))
                 {
-                   throw new ArgumentException("DateTimeSettings tiene un formato incorrecto.");
+                    throw new ArgumentException("DateTimeSettings tiene un formato incorrecto.");
                 }
-                else {
-                    dateTimeSettings = resultValidateDateTimeSettings.Value;
+                else
+                {
+                    dateTimeSettings = settings.DateTimeSettings;
                 }
+              
             }
 
 
-            if (type == "Once" && dateTimeSettings != null)
+            if (type == 0 && dateTimeSettings != null)
             {
                 if (dateTimeSettings <= currentDate)
                 {
@@ -51,20 +45,18 @@ namespace Scheduler.Library
             }
 
 
-            DateTime? startDate = null;
+            DateTimeOffset? startDate = null;
 
 
             if (settings.StartDate != null)
             {
-                var resultValidateStartDate = DateValidator.GetValidDate(settings.StartDate);
-
-                if (!resultValidateStartDate.IsValid)
+                if (!(settings.StartDate is DateTimeOffset))
                 {
                     throw new ArgumentException("StartDate tiene un formato incorrecto.");
                 }
                 else
                 {
-                    startDate = resultValidateStartDate.Value;
+                    startDate = settings.StartDate;
                 }
             }
           
