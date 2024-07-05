@@ -19,7 +19,7 @@ namespace Scheduler.Library
                 currentDate = DateValidator.ConvertToDateTime(settings.CurrentDate);
             }
 
-            string type = "Once";
+            var type = "Once";
             
             if (settings.StatusAvailableType)
             {
@@ -28,9 +28,9 @@ namespace Scheduler.Library
 
             DateTime? dateTimeSettings = null;
 
-            if ( !(settings.DateTimeSettings == null))
+            if ( settings.DateTimeSettings != null)
             {
-                DateValidationResult resultValidateDateTimeSettings = DateValidator.GetValidDate(settings.DateTimeSettings);
+                var resultValidateDateTimeSettings = DateValidator.GetValidDate(settings.DateTimeSettings);
 
                 if (!resultValidateDateTimeSettings.IsValid )
                 {
@@ -51,15 +51,12 @@ namespace Scheduler.Library
             }
 
 
-            int every = settings.Every.HasValue ? settings.Every.Value : 0;
-            string Occurs = settings.Occurs;
-
             DateTime? startDate = null;
 
 
-            if (!(settings.StartDate == null))
+            if (settings.StartDate != null)
             {
-                DateValidationResult resultValidateStartDate = DateValidator.GetValidDate(settings.StartDate);
+                var resultValidateStartDate = DateValidator.GetValidDate(settings.StartDate);
 
                 if (!resultValidateStartDate.IsValid)
                 {
@@ -74,9 +71,9 @@ namespace Scheduler.Library
 
             DateTime? endDate = null;
 
-            if (!(settings.EndDate == null))
+            if (settings.EndDate != null)
             {
-                DateValidationResult resultValidateEndDate = DateValidator.GetValidDate(settings.EndDate);
+                var resultValidateEndDate = DateValidator.GetValidDate(settings.EndDate);
 
 
                 if (!resultValidateEndDate.IsValid)
@@ -96,7 +93,10 @@ namespace Scheduler.Library
 
 
 
-            DateTime referenceDate = dateTimeSettings ?? currentDate;
+            //var every = settings.Every ?? 0;
+            //var momentThatOccurs = settings.Occurs;
+
+            var referenceDate = dateTimeSettings ?? currentDate;
 
 
 
@@ -108,7 +108,7 @@ namespace Scheduler.Library
                 }
             }
 
-            DateTime result = dateTimeSettings ?? currentDate.AddDays(1);
+            var result = dateTimeSettings ?? currentDate.AddDays(1);
 
 
             

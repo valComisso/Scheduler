@@ -30,11 +30,6 @@ namespace Scheduler.Library
 
     public static class DateValidator
     {
-
-        public static bool ValidateFormatDate(string dateString)
-        {
-            return DateTime.TryParse(dateString, out _);
-        }
        
         public static bool DateRangeValidator(DateTime date, DateTime startDate, DateTime endDate)
         {
@@ -68,27 +63,6 @@ namespace Scheduler.Library
 
         public static DateTime ConvertToDateTime(object value)
         {
-            /*
-            if (value is DateTime) { 
-                return (DateTime)value;
-            }
-
-            else if (value is string)
-            {
-                if (DateTime.TryParse((string)value, out DateTime result))
-                {
-                    return result;
-                }
-            }
-            else
-            {
-                    DateTime dt = Convert.ToDateTime(value);
-                    return dt;
-            }
-
-            return (DateTime)value;
-            */
-
             return value switch
             {
                 DateTime dateTimeValue => dateTimeValue,
@@ -99,22 +73,6 @@ namespace Scheduler.Library
 
         public static DateValidationResult GetValidDate(object value)
         {
-            /*
-            var result = new DateValidationResult();
-
-            if (ValidateTypeDateTime(value))
-            {
-                result.IsValid = true;
-                result.Value = ConvertToDateTime(value);
-            }
-            else
-            {
-                result.IsValid = false;
-                result.Value = null;
-            }
-
-            return result;
-            */
 
             return new DateValidationResult
             {
