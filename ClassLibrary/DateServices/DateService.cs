@@ -1,8 +1,18 @@
-﻿namespace SchedulerClassLibrary
+﻿
+using SchedulerClassLibrary.Interfaces;
+using SchedulerClassLibrary.Entity;
+
+namespace SchedulerClassLibrary.DateServices
 {
-   
-    public class DateService(IDateValidator dateValidator)
+    public class DateService
     {
+        private static IDateValidator dateValidator;
+
+        public DateService(IDateValidator dateValidator)
+        {
+            DateService.dateValidator = dateValidator;
+        }
+
         public DateTimeOffset? GenerateNextDate(DateSettings settings)
         {
             ValidateSettings(settings);
@@ -17,9 +27,9 @@
             return referenceDate < settings.StartDate ? settings.StartDate.AddDays(1) : referenceDate;
         }
 
-        private void ValidateSettings(DateSettings settings)
+        private static void ValidateSettings(DateSettings settings)
         {
-            if (settings.Type == DateSettings.EventType.Once && settings.DateTimeSettings != null)
+            if (settings.Type == 0 && settings.DateTimeSettings != null)
             {
                 if (settings.DateTimeSettings < settings.CurrentDate)
                 {
@@ -32,13 +42,13 @@
                 }
             }
 
-            if ((settings.EndDate != null) && (settings.EndDate <= settings.StartDate))
+            if (settings.EndDate != null && settings.EndDate <= settings.StartDate)
             {
                 throw new ArgumentException("EndDate debe ser mayor que StartDate.");
             }
         }
 
-        private DateTimeOffset GetReferenceDate(DateSettings settings)
+        private static DateTimeOffset GetReferenceDate(DateSettings settings)
         {
             var currentDate = settings.CurrentDate;
             var dateTimeSettings = settings.DateTimeSettings;
