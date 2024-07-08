@@ -2,7 +2,7 @@
 using SchedulerClassLibrary.Interfaces;
 using SchedulerClassLibrary.Entity;
 
-namespace SchedulerClassLibrary
+namespace SchedulerClassLibrary.DateServices
 {
     public class DateService
     {
@@ -42,7 +42,7 @@ namespace SchedulerClassLibrary
                 }
             }
 
-            if ((settings.EndDate != null) && (settings.EndDate <= settings.StartDate))
+            if (settings.EndDate != null && settings.EndDate <= settings.StartDate)
             {
                 throw new ArgumentException("EndDate debe ser mayor que StartDate.");
             }
