@@ -7,26 +7,24 @@ namespace Scheduler.Console
     {
         static void Main(string[] args)
         {
-            DateTime now = DateTime.Now;
-
-            //[InlineData("2023-07-01", true, "Recurring", "", "2023-07-03", 1, "2023-07-01", "2023-07-10", "2023-07-04")]
+            var now = DateTimeOffset.Now;
 
             var settings = new DateSettings
             {
-                CurrentDate = "2023-07-01",
+                CurrentDate =now,
                 StatusAvailableType = true,
-                Type = "Recurring",
-                Occurs = "",
-                DateTimeSettings = "2023-07-03",
+                Type = 0,
+                Occurrence = 0,
+                DateTimeSettings = now,
                 Every = 1,
-                StartDate = "2023-07-01",
-                EndDate = "2023-07-10",
+                StartDate =now,
+                EndDate = null,
             };
 
             var dateService = new DateService();
             var nextDate = dateService.GenerateNextDate(settings);
 
-            System.Console.WriteLine($"La siguiente fecha es: {nextDate.ToShortDateString()}");
+            System.Console.WriteLine($"La siguiente fecha es: {nextDate.ToString()}");
         }
     }
 }
