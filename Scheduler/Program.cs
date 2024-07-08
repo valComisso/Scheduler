@@ -1,7 +1,6 @@
-﻿using System;
-using SchedulerClassLibrary;
+﻿using SchedulerClassLibrary;
 
-namespace Scheduler.Console
+namespace Scheduler
 {
     class Program
     {
@@ -21,7 +20,7 @@ namespace Scheduler.Console
                 EndDate = null,
             };
 
-            var dateService = new DateService();
+            var dateService = new DateService(new DateValidator());
             var nextDate = dateService.GenerateNextDate(settings);
 
             System.Console.WriteLine($"La siguiente fecha es: {nextDate.ToString()}");

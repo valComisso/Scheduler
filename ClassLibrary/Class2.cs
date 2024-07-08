@@ -1,62 +1,49 @@
-﻿
-namespace SchedulerClassLibrary
+﻿namespace SchedulerClassLibrary
 {
-    public class DateService
+   
+    public class DateService(IDateValidator dateValidator)
     {
-
-        
         public DateTimeOffset? GenerateNextDate(DateSettings settings)
         {
+            ValidateSettings(settings);
 
-            var currentDate = settings.CurrentDate;
+            var referenceDate = GetReferenceDate(settings);
 
-            var type = settings.StatusAvailableType ? settings.Type :  DateSettings.EventType.Once;
-            
-            var dateTimeSettings = settings.DateTimeSettings;
-
-            var startDate = settings.StartDate;
-
-            DateTimeOffset? endDate = settings.EndDate;
-
-
-            if (type == 0 && dateTimeSettings != null)
+            if (!dateValidator.DateRangeValidator(referenceDate, settings.StartDate, settings.EndDate))
             {
-                if (dateTimeSettings < currentDate)
+                throw new ArgumentException("La fecha de referencia no está dentro del rango permitido.");
+            }
+
+            return referenceDate < settings.StartDate ? settings.StartDate.AddDays(1) : referenceDate;
+        }
+
+        private void ValidateSettings(DateSettings settings)
+        {
+            if (settings.Type == DateSettings.EventType.Once && settings.DateTimeSettings != null)
+            {
+                if (settings.DateTimeSettings < settings.CurrentDate)
                 {
                     throw new ArgumentException("DateTimeSettings debe ser mayor que CurrentDate.");
                 }
 
-
-                if (!DateValidator.DateRangeValidator(dateTimeSettings, startDate, endDate))
+                if (!dateValidator.DateRangeValidator(settings.DateTimeSettings.Value, settings.StartDate, settings.EndDate))
                 {
                     throw new ArgumentException("La fecha de DateTime de las configuraciones no está dentro del rango permitido.");
                 }
             }
 
-
-            if ((endDate != null) && (endDate <= startDate))
+            if ((settings.EndDate != null) && (settings.EndDate <= settings.StartDate))
             {
                 throw new ArgumentException("EndDate debe ser mayor que StartDate.");
             }
+        }
 
-
-            //var every = settings.Every ?? 0;
-            //var momentThatOccurs = settings.Occurs;
-
-            var referenceDate = dateTimeSettings > currentDate? dateTimeSettings : currentDate.AddDays(1);
-
-          
-                if (!DateValidator.DateRangeValidator(referenceDate, startDate, endDate ))
-                {
-                    throw new ArgumentException("La fecha de referencia no está dentro del rango permitido.");
-                }
-          
-
-            var result = referenceDate < startDate ? startDate.AddDays(1) : referenceDate;
-
-
-            
-            return result;
+        private DateTimeOffset GetReferenceDate(DateSettings settings)
+        {
+            var currentDate = settings.CurrentDate;
+            var dateTimeSettings = settings.DateTimeSettings;
+            var referenceDate = dateTimeSettings > currentDate ? dateTimeSettings.Value : currentDate.AddDays(1);
+            return referenceDate;
         }
     }
 }

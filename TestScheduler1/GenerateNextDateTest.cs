@@ -37,7 +37,7 @@ namespace TestScheduler1
                 EndDate = end
             };
 
-            var service = new DateService();
+            var service = new DateService(new DateValidator());
             var nextDate = service.GenerateNextDate(settings);
             var expectedDate = expected;
 
@@ -62,7 +62,7 @@ namespace TestScheduler1
                 EndDate = end
             };
 
-            var service = new DateService();
+            var service = new DateService(new DateValidator());
 
             Assert.Throws<ArgumentException>(() => service.GenerateNextDate(settings));
         }

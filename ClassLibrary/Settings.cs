@@ -1,7 +1,6 @@
 ﻿namespace SchedulerClassLibrary
 {
 
-    
     public class DateSettings
     {
         public DateTimeOffset CurrentDate { get; set; }
@@ -24,21 +23,5 @@
         public DateTimeOffset StartDate { get; set; }
         public DateTimeOffset? EndDate { get; set; }
     }
-
-
-
-
-
-    public static class DateValidator
-    {
-       
-        public static bool DateRangeValidator(DateTimeOffset? date, DateTimeOffset startDate, DateTimeOffset? endDate)
-        {
-            return  (endDate == null || date <= endDate);
-        }
-         
-
-    }
-
 
 }
