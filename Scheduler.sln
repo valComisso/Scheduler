@@ -5,9 +5,11 @@ VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scheduler", "Scheduler\Scheduler.csproj", "{A37A27B6-00E8-4119-B6A6-46DF0B1DB57B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestScheduler1", "TestScheduler1\TestScheduler1.csproj", "{90A430CE-1BAD-4018-9D2F-A5F259A274CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "TestScheduler1\Test.csproj", "{90A430CE-1BAD-4018-9D2F-A5F259A274CF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchedulerClassLibrary", "ClassLibrary\SchedulerClassLibrary.csproj", "{92135D6B-F95D-4D75-B293-EC71892B83D5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Interfaces", "Interfaces", "{109ABEBB-BF13-4066-BFB3-D559AEDF60FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,10 +1,7 @@
-﻿namespace SchedulerClassLibrary
-{
-    public interface IDateValidator
-    {
-        bool DateRangeValidator(DateTimeOffset date, DateTimeOffset startDate, DateTimeOffset? endDate);
-    }
+﻿using SchedulerClassLibrary.Interfaces;
 
+namespace SchedulerClassLibrary
+{
     public class DateValidator : IDateValidator
     {
         public bool DateRangeValidator(DateTimeOffset date, DateTimeOffset startDate, DateTimeOffset? endDate)

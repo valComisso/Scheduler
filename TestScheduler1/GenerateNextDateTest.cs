@@ -1,7 +1,8 @@
 using SchedulerClassLibrary;
-using static SchedulerClassLibrary.DateSettings;
+using SchedulerClassLibrary.Enums;
+using SchedulerClassLibrary.Entity;
 
-namespace TestScheduler1
+namespace Test 
 {
     public class DateServiceTests
     {
