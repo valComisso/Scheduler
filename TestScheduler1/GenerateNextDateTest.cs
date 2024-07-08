@@ -41,9 +41,8 @@ namespace Test
 
             var service = new DateService(new DateValidator());
             var nextDate = service.GenerateNextDate(settings);
-            var expectedDate = expected;
 
-            Assert.Equal(expectedDate, nextDate);
+            Assert.Equal(expected, nextDate);
         }
 
         [Theory]
@@ -52,8 +51,8 @@ namespace Test
 
         public void GenerateNextDate_rangeDate_ThrowsAnException(string currentDate, string startDate, string? endDate)
         {
-            DateTimeOffset current = DateTimeOffset.Parse(currentDate);
-            DateTimeOffset start = DateTimeOffset.Parse(startDate);
+            var current = DateTimeOffset.Parse(currentDate);
+            var start = DateTimeOffset.Parse(startDate);
             DateTimeOffset? end = string.IsNullOrEmpty(endDate) ? null : DateTimeOffset.Parse(endDate);
 
             var settings = new DateSettings
