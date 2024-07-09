@@ -1,16 +1,19 @@
-﻿using SchedulerClassLibrary;
+﻿
+using SchedulerClassLibrary.DateServices;
+using SchedulerClassLibrary.Entity;
+using SchedulerClassLibrary.UseCasesDate;
 
 namespace Scheduler
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
             var now = DateTimeOffset.Now;
 
             var settings = new DateSettings
             {
-                CurrentDate =now,
+                CurrentDate = now,
                 StatusAvailableType = true,
                 Type = 0,
                 Occurrence = 0,
@@ -23,7 +26,7 @@ namespace Scheduler
             var dateService = new DateService(new DateValidator());
             var nextDate = dateService.GenerateNextDate(settings);
 
-            System.Console.WriteLine($"La siguiente fecha es: {nextDate.ToString()}");
+            System.Console.WriteLine($"The next date is: {nextDate.ToString()}");
         }
     }
 }
