@@ -1,8 +1,7 @@
-﻿
+﻿using SchedulerClassLibrary.Entity;
 using SchedulerClassLibrary.Interfaces;
-using SchedulerClassLibrary.Entity;
 
-namespace SchedulerClassLibrary.DateServices
+namespace SchedulerClassLibrary.UseCasesDate
 {
     public class DateService
     {
