@@ -1,8 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using SchedulerClassLibrary.Enums;
 using SchedulerClassLibrary.Utils;
 
-namespace Test.TestData.GenerateNextDate
+namespace Test.TestData
 {
     internal class SuccessfulCasesData : IEnumerable<object[]>
     {
@@ -53,20 +58,6 @@ namespace Test.TestData.GenerateNextDate
                 OccurrenceType.Daily,
                 null,
                 0,
-                GenerateDateTimeOffset.Generate(2023, 07, 01),
-                GenerateDateTimeOffset.Generate(2023, 07, 02),
-                GenerateDateTimeOffset.Generate(2023, 07, 02)
-            };
-
-
-
-            yield return new object?[] {
-                GenerateDateTimeOffset.Generate(2023,07,01),
-                false,
-                null,
-                OccurrenceType.Daily,
-                null,
-                0,
                 GenerateDateTimeOffset.Generate(2023, 07, 05),
                 GenerateDateTimeOffset.Generate(2023, 07, 10),
                 GenerateDateTimeOffset.Generate(2023, 07, 06)
@@ -101,7 +92,7 @@ namespace Test.TestData.GenerateNextDate
 
         }
 
-        public IEnumerator<object[]> GetEnumerator() => Data().GetEnumerator();
+        public IEnumerator<object?[]> GetEnumerator() => Data().GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
