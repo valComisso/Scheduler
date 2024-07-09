@@ -20,7 +20,7 @@ namespace SchedulerClassLibrary.UseCasesDate
 
             if (!dateValidator.DateRangeValidator(referenceDate, settings.StartDate, settings.EndDate))
             {
-                throw new ArgumentException("La fecha de referencia no está dentro del rango permitido.");
+                throw new ArgumentException("The reference date is not within the allowed range.");
             }
 
             return referenceDate < settings.StartDate ? settings.StartDate.AddDays(1) : referenceDate;
@@ -28,22 +28,22 @@ namespace SchedulerClassLibrary.UseCasesDate
 
         private static void ValidateSettings(DateSettings settings)
         {
-            if (settings.Type == 0 && settings.DateTimeSettings != null)
+            if (settings is { Type: 0, DateTimeSettings: not null })
             {
                 if (settings.DateTimeSettings < settings.CurrentDate)
                 {
-                    throw new ArgumentException("DateTimeSettings debe ser mayor que CurrentDate.");
+                    throw new ArgumentException("DateTimeSettings must be larger than CurrentDate.");
                 }
 
                 if (!dateValidator.DateRangeValidator(settings.DateTimeSettings.Value, settings.StartDate, settings.EndDate))
                 {
-                    throw new ArgumentException("La fecha de DateTime de las configuraciones no está dentro del rango permitido.");
+                    throw new ArgumentException("The DateTime date of the settings is not within the allowed range.");
                 }
             }
 
             if (settings.EndDate != null && settings.EndDate <= settings.StartDate)
             {
-                throw new ArgumentException("EndDate debe ser mayor que StartDate.");
+                throw new ArgumentException("EndDate must be larger than StartDate.");
             }
         }
 
