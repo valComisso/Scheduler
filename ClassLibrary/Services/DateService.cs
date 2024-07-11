@@ -1,19 +1,19 @@
 ﻿using SchedulerClassLibrary.Entity;
 using SchedulerClassLibrary.Interfaces;
 
-namespace SchedulerClassLibrary.UseCasesDate
+namespace SchedulerClassLibrary.Services
 {
-    public class DateService
+    public class DateService(IDateValidator dateValidator)
     {
-        private static IDateValidator dateValidator;
-
-        public DateService(IDateValidator dateValidator)
+        
+        public NextDateResult? GenerateNextDate(DateSettings settings)
         {
-            DateService.dateValidator = dateValidator;
-        }
+            if (!settings.StatusAvailableType)
+            {
+                return new NextDateResult("It is not possible to calculate the next day", null);
+            }
 
-        public DateTimeOffset? GenerateNextDate(DateSettings settings)
-        {
+
             ValidateSettings(settings);
 
             var referenceDate = GetReferenceDate(settings);
@@ -23,11 +23,15 @@ namespace SchedulerClassLibrary.UseCasesDate
                 throw new ArgumentException("The reference date is not within the allowed range.");
             }
 
-            return referenceDate < settings.StartDate ? settings.StartDate.AddDays(1) : referenceDate;
+            var nextDate = referenceDate < settings.StartDate ? settings.StartDate.AddDays(1) : referenceDate;
+            var message = $"occurs {settings.Type}. Schedule will be used on {nextDate} starting on {settings.StartDate}.";
+
+            return new NextDateResult(message, nextDate);
         }
 
-        private static void ValidateSettings(DateSettings settings)
+        private void ValidateSettings(DateSettings settings)
         {
+          
             if (settings is { Type: 0, DateTimeSettings: not null })
             {
                 if (settings.DateTimeSettings < settings.CurrentDate)

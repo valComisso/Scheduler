@@ -1,7 +1,7 @@
 ﻿
 using SchedulerClassLibrary.DateServices;
 using SchedulerClassLibrary.Entity;
-using SchedulerClassLibrary.UseCasesDate;
+using SchedulerClassLibrary.Services;
 
 namespace Scheduler
 {
@@ -11,22 +11,13 @@ namespace Scheduler
         {
             var now = DateTimeOffset.Now;
 
-            var settings = new DateSettings
-            {
-                CurrentDate = now,
-                StatusAvailableType = true,
-                Type = 0,
-                Occurrence = 0,
-                DateTimeSettings = now,
-                Every = 1,
-                StartDate =now,
-                EndDate = null,
-            };
+            var settings = new DateSettings(now, true, 0, 0, now, 1, now, null);
+           
 
             var dateService = new DateService(new DateValidator());
             var nextDate = dateService.GenerateNextDate(settings);
 
-            System.Console.WriteLine($"The next date is: {nextDate.ToString()}");
+            System.Console.WriteLine($"The next date is: {nextDate?.NextDate}");
         }
     }
 }
