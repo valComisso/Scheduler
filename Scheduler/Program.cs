@@ -1,6 +1,4 @@
-﻿
-using SchedulerClassLibrary.DateServices;
-using SchedulerClassLibrary.Entity;
+﻿using SchedulerClassLibrary.Entity;
 using SchedulerClassLibrary.Services;
 
 namespace Scheduler

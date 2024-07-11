@@ -1,6 +1,6 @@
 ﻿using SchedulerClassLibrary.Interfaces;
 
-namespace SchedulerClassLibrary.DateServices
+namespace SchedulerClassLibrary.Services
 {
     public class DateValidator : IDateValidator
     {

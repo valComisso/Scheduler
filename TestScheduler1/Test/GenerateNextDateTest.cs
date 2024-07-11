@@ -1,6 +1,5 @@
 
 using SchedulerClassLibrary.Entity;
-using SchedulerClassLibrary.DateServices;
 using SchedulerClassLibrary.Services;
 using Test.TestData.GenerateNextDate;
 
@@ -18,7 +17,7 @@ namespace Test.Test
             )
         {
 
-            var service = new DateService(new DateValidator());
+            var service = new DateService(new DateValidator()); 
             var nextDate = service.GenerateNextDate(dateSettings);
 
             Assert.Equal(expectedNextDate, nextDate?.NextDate);
