@@ -2,15 +2,24 @@
 
 namespace SchedulerClassLibrary.Entity
 {
-    public class DateSettings
+    public class DateSettings(
+        DateTimeOffset currentDate,
+        bool statusAvailableType,
+        EventType? type,
+        OccurrenceType occurrence,
+        uint every,
+        DateTimeOffset startDate,
+        DateTimeOffset? dateTimeSettings,
+        DateTimeOffset? endDate = null
+        )
     {
-        public DateTimeOffset CurrentDate { get; set; }
-        public bool StatusAvailableType { get; set; }
-        public EventType Type { get; set; }
-        public OccurrenceType Occurrence { get; set; }
-        public DateTimeOffset? DateTimeSettings { get; set; }
-        public int Every { get; set; }
-        public DateTimeOffset StartDate { get; set; }
-        public DateTimeOffset? EndDate { get; set; }
+        public DateTimeOffset CurrentDate { get; } = currentDate;
+        public bool StatusAvailableType { get;  } = statusAvailableType;
+        public EventType Type { get;  } = type ?? EventType.Once ;
+        public OccurrenceType Occurrence { get;  } = occurrence;
+        public DateTimeOffset? DateTimeSettings { get;  } = dateTimeSettings;
+        public uint Every { get; } = every;
+        public DateTimeOffset StartDate { get; } = startDate;
+        public DateTimeOffset? EndDate { get; } = endDate;
     }
 }

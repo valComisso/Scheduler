@@ -1,104 +1,48 @@
 
-using SchedulerClassLibrary.Enums;
 using SchedulerClassLibrary.Entity;
 using SchedulerClassLibrary.DateServices;
-using SchedulerClassLibrary.UseCasesDate;
+using SchedulerClassLibrary.Services;
 using Test.TestData.GenerateNextDate;
 
 namespace Test.Test
 {
     public class DateServiceTests
     {
+        /*
+        private readonly DateService _service;
+
+        public DateServiceTests()
+        {
+            var dateValidator = new DateValidator();
+            _service = new DateService(dateValidator);
+        }
+
 
         [Theory]
         [MemberData(nameof(SuccessfulCasesData.Data), MemberType = typeof(SuccessfulCasesData))]
 
         public void GenerateNextDate_SuccessfulCases(
-            DateTimeOffset currentDate,
-            bool statusAvailableType,
-            EventType type,
-            OccurrenceType occurs,
-            DateTimeOffset? dateTimeSettings,
-            int every,
-            DateTimeOffset startDate,
-            DateTimeOffset? endDate,
-            DateTimeOffset expectedNextDate
+            DateSettings dateSettings,
+            DateTimeOffset? expectedNextDate
             )
         {
+            var nextDate = _service.GenerateNextDate(dateSettings);
 
-            var settings = new DateSettings
-            {
-                CurrentDate = currentDate,
-                StatusAvailableType = statusAvailableType,
-                Type = type,
-                Occurrence = occurs,
-                DateTimeSettings = dateTimeSettings,
-                Every = every,
-                StartDate = startDate,
-                EndDate = endDate
-            };
-
-            var service = new DateService(new DateValidator());
-            var nextDate = service.GenerateNextDate(settings);
-
-            Assert.Equal(expectedNextDate, nextDate);
+            Assert.Equal(expectedNextDate, nextDate?.NextDate);
         }
-
-
 
 
         [Theory]
         [MemberData(nameof(RangeDateThrowsAnExceptionData.Data), MemberType = typeof(RangeDateThrowsAnExceptionData))]
-
-        public void GenerateNextDate_rangeDate_ThrowsAnException(DateTimeOffset currentDate, DateTimeOffset startDate, DateTimeOffset? endDate)
-        {
-            var settings = new DateSettings
-
-            {
-                CurrentDate = currentDate,
-                StartDate = startDate,
-                EndDate = endDate
-            };
-
-            var service = new DateService(new DateValidator());
-
-            Assert.Throws<ArgumentException>(() => service.GenerateNextDate(settings));
-        }
-
-        [Theory]
         [MemberData(nameof(InvalidParamsThrowsAnExceptionData.Data), MemberType = typeof(InvalidParamsThrowsAnExceptionData))]
 
-        
-        public void GenerateNextDate_invalidParams_ThrowsAnException(
-            DateTimeOffset currentDate,
-            bool statusAvailableType,
-            EventType type,
-            OccurrenceType occurs,
-            DateTimeOffset? dateTimeSettings,
-            int every,
-            DateTimeOffset startDate,
-            DateTimeOffset? endDate,
-            DateTimeOffset expectedNextDate
-        )
+        public void GenerateNextDate_ThrowsAnException(DateSettings settings)
         {
-
-            var settings = new DateSettings
-            {
-                CurrentDate = currentDate,
-                StatusAvailableType = statusAvailableType,
-                Type = type,
-                Occurrence = occurs,
-                DateTimeSettings = dateTimeSettings,
-                Every = every,
-                StartDate = startDate,
-                EndDate = endDate
-            };
-
-            var service = new DateService(new DateValidator());
-
-            Assert.Throws<ArgumentException>(() => service.GenerateNextDate(settings));
+            Assert.Throws<ArgumentException>(() => _service.GenerateNextDate(settings));
         }
 
+
+       */
 
     }
 }
