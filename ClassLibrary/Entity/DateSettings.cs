@@ -13,13 +13,13 @@ namespace SchedulerClassLibrary.Entity
         DateTimeOffset? endDate = null
         )
     {
-        public DateTimeOffset CurrentDate { get; set; } = currentDate;
-        public bool StatusAvailableType { get; set; } = statusAvailableType;
-        public EventType Type { get; set; } = type ?? EventType.Once ;
-        public OccurrenceType Occurrence { get; set; } = occurrence;
-        public DateTimeOffset? DateTimeSettings { get; set; } = dateTimeSettings;
-        public uint Every { get; set; } = every;
-        public DateTimeOffset StartDate { get; set; } = startDate;
-        public DateTimeOffset? EndDate { get; set; } = endDate;
+        public DateTimeOffset CurrentDate { get; } = currentDate;
+        public bool StatusAvailableType { get;  } = statusAvailableType;
+        public EventType Type { get;  } = type ?? EventType.Once ;
+        public OccurrenceType Occurrence { get;  } = occurrence;
+        public DateTimeOffset? DateTimeSettings { get;  } = dateTimeSettings;
+        public uint Every { get; } = every;
+        public DateTimeOffset StartDate { get; } = startDate;
+        public DateTimeOffset? EndDate { get; } = endDate;
     }
 }

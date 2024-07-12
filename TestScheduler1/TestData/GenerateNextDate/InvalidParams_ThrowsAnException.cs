@@ -67,6 +67,35 @@ namespace Test.TestData.GenerateNextDate
             };
 
 
+            // The DateTime date of the settings is not within the allowed range.
+            yield return new object?[] {
+                new DateSettings(
+                    GenerateDateTimeOffset.Generate(2023, 07, 07),
+                    true,
+                    EventType.Once,
+                    OccurrenceType.Daily,
+                    1,
+                    GenerateDateTimeOffset.Generate(2020, 07, 05),
+                    GenerateDateTimeOffset.Generate(2020, 07, 15),
+                    GenerateDateTimeOffset.Generate(2023, 07, 10)
+                )
+            };
+
+            // Current time Same as End Time
+            yield return new object?[] {
+                new DateSettings(
+                    GenerateDateTimeOffset.Generate(2023, 07, 07),
+                    true,
+                    EventType.Once,
+                    OccurrenceType.Daily,
+                    1,
+                    GenerateDateTimeOffset.Generate(2020, 07, 05),
+                    null,
+                    GenerateDateTimeOffset.Generate(2023, 07, 07)
+                )
+            };
+
+
 
         }
 

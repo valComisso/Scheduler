@@ -35,7 +35,7 @@ namespace Test.TestData.GenerateNextDate
                     GenerateDateTimeOffset.Generate(2023, 07, 03),
                     GenerateDateTimeOffset.Generate(2023, 07, 10)
                     ),
-                GenerateDateTimeOffset.Generate(2023, 07, 03)
+             new List<DateTimeOffset>() {GenerateDateTimeOffset.Generate(2023, 07, 03)} 
             };
 
             yield return new object?[] {
@@ -49,8 +49,9 @@ namespace Test.TestData.GenerateNextDate
                     GenerateDateTimeOffset.Generate(2023, 07, 02),
                     GenerateDateTimeOffset.Generate(2023, 07, 10)
                     ),
-              
-                GenerateDateTimeOffset.Generate(2023, 07, 02)
+
+                new List<DateTimeOffset>() { GenerateDateTimeOffset.Generate(2023, 07, 02)}
+               
             };
 
             yield return new object?[] {
@@ -64,10 +65,10 @@ namespace Test.TestData.GenerateNextDate
                     null,
                     GenerateDateTimeOffset.Generate(2023, 07, 02)
                     ),
-                GenerateDateTimeOffset.Generate(2023, 07, 02)
+
+                new List<DateTimeOffset>() { GenerateDateTimeOffset.Generate(2023, 07, 02)}
+              
             };
-
-
 
             yield return new object?[] {
                 new DateSettings(
@@ -81,7 +82,9 @@ namespace Test.TestData.GenerateNextDate
                 GenerateDateTimeOffset.Generate(2023, 07, 10)
                     )
                 ,
-                GenerateDateTimeOffset.Generate(2023, 07, 06)
+
+                new List<DateTimeOffset>() { GenerateDateTimeOffset.Generate(2023, 07, 05)}
+        
             };
 
             // Test cases of the first part of the exercise
@@ -97,12 +100,28 @@ namespace Test.TestData.GenerateNextDate
                     GenerateDateTimeOffset.Generate(2020, 01, 08, 14, 0,0),
                     null
                     ),
-                GenerateDateTimeOffset.Generate(2020, 01, 08, 14, 0,0)
+                    new List<DateTimeOffset>() {  GenerateDateTimeOffset.Generate(2020, 01, 08, 14, 0,0)}
             };
 
             yield return new object?[] {
                 new DateSettings( 
                     GenerateDateTimeOffset.Generate(2020,01,04),
+                    true,
+                    EventType.Once,
+                    OccurrenceType.Daily,
+                    1,
+                    GenerateDateTimeOffset.Generate(2020, 01, 01),
+                    null,
+                    null
+                    ),
+                new List<DateTimeOffset>() { GenerateDateTimeOffset.Generate(2020, 01, 05)}
+               
+            };
+
+            yield return new object?[]
+            {
+                new DateSettings( 
+                    GenerateDateTimeOffset.Generate(2020, 01, 04),
                     true,
                     EventType.Recurring,
                     OccurrenceType.Daily,
@@ -111,12 +130,13 @@ namespace Test.TestData.GenerateNextDate
                     null,
                     null
                     ),
-                GenerateDateTimeOffset.Generate(2020, 01, 05)
+                new List<DateTimeOffset>() { GenerateDateTimeOffset.Generate(2020, 01, 05), GenerateDateTimeOffset.Generate(2020, 01, 06) , GenerateDateTimeOffset.Generate(2020, 01, 07) , GenerateDateTimeOffset.Generate(2020, 01, 08), GenerateDateTimeOffset.Generate(2020, 01, 09) }
             };
 
+            // If not available
             yield return new object?[]
             {
-                new DateSettings( 
+                new DateSettings(
                     GenerateDateTimeOffset.Generate(2020, 01, 04),
                     false,
                     EventType.Recurring,
@@ -125,10 +145,9 @@ namespace Test.TestData.GenerateNextDate
                     GenerateDateTimeOffset.Generate(2020, 01, 01),
                     null,
                     null
-                    ),
+                ),
                 null
             };
-
 
         }
 

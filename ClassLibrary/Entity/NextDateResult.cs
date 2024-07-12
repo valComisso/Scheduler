@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SchedulerClassLibrary.Entity
 {
-    public class NextDateResult(string message, DateTimeOffset? nextDate)
+    public class NextDateResult(string message, List<DateTimeOffset> nextDate)
     {
-        public DateTimeOffset? NextDate { get; set; } = nextDate;
-        public string Message { get; set; } = message;
+        public List<DateTimeOffset> NextDate { get; } = nextDate;
+        public string Message { get; } = message;
     }
 }
