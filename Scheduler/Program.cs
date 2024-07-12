@@ -28,13 +28,11 @@ namespace Scheduler
 
             var dateService = new DateService(new DateValidator());
             var nextDate = dateService.GenerateNextDate(settings);
-           
-             if (nextDate?.NextDate != null)
+
+            if (nextDate?.NextDate == null) return;
+            foreach (var date in nextDate.NextDate!)
             {
-                foreach (var date in nextDate?.NextDate)
-                {
-                    System.Console.WriteLine($"The next date is: {date}");
-                }
+                System.Console.WriteLine($"The next date is: {date}");
             }
         }
     }
