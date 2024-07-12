@@ -2,25 +2,15 @@
 
 namespace SchedulerClassLibrary.Entity
 {
-
-
-    //DateTimeOffset currentDate,
-    //bool statusAvailableType,
-    //    EventType? type,
-    //OccurrenceType occurrence,
-    //    DateTimeOffset? dateTimeSettings,
-    //uint every,
-    //    DateTimeOffset startDate,
-    //DateTimeOffset? endDate
     public class DateSettings(
         DateTimeOffset currentDate,
         bool statusAvailableType,
         EventType? type,
         OccurrenceType occurrence,
-        DateTimeOffset? dateTimeSettings,
         uint every,
         DateTimeOffset startDate,
-        DateTimeOffset? endDate 
+        DateTimeOffset? dateTimeSettings,
+        DateTimeOffset? endDate = null
         )
     {
         public DateTimeOffset CurrentDate { get; set; } = currentDate;

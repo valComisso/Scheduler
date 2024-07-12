@@ -30,9 +30,9 @@ namespace Test.TestData.GenerateNextDate
                     true,
                     EventType.Once,
                     OccurrenceType.Daily,
-                    GenerateDateTimeOffset.Generate(2023, 07, 03),
                     1,
                     GenerateDateTimeOffset.Generate(2023, 07, 01),
+                    GenerateDateTimeOffset.Generate(2023, 07, 03),
                     GenerateDateTimeOffset.Generate(2023, 07, 10)
                     ),
                 GenerateDateTimeOffset.Generate(2023, 07, 03)
@@ -44,9 +44,9 @@ namespace Test.TestData.GenerateNextDate
                     true,
                     null,
                     OccurrenceType.Daily,
-                    GenerateDateTimeOffset.Generate(2023, 07, 02),
                     0,
                     GenerateDateTimeOffset.Generate(2023, 07, 01),
+                    GenerateDateTimeOffset.Generate(2023, 07, 02),
                     GenerateDateTimeOffset.Generate(2023, 07, 10)
                     ),
               
@@ -59,9 +59,9 @@ namespace Test.TestData.GenerateNextDate
                     true,
                     null,
                     OccurrenceType.Daily,
-                    null,
                     0,
                     GenerateDateTimeOffset.Generate(2023, 07, 01),
+                    null,
                     GenerateDateTimeOffset.Generate(2023, 07, 02)
                     ),
                 GenerateDateTimeOffset.Generate(2023, 07, 02)
@@ -75,9 +75,9 @@ namespace Test.TestData.GenerateNextDate
                 true,
                 null,
                 OccurrenceType.Daily,
-                null,
                 0,
                 GenerateDateTimeOffset.Generate(2023, 07, 05),
+                null,
                 GenerateDateTimeOffset.Generate(2023, 07, 10)
                     )
                 ,
@@ -92,9 +92,9 @@ namespace Test.TestData.GenerateNextDate
                     true,
                     EventType.Once,
                     OccurrenceType.Daily,
-                    GenerateDateTimeOffset.Generate(2020, 01, 08, 14, 0,0),
                     0,
                     GenerateDateTimeOffset.Generate(2020, 01, 01),
+                    GenerateDateTimeOffset.Generate(2020, 01, 08, 14, 0,0),
                     null
                     ),
                 GenerateDateTimeOffset.Generate(2020, 01, 08, 14, 0,0)
@@ -106,9 +106,9 @@ namespace Test.TestData.GenerateNextDate
                     true,
                     EventType.Recurring,
                     OccurrenceType.Daily,
-                    null,
                     1,
                     GenerateDateTimeOffset.Generate(2020, 01, 01),
+                    null,
                     null
                     ),
                 GenerateDateTimeOffset.Generate(2020, 01, 05)
@@ -121,9 +121,9 @@ namespace Test.TestData.GenerateNextDate
                     false,
                     EventType.Recurring,
                     OccurrenceType.Daily,
-                    null,
                     1,
                     GenerateDateTimeOffset.Generate(2020, 01, 01),
+                    null,
                     null
                     ),
                 null

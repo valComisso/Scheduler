@@ -1,5 +1,6 @@
 
 using SchedulerClassLibrary.Entity;
+using SchedulerClassLibrary.DateServices;
 using SchedulerClassLibrary.Services;
 using Test.TestData.GenerateNextDate;
 
@@ -7,6 +8,15 @@ namespace Test.Test
 {
     public class DateServiceTests
     {
+
+        private readonly DateService _service;
+
+        public DateServiceTests()
+        {
+            var dateValidator = new DateValidator();
+            _service = new DateService(dateValidator);
+        }
+
 
         [Theory]
         [MemberData(nameof(SuccessfulCasesData.Data), MemberType = typeof(SuccessfulCasesData))]
@@ -16,9 +26,7 @@ namespace Test.Test
             DateTimeOffset? expectedNextDate
             )
         {
-
-            var service = new DateService(new DateValidator()); 
-            var nextDate = service.GenerateNextDate(dateSettings);
+            var nextDate = _service.GenerateNextDate(dateSettings);
 
             Assert.Equal(expectedNextDate, nextDate?.NextDate);
         }
@@ -30,9 +38,7 @@ namespace Test.Test
 
         public void GenerateNextDate_ThrowsAnException(DateSettings settings)
         {
-            var service = new DateService(new DateValidator());
-
-            Assert.Throws<ArgumentException>(() => service.GenerateNextDate(settings));
+            Assert.Throws<ArgumentException>(() => _service.GenerateNextDate(settings));
         }
 
 

@@ -1,4 +1,6 @@
-﻿using SchedulerClassLibrary.Entity;
+﻿
+using SchedulerClassLibrary.DateServices;
+using SchedulerClassLibrary.Entity;
 using SchedulerClassLibrary.Services;
 
 namespace Scheduler
@@ -9,7 +11,7 @@ namespace Scheduler
         {
             var now = DateTimeOffset.Now;
 
-            var settings = new DateSettings(now, true, 0, 0, now, 1, now, null);
+            var settings = new DateSettings(now, true, 0, 0, 1, now, now, null);
            
 
             var dateService = new DateService(new DateValidator());

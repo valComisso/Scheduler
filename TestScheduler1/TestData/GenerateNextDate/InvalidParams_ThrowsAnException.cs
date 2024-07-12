@@ -1,11 +1,6 @@
 ﻿using SchedulerClassLibrary.Enums;
 using SchedulerClassLibrary.Utils;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SchedulerClassLibrary.Entity;
 
 namespace Test.TestData.GenerateNextDate
@@ -34,9 +29,9 @@ namespace Test.TestData.GenerateNextDate
                     true,
                     EventType.Once,
                     OccurrenceType.Daily,
-                    GenerateDateTimeOffset.Generate(2023, 06, 03),
                     1,
                     GenerateDateTimeOffset.Generate(2023, 07, 01),
+                    GenerateDateTimeOffset.Generate(2023, 06, 03),
                     GenerateDateTimeOffset.Generate(2023, 07, 10)
                     )
             };
@@ -49,9 +44,9 @@ namespace Test.TestData.GenerateNextDate
                     true,
                     EventType.Once,
                     OccurrenceType.Daily,
-                    GenerateDateTimeOffset.Generate(2023, 07, 13),
                     1,
                     GenerateDateTimeOffset.Generate(2023, 07, 01),
+                    GenerateDateTimeOffset.Generate(2023, 07, 13),
                     GenerateDateTimeOffset.Generate(2023, 07, 10)
                     )
                 
@@ -64,9 +59,9 @@ namespace Test.TestData.GenerateNextDate
                    true,
                    EventType.Once,
                    OccurrenceType.Daily,
-                   null,
                    1,
                    GenerateDateTimeOffset.Generate(2023, 07, 15),
+                   null,
                    GenerateDateTimeOffset.Generate(2023, 07, 10)
                    )
             };
