@@ -5,7 +5,6 @@ using SchedulerClassLibrary.Enums;
 using SchedulerClassLibrary.Services;
 using SchedulerClassLibrary.Utils;
 using Test.TestData.GenerateNextDate;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 
 namespace Test.Test
 {
@@ -21,23 +20,24 @@ namespace Test.Test
 
 
         [Theory]
-        [MemberData(nameof(SuccessfulCasesData.Data), MemberType = typeof(SuccessfulCasesData))]
+        [MemberData(nameof(SuccessfullCasesData.Data), MemberType = typeof(SuccessfullCasesData))]
 
         public void GenerateNextDate_SuccessfulCases(
             DateSettings dateSettings,
-           List<DateTimeOffset>? expectedNextDate
+           List<DateTimeOffset>? expectedNextDate, 
+            string expectedMessage
         )
         {
 
             var nextDate = _service.GenerateNextDate(dateSettings);
 
             Assert.Equal(expectedNextDate, nextDate?.NextDate);
-            Assert.False(string.IsNullOrEmpty(nextDate?.Message), "The message should not be null or empty");
+            Assert.Equal(expectedMessage, nextDate?.Message);
 
         }
 
         [Theory]
-        [MemberData(nameof(OnceSuccessfulCasesData.Data), MemberType = typeof(OnceSuccessfulCasesData))]
+        [MemberData(nameof(OnceSuccessfullCasesData.Data), MemberType = typeof(OnceSuccessfullCasesData))]
 
         public void GenerateNextDate_SuccessfulCases_Once(
             DateTimeOffset currentDate,
@@ -46,7 +46,8 @@ namespace Test.Test
             DateTimeOffset startDate,
             DateTimeOffset? dateTimeSettings,
             DateTimeOffset? endDate,
-            List<DateTimeOffset>? expectedNextDate
+            List<DateTimeOffset>? expectedNextDate,
+            string expectedMessage 
         )
         {
 
@@ -65,6 +66,7 @@ namespace Test.Test
             var nextDate = _service.GenerateNextDate(settings);
 
             Assert.Equal(expectedNextDate, nextDate?.NextDate);
+            Assert.Equal(expectedMessage, nextDate?.Message);
         }
 
         [Theory]
@@ -77,7 +79,8 @@ namespace Test.Test
             DateTimeOffset startDate,
             DateTimeOffset? dateTimeSettings,
             DateTimeOffset? endDate,
-            List<DateTimeOffset>? expectedNextDate
+            List<DateTimeOffset>? expectedNextDate,
+            string expectedMessage
         )
         {
 
@@ -96,9 +99,42 @@ namespace Test.Test
             var nextDate = _service.GenerateNextDate(settings);
 
             Assert.Equal(expectedNextDate, nextDate?.NextDate);
+            Assert.Equal(expectedMessage, nextDate?.Message);
         }
 
-      
+
+        [Theory]
+        [MemberData(nameof(LimitOcurrencesCasesData.Data), MemberType = typeof(LimitOcurrencesCasesData))]
+
+        public void GenerateNextDate_LimitOccurrencesCases(
+            int? limit,
+            EventType type,
+            List<DateTimeOffset>? expectedNextDate,
+            string expectedMessage
+        )
+        {
+            DateTimeOffset currentDate = GenerateDateTimeOffset.Generate(2023, 07, 05);
+            DateTimeOffset startDate = GenerateDateTimeOffset.Generate(2023, 07, 01);
+            DateTimeOffset endDate = GenerateDateTimeOffset.Generate(2023, 07, 20);
+
+            var settings = new DateSettings(
+                currentDate,
+                true,
+                type,
+                OccurrenceType.Daily,
+                1,
+                startDate,
+                null,
+                endDate
+            );
+
+
+            var nextDate = _service.GenerateNextDate(settings, limit);
+
+            Assert.Equal(expectedNextDate, nextDate?.NextDate);
+            Assert.Equal(expectedMessage, nextDate?.Message);
+        }
+
 
         [Theory]
         [MemberData(nameof(InvalidParamsThrowsAnExceptionData.Data), MemberType = typeof(InvalidParamsThrowsAnExceptionData))]
