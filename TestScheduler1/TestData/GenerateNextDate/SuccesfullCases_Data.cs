@@ -5,12 +5,11 @@ using SchedulerClassLibrary.Utils;
 
 namespace Test.TestData.GenerateNextDate
 {
-    internal class SuccessfulCasesData : IEnumerable<object[]>
+    internal class SuccessfullCasesData : IEnumerable<object[]>
     {
         public static IEnumerable<object?[]> Data()
         {
             /*
-            yield return new object?[] {
                 CurrentDate,
                 StatusAvailableType,
                 Type,
@@ -20,9 +19,9 @@ namespace Test.TestData.GenerateNextDate
                 StartDate,
                 EndDate,
                 expectedNextDate
-            };
+                expectedMessage
             */
-          
+
 
             yield return new object?[] {
                 new DateSettings(
@@ -35,7 +34,8 @@ namespace Test.TestData.GenerateNextDate
                     GenerateDateTimeOffset.Generate(2023, 07, 03),
                     GenerateDateTimeOffset.Generate(2023, 07, 10)
                     ),
-             new List<DateTimeOffset>() {GenerateDateTimeOffset.Generate(2023, 07, 03)} 
+             new List<DateTimeOffset>() {GenerateDateTimeOffset.Generate(2023, 07, 03)},
+             $"Occurs Once. Schedule will be used on {GenerateDateTimeOffset.Generate(2023, 07, 03)} starting on {GenerateDateTimeOffset.Generate(2023, 07, 01)}." 
             };
 
             yield return new object?[] {
@@ -50,8 +50,9 @@ namespace Test.TestData.GenerateNextDate
                     GenerateDateTimeOffset.Generate(2023, 07, 10)
                     ),
 
-                new List<DateTimeOffset>() { GenerateDateTimeOffset.Generate(2023, 07, 02)}
-               
+                new List<DateTimeOffset>() { GenerateDateTimeOffset.Generate(2023, 07, 02)},
+                $"Occurs Once. Schedule will be used on {GenerateDateTimeOffset.Generate(2023, 07, 02)} starting on {GenerateDateTimeOffset.Generate(2023, 07, 01)}."
+
             };
 
             yield return new object?[] {
@@ -66,8 +67,9 @@ namespace Test.TestData.GenerateNextDate
                     GenerateDateTimeOffset.Generate(2023, 07, 02)
                     ),
 
-                new List<DateTimeOffset>() { GenerateDateTimeOffset.Generate(2023, 07, 02)}
-              
+                new List<DateTimeOffset>() { GenerateDateTimeOffset.Generate(2023, 07, 02)},
+                $"Occurs Once. Schedule will be used on {GenerateDateTimeOffset.Generate(2023, 07, 02)} starting on {GenerateDateTimeOffset.Generate(2023, 07, 01)}."
+
             };
 
             yield return new object?[] {
@@ -83,8 +85,9 @@ namespace Test.TestData.GenerateNextDate
                     )
                 ,
 
-                new List<DateTimeOffset>() { GenerateDateTimeOffset.Generate(2023, 07, 05)}
-        
+                new List<DateTimeOffset>() { GenerateDateTimeOffset.Generate(2023, 07, 05)},
+                $"Occurs Once. Schedule will be used on {GenerateDateTimeOffset.Generate(2023, 07, 05)} starting on {GenerateDateTimeOffset.Generate(2023, 07, 05)}."
+
             };
 
             // Test cases of the first part of the exercise
@@ -100,7 +103,9 @@ namespace Test.TestData.GenerateNextDate
                     GenerateDateTimeOffset.Generate(2020, 01, 08, 14, 0,0),
                     null
                     ),
-                    new List<DateTimeOffset>() {  GenerateDateTimeOffset.Generate(2020, 01, 08, 14, 0,0)}
+                    new List<DateTimeOffset>() {  GenerateDateTimeOffset.Generate(2020, 01, 08, 14, 0,0)},
+                    $"Occurs Once. Schedule will be used on {GenerateDateTimeOffset.Generate(2020, 01, 08, 14, 0,0)} starting on {GenerateDateTimeOffset.Generate(2020, 01, 01)}."
+
             };
 
             yield return new object?[] {
@@ -114,8 +119,10 @@ namespace Test.TestData.GenerateNextDate
                     null,
                     null
                     ),
-                new List<DateTimeOffset>() { GenerateDateTimeOffset.Generate(2020, 01, 05)}
-               
+                new List<DateTimeOffset>() { GenerateDateTimeOffset.Generate(2020, 01, 05)},
+                $"Occurs Once. Schedule will be used on {GenerateDateTimeOffset.Generate(2020, 01, 05)} starting on {GenerateDateTimeOffset.Generate(2020, 01, 01)}."
+
+
             };
 
             yield return new object?[]
@@ -130,7 +137,9 @@ namespace Test.TestData.GenerateNextDate
                     null,
                     null
                     ),
-                new List<DateTimeOffset>() { GenerateDateTimeOffset.Generate(2020, 01, 05), GenerateDateTimeOffset.Generate(2020, 01, 06) , GenerateDateTimeOffset.Generate(2020, 01, 07) , GenerateDateTimeOffset.Generate(2020, 01, 08), GenerateDateTimeOffset.Generate(2020, 01, 09) }
+                new List<DateTimeOffset>() { GenerateDateTimeOffset.Generate(2020, 01, 05), GenerateDateTimeOffset.Generate(2020, 01, 06) , GenerateDateTimeOffset.Generate(2020, 01, 07) , GenerateDateTimeOffset.Generate(2020, 01, 08), GenerateDateTimeOffset.Generate(2020, 01, 09) },
+                $"Occurs Recurring. Starting on {GenerateDateTimeOffset.Generate(2020, 01, 01)}."
+
             };
 
             // If not available
@@ -146,7 +155,8 @@ namespace Test.TestData.GenerateNextDate
                     null,
                     null
                 ),
-                null
+                null,
+                "It is not possible to calculate the next day"
             };
 
         }

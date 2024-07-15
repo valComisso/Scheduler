@@ -1,18 +1,16 @@
 ﻿using SchedulerClassLibrary.Entity;
 using SchedulerClassLibrary.Enums;
 using SchedulerClassLibrary.Interfaces;
-using System;
-using System.Collections.Generic;
 
 namespace SchedulerClassLibrary.Services
 {
     public class DateService(IDateValidator dateValidator)
     {
-        public NextDateResult? GenerateNextDate(DateSettings settings)
+        public NextDateResult? GenerateNextDate(DateSettings settings, int? limitOccurrences = null)
         {
             if (!settings.StatusAvailableType)
             {
-                return new NextDateResult("It is not possible to calculate the next day", null);
+                return new NextDateResult("It is not possible to calculate the next day", null!);
             }
 
             
@@ -25,11 +23,10 @@ namespace SchedulerClassLibrary.Services
                 throw new ArgumentException("The reference date is not within the allowed range.");
             }
 
-            //ValidateSettings(settings);
 
             if (settings.Type == EventType.Recurring)
             {
-                return GenerateRecurrentDates(settings, referenceDate);
+                return GenerateRecurrentDates(settings, referenceDate, limitOccurrences);
             }
 
             var nextDate = referenceDate < settings.StartDate ? settings.StartDate : referenceDate;
@@ -39,13 +36,16 @@ namespace SchedulerClassLibrary.Services
         }
 
 
-        private NextDateResult GenerateRecurrentDates(DateSettings settings, DateTimeOffset referenceDate)
+        private NextDateResult GenerateRecurrentDates(DateSettings settings, DateTimeOffset referenceDate, int? limitOccurrences)
         {
            
             var dates = new List<DateTimeOffset>();
             var currentDate = referenceDate < settings.StartDate ? settings.StartDate : referenceDate;
+            int limit = limitOccurrences is null || limitOccurrences < 0 ? 5 : limitOccurrences.Value;
 
-            for (var i = 0; i < 5; i++)
+
+
+            for (var i = 0; i < limit; i++)
             {
                 if (settings.EndDate.HasValue && currentDate > settings.EndDate.Value)
                 {
@@ -56,7 +56,7 @@ namespace SchedulerClassLibrary.Services
                 currentDate = GetNextDate(currentDate, settings.Occurrence, settings.Every);
             }
 
-            var message = $"Occurs {settings.Type} starting on {settings.StartDate}. Next dates: {string.Join(", ", dates)}";
+            var message = $"Occurs {settings.Type}. Starting on {settings.StartDate}.";
 
             return new NextDateResult(message, dates);
         }
@@ -66,8 +66,6 @@ namespace SchedulerClassLibrary.Services
             return occurrence switch
             {
                 OccurrenceType.Daily => currentDate.AddDays(every),
-                OccurrenceType.Weekly => currentDate.AddDays(7), // Here I don't take into account the Every, because I can't imagine how I would work
-                OccurrenceType.Monthly => currentDate.AddMonths(1), // Here I don't take into account the Every, because I can't imagine how I would work
                 _ => throw new ArgumentException("Invalid occurrence type."),
             };
         }

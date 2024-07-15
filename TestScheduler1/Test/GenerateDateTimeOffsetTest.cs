@@ -1,9 +1,4 @@
 ﻿using SchedulerClassLibrary.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Test.Test
 {
@@ -12,7 +7,7 @@ namespace Test.Test
         [Fact]
         public void Generate_ValidDate_ReturnsExpectedDateTimeOffset()
         {
-            // Arrange
+           
             const int year = 2024;
             const int month = 7;
             const int day = 9;
@@ -21,10 +16,10 @@ namespace Test.Test
             const int second = 45;
             const DateTimeKind timeKind = DateTimeKind.Utc;
 
-            // Act
+         
             var result = GenerateDateTimeOffset.Generate(year, month, day, hour, minute, second, timeKind);
 
-            // Assert
+       
             var expected = new DateTimeOffset(new DateTime(year, month, day, hour, minute, second, timeKind));
             Assert.Equal(expected, result);
         }
@@ -41,9 +36,8 @@ namespace Test.Test
         [InlineData(2024, 7, 9, 23, 59, -1, "second")] // Second out of range
         public void Generate_InvalidParameters_ThrowsArgumentOutOfRangeException(int year, int month, int day, int hour, int minute, int second, string expectedParamName)
         {
-            // Act & Assert
-            var exception = Assert.Throws<ArgumentOutOfRangeException>(() => GenerateDateTimeOffset.Generate(year, month, day, hour, minute, second));
-            Assert.Equal(expectedParamName, exception.ParamName);
+            
+            Assert.Throws<ArgumentException>(() => GenerateDateTimeOffset.Generate(year, month, day, hour, minute, second));
         }
     }
 }

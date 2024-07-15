@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using SchedulerClassLibrary.Entity;
 using SchedulerClassLibrary.Enums;
 using SchedulerClassLibrary.Utils;
 
@@ -34,7 +33,8 @@ namespace Test.TestData.GenerateNextDate
                     GenerateDateTimeOffset.Generate(2023, 07, 03),
                     GenerateDateTimeOffset.Generate(2023, 07, 04),
                     GenerateDateTimeOffset.Generate(2023, 07, 05)
-                }
+                },
+                $"Occurs Recurring. Starting on {GenerateDateTimeOffset.Generate(2023, 07, 01)}."
             };
 
             // case where "startDate" is greater than "currenteDate"
@@ -51,42 +51,11 @@ namespace Test.TestData.GenerateNextDate
                     GenerateDateTimeOffset.Generate(2023, 07, 03),
                     GenerateDateTimeOffset.Generate(2023, 07, 04),
                     GenerateDateTimeOffset.Generate(2023, 07, 05)
-                }
+                },
+                $"Occurs Recurring. Starting on {GenerateDateTimeOffset.Generate(2023, 07, 01)}."
             };
 
-            // case in which it is recurrent per week
-            yield return new object?[] {
-                GenerateDateTimeOffset.Generate(2023,07,01),
-                OccurrenceType.Weekly,
-                1,
-                GenerateDateTimeOffset.Generate(2023, 07, 02),
-                null,
-                GenerateDateTimeOffset.Generate(2023, 07, 25),
-                new List<DateTimeOffset>()
-                {
-                    GenerateDateTimeOffset.Generate(2023, 07, 02),
-                    GenerateDateTimeOffset.Generate(2023, 07, 09),
-                    GenerateDateTimeOffset.Generate(2023, 07, 16),
-                    GenerateDateTimeOffset.Generate(2023, 07, 23)
-                }
-            };
-
-            // case in which it is recurring per month
-            yield return new object?[] {
-                GenerateDateTimeOffset.Generate(2023,07,01),
-                OccurrenceType.Monthly,
-                1,
-                GenerateDateTimeOffset.Generate(2023, 07, 02),
-                null,
-                GenerateDateTimeOffset.Generate(2023, 09, 25),
-                new List<DateTimeOffset>()
-                {
-                    GenerateDateTimeOffset.Generate(2023, 07, 02),
-                    GenerateDateTimeOffset.Generate(2023, 08, 02),
-                    GenerateDateTimeOffset.Generate(2023, 09, 02)
-                }
-            };
-
+           
 
             // --- Case with dateTime by configuration
             // daily recurrence - 1 days
@@ -102,7 +71,8 @@ namespace Test.TestData.GenerateNextDate
                     GenerateDateTimeOffset.Generate(2023, 07, 05, 14),
                     GenerateDateTimeOffset.Generate(2023, 07, 06, 14),
                     GenerateDateTimeOffset.Generate(2023, 07, 07, 14)
-                }
+                },
+                $"Occurs Recurring. Starting on {GenerateDateTimeOffset.Generate(2023, 07, 02)}."
             };
 
             // daily recurrence - 2 days
@@ -119,25 +89,11 @@ namespace Test.TestData.GenerateNextDate
                     GenerateDateTimeOffset.Generate(2023, 07, 07, 14),
                     GenerateDateTimeOffset.Generate(2023, 07, 09, 14),
                     GenerateDateTimeOffset.Generate(2023, 07, 11, 14)
-                }
+                },
+                $"Occurs Recurring. Starting on {GenerateDateTimeOffset.Generate(2023, 07, 02)}."
             };
 
-            // Weekly recurrence
-            yield return new object?[] {
-                GenerateDateTimeOffset.Generate(2023,07,01),
-                OccurrenceType.Weekly,
-                2,
-                GenerateDateTimeOffset.Generate(2023, 07, 02),
-                GenerateDateTimeOffset.Generate(2023, 07, 05, 14, 0, 0),
-                GenerateDateTimeOffset.Generate(2023, 07, 20, 17),
-                new List<DateTimeOffset>()
-                {
-                    GenerateDateTimeOffset.Generate(2023, 07, 05, 14),
-                    GenerateDateTimeOffset.Generate(2023, 07, 12, 14),
-                    GenerateDateTimeOffset.Generate(2023, 07, 19, 14)
-                }
-            };
-
+       
 
         }
 
