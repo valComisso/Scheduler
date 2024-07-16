@@ -3,7 +3,6 @@ using SchedulerClassLibrary.Entity;
 using SchedulerClassLibrary.DateServices;
 using SchedulerClassLibrary.Enums;
 using SchedulerClassLibrary.Services;
-using SchedulerClassLibrary.Utils;
 using Test.TestData.GenerateNextDate;
 
 namespace Test.Test
@@ -113,9 +112,9 @@ namespace Test.Test
             string expectedMessage
         )
         {
-            DateTimeOffset currentDate = GenerateDateTimeOffset.Generate(2023, 07, 05);
-            DateTimeOffset startDate = GenerateDateTimeOffset.Generate(2023, 07, 01);
-            DateTimeOffset endDate = GenerateDateTimeOffset.Generate(2023, 07, 20);
+            DateTimeOffset currentDate = new DateTimeOffset(2023, 7, 5, 0, 0, 0, TimeSpan.Zero);
+            DateTimeOffset startDate = new DateTimeOffset(2023, 7, 1, 0, 0, 0, TimeSpan.Zero);
+            DateTimeOffset endDate = new DateTimeOffset(2023, 7, 20, 0, 0, 0, TimeSpan.Zero);
 
             var settings = new DateSettings(
                 currentDate,

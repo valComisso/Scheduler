@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using SchedulerClassLibrary.Enums;
-using SchedulerClassLibrary.Utils;
 
 namespace Test.TestData.GenerateNextDate
 {
@@ -22,37 +21,37 @@ namespace Test.TestData.GenerateNextDate
             // --- case only with currentTime 
             // normal case
             yield return new object?[] {
-                GenerateDateTimeOffset.Generate(2023,07,02),
+                new DateTimeOffset(2023,7,2,0,0,0, TimeSpan.Zero),
                 OccurrenceType.Daily,
                 1,
-                GenerateDateTimeOffset.Generate(2023, 07, 01),
+                new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
                 null,
-                GenerateDateTimeOffset.Generate(2023, 07, 05),
+                new DateTimeOffset(2023,7,5,0,0,0, TimeSpan.Zero),
                 new List<DateTimeOffset>()
                 {
-                    GenerateDateTimeOffset.Generate(2023, 07, 03),
-                    GenerateDateTimeOffset.Generate(2023, 07, 04),
-                    GenerateDateTimeOffset.Generate(2023, 07, 05)
+                    new DateTimeOffset(2023,7,3,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,4,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,5,0,0,0, TimeSpan.Zero)
                 },
-                $"Occurs Recurring. Starting on {GenerateDateTimeOffset.Generate(2023, 07, 01)}."
+                $"Occurs Recurring. Starting on {new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero)}."
             };
 
             // case where "startDate" is greater than "currenteDate"
             yield return new object?[] {
-                GenerateDateTimeOffset.Generate(2023,07,01),
+                new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
                 OccurrenceType.Daily,
                 1,
-                GenerateDateTimeOffset.Generate(2023, 07, 01),
+                new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
                 null,
-                GenerateDateTimeOffset.Generate(2023, 07, 05),
+                new DateTimeOffset(2023,7,5,0,0,0, TimeSpan.Zero),
                 new List<DateTimeOffset>()
                 {
-                    GenerateDateTimeOffset.Generate(2023, 07, 02),
-                    GenerateDateTimeOffset.Generate(2023, 07, 03),
-                    GenerateDateTimeOffset.Generate(2023, 07, 04),
-                    GenerateDateTimeOffset.Generate(2023, 07, 05)
+                    new DateTimeOffset(2023,7,2,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,3,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,4,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,5,0,0,0, TimeSpan.Zero)
                 },
-                $"Occurs Recurring. Starting on {GenerateDateTimeOffset.Generate(2023, 07, 01)}."
+                $"Occurs Recurring. Starting on {new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero)}."
             };
 
            
@@ -60,37 +59,37 @@ namespace Test.TestData.GenerateNextDate
             // --- Case with dateTime by configuration
             // daily recurrence - 1 days
             yield return new object?[] {
-                GenerateDateTimeOffset.Generate(2023,07,01),
+                new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
                 OccurrenceType.Daily,
                 1,
-                GenerateDateTimeOffset.Generate(2023, 07, 02),
-                GenerateDateTimeOffset.Generate(2023, 07, 05, 14, 0, 0),
-                GenerateDateTimeOffset.Generate(2023, 07, 07, 17),
+                new DateTimeOffset(2023,7,2,0,0,0, TimeSpan.Zero),
+                new DateTimeOffset(2023,7,5,14,0,0, TimeSpan.Zero),
+                new DateTimeOffset(2023,7,7,17,0,0, TimeSpan.Zero),
                 new List<DateTimeOffset>()
                 {
-                    GenerateDateTimeOffset.Generate(2023, 07, 05, 14),
-                    GenerateDateTimeOffset.Generate(2023, 07, 06, 14),
-                    GenerateDateTimeOffset.Generate(2023, 07, 07, 14)
+                    new DateTimeOffset(2023,7,5,14,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,6,14,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,7,14,0,0, TimeSpan.Zero)
                 },
-                $"Occurs Recurring. Starting on {GenerateDateTimeOffset.Generate(2023, 07, 02)}."
+                $"Occurs Recurring. Starting on {new DateTimeOffset(2023,7,2,0,0,0, TimeSpan.Zero)}."
             };
 
             // daily recurrence - 2 days
             yield return new object?[] {
-                GenerateDateTimeOffset.Generate(2023,07,01),
+                new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
                 OccurrenceType.Daily,
                 2,
-                GenerateDateTimeOffset.Generate(2023, 07, 02),
-                GenerateDateTimeOffset.Generate(2023, 07, 05, 14, 0, 0),
-                GenerateDateTimeOffset.Generate(2023, 07, 11, 17),
+                new DateTimeOffset(2023,7,2,0,0,0, TimeSpan.Zero),
+                new DateTimeOffset(2023,7,5,14,0,0, TimeSpan.Zero),
+                new DateTimeOffset(2023,7,11,17,0,0, TimeSpan.Zero),
                 new List<DateTimeOffset>()
                 {
-                    GenerateDateTimeOffset.Generate(2023, 07, 05, 14),
-                    GenerateDateTimeOffset.Generate(2023, 07, 07, 14),
-                    GenerateDateTimeOffset.Generate(2023, 07, 09, 14),
-                    GenerateDateTimeOffset.Generate(2023, 07, 11, 14)
+                    new DateTimeOffset(2023,7,5,14,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,7,14,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,9,14,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,11,14,0,0, TimeSpan.Zero)
                 },
-                $"Occurs Recurring. Starting on {GenerateDateTimeOffset.Generate(2023, 07, 02)}."
+                $"Occurs Recurring. Starting on {new DateTimeOffset(2023,7,2,0,0,0, TimeSpan.Zero)}."
             };
 
        

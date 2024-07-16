@@ -1,5 +1,4 @@
 ﻿using SchedulerClassLibrary.Enums;
-using SchedulerClassLibrary.Utils;
 using System.Collections;
 using SchedulerClassLibrary.Entity;
 
@@ -25,14 +24,14 @@ namespace Test.TestData.GenerateNextDate
             // DateTimeSettings must be larger than CurrentDate
             yield return new object?[] {
                 new DateSettings(
-                    GenerateDateTimeOffset.Generate(2023,07,01),
+                    new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
                     true,
                     EventType.Once,
                     OccurrenceType.Daily,
                     1,
-                    GenerateDateTimeOffset.Generate(2023, 07, 01),
-                    GenerateDateTimeOffset.Generate(2023, 06, 03),
-                    GenerateDateTimeOffset.Generate(2023, 07, 10)
+                    new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,6,3,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,10,0,0,0, TimeSpan.Zero)
                     )
             };
 
@@ -40,14 +39,14 @@ namespace Test.TestData.GenerateNextDate
 
             yield return new object?[] {
                 new DateSettings(
-                    GenerateDateTimeOffset.Generate(2023,07,01),
+                    new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
                     true,
                     EventType.Once,
                     OccurrenceType.Daily,
                     1,
-                    GenerateDateTimeOffset.Generate(2023, 07, 01),
-                    GenerateDateTimeOffset.Generate(2023, 07, 13),
-                    GenerateDateTimeOffset.Generate(2023, 07, 10)
+                    new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,13,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,10,0,0,0, TimeSpan.Zero)
                     )
                 
             };
@@ -55,14 +54,14 @@ namespace Test.TestData.GenerateNextDate
             // EndDate must be larger than StartDate
             yield return new object?[] {
                new DateSettings(
-                   GenerateDateTimeOffset.Generate(2023,07,01),
+                   new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
                    true,
                    EventType.Once,
                    OccurrenceType.Daily,
                    1,
-                   GenerateDateTimeOffset.Generate(2023, 07, 15),
+                   new DateTimeOffset(2023,7,15,0,0,0, TimeSpan.Zero),
                    null,
-                   GenerateDateTimeOffset.Generate(2023, 07, 10)
+                   new DateTimeOffset(2023,7,10,0,0,0, TimeSpan.Zero)
                    )
             };
 
@@ -70,28 +69,42 @@ namespace Test.TestData.GenerateNextDate
             // The DateTime date of the settings is not within the allowed range.
             yield return new object?[] {
                 new DateSettings(
-                    GenerateDateTimeOffset.Generate(2023, 07, 07),
+                    new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero),
                     true,
                     EventType.Once,
                     OccurrenceType.Daily,
                     1,
-                    GenerateDateTimeOffset.Generate(2020, 07, 05),
-                    GenerateDateTimeOffset.Generate(2020, 07, 15),
-                    GenerateDateTimeOffset.Generate(2023, 07, 10)
+                    new DateTimeOffset(2020,7,5,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2020,7,15,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,10,0,0,0, TimeSpan.Zero)
                 )
             };
 
             // Current time Same as End Time
             yield return new object?[] {
                 new DateSettings(
-                    GenerateDateTimeOffset.Generate(2023, 07, 07),
+                    new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero),
                     true,
                     EventType.Once,
                     OccurrenceType.Daily,
                     1,
-                    GenerateDateTimeOffset.Generate(2020, 07, 05),
+                    new DateTimeOffset(2020,7,5,0,0,0, TimeSpan.Zero),
                     null,
-                    GenerateDateTimeOffset.Generate(2023, 07, 07)
+                    new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero)
+                )
+            };
+
+            // every is cero and is Recurring
+            yield return new object?[] {
+                new DateSettings(
+                    new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero),
+                    true,
+                    EventType.Recurring,
+                    OccurrenceType.Daily,
+                    0,
+                    new DateTimeOffset(2020,7,5,0,0,0, TimeSpan.Zero),
+                    null,
+                    new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero)
                 )
             };
 

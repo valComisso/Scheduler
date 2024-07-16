@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using SchedulerClassLibrary.Enums;
-using SchedulerClassLibrary.Utils;
 
 namespace Test.TestData.GenerateNextDate
 {
@@ -22,28 +21,28 @@ namespace Test.TestData.GenerateNextDate
             // case with dateTime by configuration
 
             yield return new object?[] {
-                GenerateDateTimeOffset.Generate(2023,07,01),
+                new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
                 OccurrenceType.Daily,
                 1,
-                GenerateDateTimeOffset.Generate(2023, 07, 01),
-                GenerateDateTimeOffset.Generate(2023, 07, 3),
-                GenerateDateTimeOffset.Generate(2023, 07, 7),
-                new List<DateTimeOffset>() {GenerateDateTimeOffset.Generate(2023, 07, 03)},
-                $"Occurs Once. Schedule will be used on {GenerateDateTimeOffset.Generate(2023, 07, 03)} starting on {GenerateDateTimeOffset.Generate(2023, 07, 01)}."
+                new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
+                new DateTimeOffset(2023,7,3,0,0,0, TimeSpan.Zero),
+                new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero),
+                new List<DateTimeOffset>() {new DateTimeOffset(2023,7,3,0,0,0, TimeSpan.Zero)},
+                $"Occurs Once. Schedule will be used on {new DateTimeOffset(2023,7,3,0,0,0, TimeSpan.Zero)} starting on {new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero)}."
             };
 
 
             // case with if dateTime by configuration, only with currentTime
 
             yield return new object?[] {
-                GenerateDateTimeOffset.Generate(2023,07,01),
+                new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
                 OccurrenceType.Daily,
                 1,
-                GenerateDateTimeOffset.Generate(2023, 07, 01),
+                new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
                 null,
-                GenerateDateTimeOffset.Generate(2023, 07, 7),
-                new List<DateTimeOffset>() {GenerateDateTimeOffset.Generate(2023, 07, 02)},
-                $"Occurs Once. Schedule will be used on {GenerateDateTimeOffset.Generate(2023, 07, 02)} starting on {GenerateDateTimeOffset.Generate(2023, 07, 01)}."
+                new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero),
+                new List<DateTimeOffset>() {new DateTimeOffset(2023,7,2,0,0,0, TimeSpan.Zero)},
+                $"Occurs Once. Schedule will be used on {new DateTimeOffset(2023,7,2,0,0,0, TimeSpan.Zero)} starting on {new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero)}."
             };
 
 
@@ -51,38 +50,38 @@ namespace Test.TestData.GenerateNextDate
             // Controlling that the "every" field does not influence the result
 
             yield return new object?[] {
-                GenerateDateTimeOffset.Generate(2023,07,01),
+                new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
                 OccurrenceType.Daily,
                 5,
-                GenerateDateTimeOffset.Generate(2023, 07, 01),
+                new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
                 null,
-                GenerateDateTimeOffset.Generate(2023, 07, 7),
-                new List<DateTimeOffset>() {GenerateDateTimeOffset.Generate(2023, 07, 02)},
-                $"Occurs Once. Schedule will be used on {GenerateDateTimeOffset.Generate(2023, 07, 02)} starting on {GenerateDateTimeOffset.Generate(2023, 07, 01)}."
+                new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero),
+                new List<DateTimeOffset>() {new DateTimeOffset(2023,7,2,0,0,0, TimeSpan.Zero)},
+                $"Occurs Once. Schedule will be used on {new DateTimeOffset(2023,7,2,0,0,0, TimeSpan.Zero)} starting on {new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero)}."
             };
 
             yield return new object?[] {
-                GenerateDateTimeOffset.Generate(2023,07,01),
+               new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
                 OccurrenceType.Daily,
                 30,
-                GenerateDateTimeOffset.Generate(2023, 07, 01),
+                new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
                 null,
-                GenerateDateTimeOffset.Generate(2023, 07, 7),
-                new List<DateTimeOffset>() {GenerateDateTimeOffset.Generate(2023, 07, 02)},
-                $"Occurs Once. Schedule will be used on {GenerateDateTimeOffset.Generate(2023, 07, 02)} starting on {GenerateDateTimeOffset.Generate(2023, 07, 01)}."
+                new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero),
+                new List<DateTimeOffset>() {new DateTimeOffset(2023,7,2,0,0,0, TimeSpan.Zero)},
+                $"Occurs Once. Schedule will be used on {new DateTimeOffset(2023,7,2,0,0,0, TimeSpan.Zero)} starting on {new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero)}."
 
             };
 
             // test
             yield return new object?[] {
-                GenerateDateTimeOffset.Generate(2023,07,01),
+               new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
                 OccurrenceType.Daily,
                 30,
-                GenerateDateTimeOffset.Generate(2023, 07, 05),
+                new DateTimeOffset(2023,7,5,0,0,0, TimeSpan.Zero),
                 null,
-                GenerateDateTimeOffset.Generate(2023, 07, 10),
-                new List<DateTimeOffset>() {GenerateDateTimeOffset.Generate(2023, 07, 05)},
-                $"Occurs Once. Schedule will be used on {GenerateDateTimeOffset.Generate(2023, 07, 05)} starting on {GenerateDateTimeOffset.Generate(2023, 07, 05)}."
+                new DateTimeOffset(2023,7,10,0,0,0, TimeSpan.Zero),
+                new List<DateTimeOffset>() {new DateTimeOffset(2023,7,5,0,0,0, TimeSpan.Zero)},
+                $"Occurs Once. Schedule will be used on {new DateTimeOffset(2023,7,5,0,0,0, TimeSpan.Zero)} starting on {new DateTimeOffset(2023,7,5,0,0,0, TimeSpan.Zero)}."
 
             };
         }
