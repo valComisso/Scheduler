@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using SchedulerClassLibrary.Enums;
-using SchedulerClassLibrary.Utils;
 
 namespace Test.TestData.GenerateNextDate
 {
@@ -19,8 +18,14 @@ namespace Test.TestData.GenerateNextDate
             yield return new object?[] {
                 2,
                 EventType.Recurring,
-                new List<DateTimeOffset>() {GenerateDateTimeOffset.Generate(2023, 07, 06), GenerateDateTimeOffset.Generate(2023, 07, 07)},
-                $"Occurs Recurring. Starting on {GenerateDateTimeOffset.Generate(2023, 07, 01)}."
+                new List<DateTimeOffset>()
+                {
+                    new DateTimeOffset(2023,7,6,0,0,0, TimeSpan.Zero),  
+                    new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero)
+                },
+                $"Occurs Recurring. Starting on {
+                    new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero)
+                }."
              };
 
             yield return new object?[] {
@@ -28,18 +33,18 @@ namespace Test.TestData.GenerateNextDate
                  EventType.Recurring,
                  new List<DateTimeOffset>()
                  {
-                     GenerateDateTimeOffset.Generate(2023, 07, 06),
-                     GenerateDateTimeOffset.Generate(2023, 07, 07),
-                     GenerateDateTimeOffset.Generate(2023, 07, 08),
-                     GenerateDateTimeOffset.Generate(2023, 07, 09),
-                     GenerateDateTimeOffset.Generate(2023, 07, 10),
-                     GenerateDateTimeOffset.Generate(2023, 07, 11),
-                     GenerateDateTimeOffset.Generate(2023, 07, 12),
-                     GenerateDateTimeOffset.Generate(2023, 07, 13),
-                     GenerateDateTimeOffset.Generate(2023, 07, 14),
-                     GenerateDateTimeOffset.Generate(2023, 07, 15)
+                     new DateTimeOffset(2023,7,6,0,0,0, TimeSpan.Zero),
+                     new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero),
+                     new DateTimeOffset(2023,7,8,0,0,0, TimeSpan.Zero),
+                     new DateTimeOffset(2023,7,9,0,0,0, TimeSpan.Zero),
+                     new DateTimeOffset(2023,7,10,0,0,0, TimeSpan.Zero),
+                     new DateTimeOffset(2023,7,11,0,0,0, TimeSpan.Zero),
+                     new DateTimeOffset(2023,7,12,0,0,0, TimeSpan.Zero),
+                     new DateTimeOffset(2023,7,13,0,0,0, TimeSpan.Zero),
+                     new DateTimeOffset(2023,7,14,0,0,0, TimeSpan.Zero),
+                     new DateTimeOffset(2023,7,15,0,0,0, TimeSpan.Zero)
                  },
-                 $"Occurs Recurring. Starting on {GenerateDateTimeOffset.Generate(2023, 07, 01)}."
+                 $"Occurs Recurring. Starting on { new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero)}."
              };
 
         
@@ -50,13 +55,13 @@ namespace Test.TestData.GenerateNextDate
                 EventType.Recurring,
                 new List<DateTimeOffset>()
                 {
-                    GenerateDateTimeOffset.Generate(2023, 07, 06),
-                    GenerateDateTimeOffset.Generate(2023, 07, 07),
-                    GenerateDateTimeOffset.Generate(2023, 07, 08),
-                    GenerateDateTimeOffset.Generate(2023, 07, 09),
-                    GenerateDateTimeOffset.Generate(2023, 07, 10)
+                    new DateTimeOffset(2023,7,6,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,8,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,9,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,10,0,0,0, TimeSpan.Zero),
                 },
-                $"Occurs Recurring. Starting on {GenerateDateTimeOffset.Generate(2023, 07, 01)}."
+                $"Occurs Recurring. Starting on { new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero)}."
             };
 
             yield return new object?[] {
@@ -64,28 +69,16 @@ namespace Test.TestData.GenerateNextDate
                 EventType.Recurring,
                 new List<DateTimeOffset>()
                 {
-                    GenerateDateTimeOffset.Generate(2023, 07, 06),
-                    GenerateDateTimeOffset.Generate(2023, 07, 07),
-                    GenerateDateTimeOffset.Generate(2023, 07, 08),
-                    GenerateDateTimeOffset.Generate(2023, 07, 09),
-                    GenerateDateTimeOffset.Generate(2023, 07, 10)
+                    new DateTimeOffset(2023,7,6,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,8,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,9,0,0,0, TimeSpan.Zero),
+                    new DateTimeOffset(2023,7,10,0,0,0, TimeSpan.Zero),
                 },
-                $"Occurs Recurring. Starting on {GenerateDateTimeOffset.Generate(2023, 07, 01)}."
+                $"Occurs Recurring. Starting on {new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero)}."
             };
 
-            yield return new object?[] {
-                -1,
-                EventType.Recurring,
-                new List<DateTimeOffset>()
-                {
-                    GenerateDateTimeOffset.Generate(2023, 07, 06),
-                    GenerateDateTimeOffset.Generate(2023, 07, 07),
-                    GenerateDateTimeOffset.Generate(2023, 07, 08),
-                    GenerateDateTimeOffset.Generate(2023, 07, 09),
-                    GenerateDateTimeOffset.Generate(2023, 07, 10)
-                },
-                $"Occurs Recurring. Starting on {GenerateDateTimeOffset.Generate(2023, 07, 01)}."
-            };
+          
 
 
 

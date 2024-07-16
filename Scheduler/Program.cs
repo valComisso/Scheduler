@@ -3,7 +3,6 @@ using SchedulerClassLibrary.DateServices;
 using SchedulerClassLibrary.Entity;
 using SchedulerClassLibrary.Enums;
 using SchedulerClassLibrary.Services;
-using SchedulerClassLibrary.Utils;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Scheduler
@@ -15,14 +14,14 @@ namespace Scheduler
             var now = DateTimeOffset.Now;
 
             var settings = new DateSettings(
-                GenerateDateTimeOffset.Generate(2023, 07, 07),
+                new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero),
                 true,
                 EventType.Once,
                 OccurrenceType.Daily,
                 1,
-                GenerateDateTimeOffset.Generate(2023, 07, 05),
-                GenerateDateTimeOffset.Generate(2023, 07, 15),
-                GenerateDateTimeOffset.Generate(2023, 07, 10)
+                new DateTimeOffset(2023, 7, 5, 0, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 15, 0, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 10, 0, 0, 0, TimeSpan.Zero)
                 );
            
 
