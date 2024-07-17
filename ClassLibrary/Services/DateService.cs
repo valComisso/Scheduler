@@ -24,23 +24,24 @@ namespace SchedulerClassLibrary.Services
             }
 
 
+            var nextDate = referenceDate < settings.StartDate ? settings.StartDate : referenceDate;
+
             if (settings.Type == EventType.Recurring)
             {
-                return GenerateRecurrentDates(settings, referenceDate, limitOccurrences);
+                return GenerateRecurrentDates(settings, nextDate, limitOccurrences);
             }
 
-            var nextDate = referenceDate < settings.StartDate ? settings.StartDate : referenceDate;
             var message = $"Occurs {settings.Type}. Schedule will be used on {nextDate} starting on {settings.StartDate}.";
 
             return new NextDateResult(message, [nextDate]);
         }
 
 
-        private NextDateResult GenerateRecurrentDates(DateSettings settings, DateTimeOffset referenceDate, int? limitOccurrences)
+        private NextDateResult GenerateRecurrentDates(DateSettings settings, DateTimeOffset nextDate, int? limitOccurrences)
         {
            
             var dates = new List<DateTimeOffset>();
-            var currentDate = referenceDate < settings.StartDate ? settings.StartDate : referenceDate;
+            var currentDate = nextDate;
             int limit = limitOccurrences is null || limitOccurrences < 0 ? 5 : limitOccurrences.Value;
 
 
