@@ -14,7 +14,7 @@ namespace SchedulerClassLibrary.Services
             }
 
             
-            ValidateSettings(settings);
+            ValidateMainSettings(settings);
             
             var referenceDate = GetReferenceDate(settings);
 
@@ -71,7 +71,7 @@ namespace SchedulerClassLibrary.Services
             };
         }
 
-        private void ValidateSettings(DateSettings settings)
+        private void ValidateMainSettings(DateSettings settings)
         {
             if (settings.Type == EventType.Once && settings.DateTimeSettings.HasValue)
             {
