@@ -39,16 +39,23 @@ public class Program
     {
 
         var currentDate = new DateTimeOffset(2024, 7, 16, 0, 0, 0, TimeSpan.Zero);
-        var endDate = new DateTimeOffset(2024, 8, 26, 0, 0, 0, TimeSpan.Zero);
-        List<DayOfWeek>? requiredDays = null;
+        var endDate = new DateTimeOffset(2024, 8, 14, 13, 0, 0, TimeSpan.Zero);
+        List<DayOfWeek>? requiredDays = new List<DayOfWeek>
+        {
+            DayOfWeek.Monday,
+            DayOfWeek.Wednesday,
+        }; 
         var startTime = new TimeSpan(14, 0, 0);
         var endTime = new TimeSpan(16, 0, 0);
         var limit = 15;
-        int? weeksInterval = 1;
-        var interval = new TimeSpan(2, 0, 0);
-        var occurrence = OccurrenceType.Daily;
+        int? weeksInterval = 2;
+        var interval = new TimeSpan(14, 0, 0);
 
-        var availableDates = GetNextAvailableDates(currentDate, requiredDays, startTime, endTime, limit, weeksInterval, interval, endDate, occurrence);
+        var occurrence = OccurrenceType.Weekly;
+        var dailyFrecuencetype = DailyFrecuencyType.Variable;
+        var dailyFrecuencyOnceTime = new TimeSpan(15, 0, 0); // horario fijo de todos los dias
+        var dailyFrecuencyEvery = new TimeSpan(2, 0, 0); // frecuancia de (horas, min o seg) para cuando el horario no es fijo y hay una franja horaria 
+        var availableDates = GetNextAvailableDates(currentDate, requiredDays, startTime, endTime, limit, weeksInterval, interval, endDate, occurrence, dailyFrecuencetype, dailyFrecuencyOnceTime, dailyFrecuencyEvery);
 
         Console.WriteLine("Próximas fechas disponibles:");
         foreach (var date in availableDates)
@@ -56,26 +63,7 @@ public class Program
             Console.WriteLine(date.ToString("yyyy-MM-dd HH:mm"));
         }
 
-        var currentDate2 = new DateTimeOffset(2024, 7, 16, 0, 0, 0, TimeSpan.Zero);
-        var endDate2 = new DateTimeOffset(2024, 8, 26, 14, 0, 0, TimeSpan.Zero);
-        var requiredDays2 = new List<DayOfWeek>
-        {
-            DayOfWeek.Monday,
-            DayOfWeek.Wednesday,
-        }; ;
-        var startTime2 = new TimeSpan(14, 0, 0);
-        var endTime2 = new TimeSpan(16, 0, 0);
-        var limit2 = 15;
-        int? weeksInterval2 = 2;
-        var interval2 = new TimeSpan(2, 0, 0);
-        var occurrence2 = OccurrenceType.Weekly;
-
-        var availableDates2 = GetNextAvailableDates(currentDate2, requiredDays2, startTime2, endTime2, limit2, weeksInterval2, interval2, endDate2, occurrence2);
-        Console.WriteLine("Próximas fechas disponibles:");
-        foreach (var date in availableDates2)
-        {
-            Console.WriteLine(date.ToString("yyyy-MM-dd HH:mm"));
-        }
+        
 
     }
 
@@ -89,7 +77,11 @@ public class Program
       int? weeksInterval,
       TimeSpan interval,
       DateTimeOffset endDate,
-      OccurrenceType occurrence)
+      OccurrenceType occurrence,
+      DailyFrecuencyType dailyFrecuencetype,
+      TimeSpan dailyFrecuencyOnceTime,
+      TimeSpan dailyFrecuencyEvery
+      )
     {
         var availableDates = new List<DateTimeOffset>();
         var referenceDate = currentDate;
@@ -100,41 +92,68 @@ public class Program
 
         while (count < limit && referenceDate <= endDate)
         {
-            referenceDate = ProcessWeek(referenceDate, requiredDaysList, startTime, endTime, limit, interval, endDate, ref count, availableDates);
-            referenceDate = GetNextReferenceDate(weeksIntervalInt, referenceDate);
+            referenceDate = ProcessInteval(referenceDate, requiredDaysList, startTime, endTime, limit, interval, endDate, ref count, availableDates, dailyFrecuencetype, dailyFrecuencyOnceTime, occurrence, dailyFrecuencyEvery);
+            referenceDate = GetNextIntervalStart(referenceDate, occurrence, weeksIntervalInt);
         }
-       
+
         return availableDates.Take(limit).ToList();
     }
 
-    private static DateTimeOffset ProcessWeek(DateTimeOffset referenceDate, List<DayOfWeek> requiredDaysList, TimeSpan startTime, TimeSpan endTime, int limit, TimeSpan interval, DateTimeOffset endDate, ref int count, List<DateTimeOffset> availableDates)
+    private static DateTimeOffset ProcessInteval(DateTimeOffset referenceDate, List<DayOfWeek> requiredDaysList, TimeSpan startTime, TimeSpan endTime, int limit, TimeSpan interval, DateTimeOffset endDate, ref int count, List<DateTimeOffset> availableDates, DailyFrecuencyType dailyFrecuencetype, TimeSpan dailyFrecuencyOnceTime, OccurrenceType occurrence, TimeSpan dailyFrecuencyEvery)
     {
-        var endOfWeek = referenceDate.AddDays(7 - (int)referenceDate.DayOfWeek);
+        var daysProcess = occurrence switch
+        {
+            OccurrenceType.Daily => 0,
+            OccurrenceType.Weekly => 7 - (int)referenceDate.DayOfWeek,
+            _ => 0
+        };
 
-        for (var date = referenceDate; date <= endOfWeek; date = date.AddDays(1))
+        var endOfProcess = referenceDate.AddDays(daysProcess);
+
+        for (var date = referenceDate; date <= endOfProcess; date = date.AddDays(1))
         {
             if (!requiredDaysList.Contains(date.DayOfWeek)) continue;
-            AddAvailableDatesForDay(date, startTime, endTime, limit, interval, endDate, ref count, availableDates);
+            AddAvailableDatesForDay(date, startTime, endTime, limit, interval, endDate, ref count, availableDates, dailyFrecuencetype, dailyFrecuencyOnceTime, dailyFrecuencyEvery);
         }
 
-        return endOfWeek;
+        return endOfProcess;
     }
 
-    private static void AddAvailableDatesForDay(DateTimeOffset date, TimeSpan startTime, TimeSpan endTime, int limit, TimeSpan interval, DateTimeOffset endDate, ref int count, List<DateTimeOffset> availableDates)
+    private static void AddAvailableDatesForDay(DateTimeOffset date, TimeSpan startTime, TimeSpan endTime, int limit, TimeSpan interval, DateTimeOffset endDate, ref int count, List<DateTimeOffset> availableDates, DailyFrecuencyType dailyFrecuencetype, TimeSpan dailyFrecuencyOnceTime, TimeSpan dailyFrecuencyEvery)
     {
-        var targetDateTime = date.Add(startTime);
-        var endTimeDate = date.Add(endTime);
-
-        while (targetDateTime <= endTimeDate && count < limit && targetDateTime <= endDate)
+        if (dailyFrecuencetype == DailyFrecuencyType.Fixed)
         {
-            if (IsWithinTimeFrame(targetDateTime, startTime, endTime))
-            {
-                availableDates.Add(targetDateTime);
-                count++;
-            }
+            if (date.TimeOfDay > dailyFrecuencyOnceTime ) return;
+            var dateWithoutTime = new DateTimeOffset(date.Year, date.Month, date.Day, 0, 0, 0, date.Offset);
+            var targetDateTime = dateWithoutTime.Add(dailyFrecuencyOnceTime);
 
-            targetDateTime = targetDateTime.Add(interval);
+            if(targetDateTime > endDate) return;
+            availableDates.Add(targetDateTime);
+            count++;
+
+
         }
+        else if (dailyFrecuencetype == DailyFrecuencyType.Variable)
+        {
+            if (date.TimeOfDay > endTime ) return;
+
+            var dateWithoutTime = new DateTimeOffset(date.Year, date.Month, date.Day, 0, 0, 0, date.Offset);
+            var targetDateTime = date;
+            var endTimeDate = date.Add(endTime);
+
+            while (targetDateTime <= endTimeDate && count < limit && targetDateTime <= endDate)
+            {
+
+                if (IsWithinTimeFrame(targetDateTime, startTime, endTime))
+                {
+                    availableDates.Add(targetDateTime);
+                    count++;
+                }
+
+                targetDateTime = targetDateTime.Add(dailyFrecuencyEvery);
+            }
+        }
+
     }
 
     private static bool IsWithinTimeFrame(DateTimeOffset targetDateTime, TimeSpan startTime, TimeSpan endTime)
@@ -144,14 +163,40 @@ public class Program
 
     private static DateTimeOffset GetNextReferenceDate(int weeksIntervalInt, DateTimeOffset date)
     {
+
         var daysUntilNextMonday = ((int)DayOfWeek.Monday - (int)date.DayOfWeek + 7) % 7;
         var daysUntilStartNextInterval = 7 * (weeksIntervalInt - 1);
         var totalDaysToAdd = daysUntilNextMonday + daysUntilStartNextInterval;
 
         var nexDate = date.AddDays(totalDaysToAdd);
         var nextTDateReference = new DateTimeOffset(nexDate.Year, nexDate.Month, nexDate.Day, 0, 0, 0, TimeSpan.Zero);
-
         return nextTDateReference;
+    }
+
+    private static DateTimeOffset GetNextIntervalStart(DateTimeOffset currentDate, OccurrenceType occurrence, int every)
+    {
+        DateTimeOffset nexDate;
+        DateTimeOffset nextTDateReference;
+        switch (occurrence)
+        {
+            case OccurrenceType.Daily:
+                nexDate = currentDate.AddDays(1);
+                nextTDateReference = new DateTimeOffset(nexDate.Year, nexDate.Month, nexDate.Day, 0, 0, 0, TimeSpan.Zero);
+
+                return nextTDateReference;
+            case OccurrenceType.Weekly:
+                {
+                    var daysUntilNextMonday = ((int)DayOfWeek.Monday - (int)currentDate.DayOfWeek + 7) % 7;
+                    var daysUntilStartNextInterval = 7 * (every - 1);
+                    var totalDaysToAdd = daysUntilNextMonday + daysUntilStartNextInterval;
+
+                    nexDate = currentDate.AddDays(totalDaysToAdd);
+                    nextTDateReference = new DateTimeOffset(nexDate.Year, nexDate.Month, nexDate.Day, 0, 0, 0, TimeSpan.Zero);
+                    return nextTDateReference;
+                }
+            default:
+                throw new ArgumentOutOfRangeException(nameof(occurrence), occurrence, null);
+        }
     }
 
     private static List<DayOfWeek> GetRequiredDays(List<DayOfWeek>? days)

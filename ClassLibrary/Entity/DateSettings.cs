@@ -7,7 +7,7 @@ namespace SchedulerClassLibrary.Entity
         bool statusAvailableType,
         EventType? type,
         OccurrenceType occurrence,
-        uint every,
+        uint? every,
         DateTimeOffset startDate,
         DateTimeOffset? dateTimeSettings,
         DateTimeOffset? endDate = null,
@@ -15,7 +15,8 @@ namespace SchedulerClassLibrary.Entity
         DailyFrecuencyType? dailyFrecuency = null,
         TimeSpan? startTime = null,
         TimeSpan? endTime = null,
-        uint? everyTime = null
+        TimeSpan? everyTime = null,
+        TimeSpan? OnceTime = null
             )
     {
         // Main configurations
@@ -29,13 +30,14 @@ namespace SchedulerClassLibrary.Entity
 
         // Daily Frecuency Configurations
         public DailyFrecuencyType? DailyFrecuencyType { get; } = dailyFrecuency;
+        public TimeSpan? DailyFrecuencyOnceTime { get; } = OnceTime;
         public TimeSpan? DailyFrecuencyStartTime { get; } = startTime;
         public TimeSpan? DailyFrecuencyEndTime { get; } = endTime;
-        public uint? DailyFrecuencyEvery { get; } = everyTime;
+        public TimeSpan? DailyFrecuencyEvery { get; } = everyTime;
 
         // Weekly Configurations
         public List<DayOfWeek>? WeeklySettingsSelectedDays { get; set; } = selectedDays;
-        public uint Every { get; } = every;
+        public uint? Every { get; } = every;
 
     }
 }
