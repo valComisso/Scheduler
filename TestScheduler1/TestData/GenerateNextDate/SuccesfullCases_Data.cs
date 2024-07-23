@@ -20,23 +20,9 @@ namespace Test.TestData.GenerateNextDate
                 expectedNextDate
                 expectedMessage
             */
+           
 
-
-            yield return new object?[] {
-                new DateSettings(
-                    new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
-                    true,
-                    EventType.Once,
-                    OccurrenceType.Daily,
-                    1,
-                    new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
-                    new DateTimeOffset(2023,7,3,0,0,0, TimeSpan.Zero),
-                    new DateTimeOffset(2023,7,10,0,0,0, TimeSpan.Zero)
-                    ),
-             new List<DateTimeOffset>() {new DateTimeOffset(2023,7,3,0,0,0, TimeSpan.Zero)},
-             $"Occurs Once. Schedule will be used on {new DateTimeOffset(2023,7,3,0,0,0, TimeSpan.Zero)} starting on {new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero)}." 
-            };
-
+     
             yield return new object?[] {
                 new DateSettings(
                     new DateTimeOffset(2023,7,1,0,0,0, TimeSpan.Zero),
@@ -123,6 +109,7 @@ namespace Test.TestData.GenerateNextDate
 
 
             };
+           
 
             yield return new object?[]
             {
@@ -135,19 +122,25 @@ namespace Test.TestData.GenerateNextDate
                     new DateTimeOffset(2020,1,1,0,0,0, TimeSpan.Zero),
                     null,
                     null
-                    ),
+                    )
+                {
+                    DailyFrequencyType = DailyFrecuencyType.Fixed,
+                    DailyFrequencyFixedTime =  new TimeSpan(20,0,0)
+                },
                 new List<DateTimeOffset>()
                 {
-                    new DateTimeOffset(2020,1,5,0,0,0, TimeSpan.Zero), 
-                    new DateTimeOffset(2020,1,6,0,0,0, TimeSpan.Zero), 
-                    new DateTimeOffset(2020,1,7,0,0,0, TimeSpan.Zero), 
-                    new DateTimeOffset(2020,1,8,0,0,0, TimeSpan.Zero), 
-                    new DateTimeOffset(2020,1,9,0,0,0, TimeSpan.Zero), 
+                    new DateTimeOffset(2020,1,4,20,0,0, TimeSpan.Zero), 
+                    new DateTimeOffset(2020,1,5,20,0,0, TimeSpan.Zero), 
+                    new DateTimeOffset(2020,1,6,20,0,0, TimeSpan.Zero), 
+                    new DateTimeOffset(2020,1,7,20,0,0, TimeSpan.Zero), 
+                    new DateTimeOffset(2020,1,8,20,0,0, TimeSpan.Zero), 
+                    new DateTimeOffset(2020,1,9,20,0,0, TimeSpan.Zero), 
+                    new DateTimeOffset(2020,1,10,20,0,0, TimeSpan.Zero),
                 },
                 $"Occurs Recurring. Starting on {new DateTimeOffset(2020,1,1,0,0,0, TimeSpan.Zero)}."
 
             };
-
+     
             // If not available
             yield return new object?[]
             {
@@ -164,7 +157,7 @@ namespace Test.TestData.GenerateNextDate
                 null,
                 "It is not possible to calculate the next day"
             };
-
+      
         }
 
         public IEnumerator<object[]> GetEnumerator() => Data().GetEnumerator();

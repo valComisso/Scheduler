@@ -10,13 +10,7 @@ namespace SchedulerClassLibrary.Entity
         uint? every,
         DateTimeOffset startDate,
         DateTimeOffset? dateTimeSettings,
-        DateTimeOffset? endDate = null,
-        List<DayOfWeek>? selectedDays = null,
-        DailyFrecuencyType? dailyFrecuency = null,
-        TimeSpan? startTime = null,
-        TimeSpan? endTime = null,
-        TimeSpan? everyTime = null,
-        TimeSpan? OnceTime = null
+        DateTimeOffset? endDate = null
             )
     {
         // Main configurations
@@ -29,14 +23,14 @@ namespace SchedulerClassLibrary.Entity
         public DateTimeOffset? EndDate { get; } = endDate;
 
         // Daily Frecuency Configurations
-        public DailyFrecuencyType? DailyFrecuencyType { get; } = dailyFrecuency;
-        public TimeSpan? DailyFrecuencyOnceTime { get; } = OnceTime;
-        public TimeSpan? DailyFrecuencyStartTime { get; } = startTime;
-        public TimeSpan? DailyFrecuencyEndTime { get; } = endTime;
-        public TimeSpan? DailyFrecuencyEvery { get; } = everyTime;
+        public DailyFrecuencyType? DailyFrequencyType { get; set; }
+        public TimeSpan? DailyFrequencyFixedTime { get; set; }
+        public TimeSpan? DailyFrequencyStartTime { get; set; } 
+        public TimeSpan? DailyFrequencyEndTime { get; set; } 
+        public TimeSpan? DailyFrequencyEvery { get; set; }
 
         // Weekly Configurations
-        public List<DayOfWeek>? WeeklySettingsSelectedDays { get; set; } = selectedDays;
+        public List<DayOfWeek>? WeeklySettingsSelectedDays { get; set; }
         public uint? Every { get; } = every;
 
     }
