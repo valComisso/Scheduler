@@ -1,6 +1,6 @@
-﻿using SchedulerClassLibrary.Enums;
+﻿using SchedulerClassLibrary.Entity;
+using SchedulerClassLibrary.Enums;
 using System.Collections;
-using SchedulerClassLibrary.Entity;
 
 namespace Test.TestData.GenerateNextDate
 {
@@ -20,7 +20,7 @@ namespace Test.TestData.GenerateNextDate
                    EndDate,
             
             */
-
+     
             // DateTimeSettings must be larger than CurrentDate
             yield return new object?[] {
                 new DateSettings(
@@ -48,7 +48,7 @@ namespace Test.TestData.GenerateNextDate
                     new DateTimeOffset(2023,7,13,0,0,0, TimeSpan.Zero),
                     new DateTimeOffset(2023,7,10,0,0,0, TimeSpan.Zero)
                     )
-                
+
             };
 
             // EndDate must be larger than StartDate
@@ -107,12 +107,91 @@ namespace Test.TestData.GenerateNextDate
                     new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero)
                 )
             };
+           
+            // Weekly without day selection
+            yield return new object?[] {
+                new DateSettings(
+                    new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero),
+                    true,
+                    EventType.Recurring,
+                    OccurrenceType.Weekly,
+                    1,
+                    new DateTimeOffset(2020,7,5,0,0,0, TimeSpan.Zero),
+                    null,
+                    new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero)
+                )
+            };
 
+            // with a fixed schedule without specifying it
+            yield return new object?[] {
+                new DateSettings(
+                    new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero),
+                    true,
+                    EventType.Recurring,
+                    OccurrenceType.Weekly,
+                    1,
+                    new DateTimeOffset(2020,7,5,0,0,0, TimeSpan.Zero),
+                    null,
+                    new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero)
+                )
+                {
+                    DailyFrequencyType = DailyFrecuencyType.Fixed,
+                    WeeklySettingsSelectedDays = new List<DayOfWeek>
+                    {
+                        DayOfWeek.Wednesday,
+                        DayOfWeek.Thursday
+                    },
+                }
+            };
+          
+            // Variable weekly without any necessary parameter
+            yield return new object?[] {
+                new DateSettings(
+                    new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero),
+                    true,
+                    EventType.Recurring,
+                    OccurrenceType.Weekly,
+                    1,
+                    new DateTimeOffset(2020,7,5,0,0,0, TimeSpan.Zero),
+                    null,
+                    new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero)
+                )
+                {
+                    DailyFrequencyType = DailyFrecuencyType.Variable,
+                    WeeklySettingsSelectedDays = new List<DayOfWeek>
+                    {
+                        DayOfWeek.Wednesday,
+                        DayOfWeek.Thursday
+                    },
+                    DailyFrequencyStartTime = new TimeSpan(12,0,0)
+                }
+            };
 
-
+            //Indefinite frequency type
+            yield return new object?[] {
+                new DateSettings(
+                    new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero),
+                    true,
+                    EventType.Recurring,
+                    OccurrenceType.Weekly,
+                    1,
+                    new DateTimeOffset(2020,7,5,0,0,0, TimeSpan.Zero),
+                    null,
+                    new DateTimeOffset(2023,7,7,0,0,0, TimeSpan.Zero)
+                )
+                {
+                    WeeklySettingsSelectedDays = new List<DayOfWeek>
+                    {
+                        DayOfWeek.Wednesday,
+                        DayOfWeek.Thursday
+                    },
+                    DailyFrequencyStartTime = new TimeSpan(12,0,0)
+                }
+            };
 
 
         }
+
 
         public IEnumerator<object[]> GetEnumerator() => Data().GetEnumerator();
 

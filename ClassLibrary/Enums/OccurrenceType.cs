@@ -3,6 +3,7 @@ namespace SchedulerClassLibrary.Enums
 {
     public enum OccurrenceType
     {
-        Daily
+        Daily,
+        Weekly
     }
 }

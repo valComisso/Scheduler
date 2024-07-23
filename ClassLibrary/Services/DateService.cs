@@ -13,9 +13,9 @@ namespace SchedulerClassLibrary.Services
                 return new NextDateResult("It is not possible to calculate the next day", null!);
             }
 
-            
+
             ValidateSettings(settings);
-            
+
             var referenceDate = GetReferenceDate(settings);
 
             if (!dateValidator.DateRangeValidator(referenceDate, settings.StartDate, settings.EndDate))
@@ -24,55 +24,42 @@ namespace SchedulerClassLibrary.Services
             }
 
 
-            if (settings.Type == EventType.Recurring)
-            {
-                return GenerateRecurrentDates(settings, referenceDate, limitOccurrences);
-            }
-
             var nextDate = referenceDate < settings.StartDate ? settings.StartDate : referenceDate;
-            var message = $"Occurs {settings.Type}. Schedule will be used on {nextDate} starting on {settings.StartDate}.";
 
-            return new NextDateResult(message, [nextDate]);
+            if (settings.Type != EventType.Recurring) return SendResults([nextDate], nextDate, settings);
+
+            var nextDates = RecurringDateService.GetNextAvailableDates(settings, nextDate, limitOccurrences);
+
+            return SendResults(nextDates, nextDate, settings);
         }
 
-
-        private NextDateResult GenerateRecurrentDates(DateSettings settings, DateTimeOffset referenceDate, int? limitOccurrences)
+        private static NextDateResult SendResults(List<DateTimeOffset> dates, DateTimeOffset nextDate, DateSettings settings)
         {
-           
-            var dates = new List<DateTimeOffset>();
-            var currentDate = referenceDate < settings.StartDate ? settings.StartDate : referenceDate;
-            int limit = limitOccurrences is null || limitOccurrences < 0 ? 5 : limitOccurrences.Value;
-
-
-
-            for (var i = 0; i < limit; i++)
+            var message = settings.Type switch
             {
-                if (settings.EndDate.HasValue && currentDate > settings.EndDate.Value)
-                {
-                    break;
-                }
-
-                dates.Add(currentDate);
-                currentDate = GetNextDate(currentDate, settings.Occurrence, settings.Every);
-            }
-
-            var message = $"Occurs {settings.Type}. Starting on {settings.StartDate}.";
+                EventType.Recurring => $"Occurs {settings.Type}. Starting on {settings.StartDate}.",
+                EventType.Once =>
+                    $"Occurs {settings.Type}. Schedule will be used on {nextDate} starting on {settings.StartDate}.",
+                _ => ""
+            };
 
             return new NextDateResult(message, dates);
         }
 
-        private static DateTimeOffset GetNextDate(DateTimeOffset currentDate, OccurrenceType occurrence, uint every)
-        {
-            return occurrence switch
-            {
-                OccurrenceType.Daily => currentDate.AddDays(every),
-                _ => throw new ArgumentException("Invalid occurrence type."),
-            };
-        }
-
         private void ValidateSettings(DateSettings settings)
         {
-            if (settings.Type == EventType.Once && settings.DateTimeSettings.HasValue)
+            ValidateMainSettings(settings);
+
+            if (settings.Type == EventType.Recurring)
+            {
+                ValidateRecurringSettings(settings);
+            }
+
+        }
+
+        private void ValidateMainSettings(DateSettings settings)
+        {
+            if (settings is { Type: EventType.Once, DateTimeSettings: not null })
             {
                 if (settings.DateTimeSettings < settings.CurrentDate)
                 {
@@ -91,12 +78,46 @@ namespace SchedulerClassLibrary.Services
             }
         }
 
+        private void ValidateRecurringSettings(DateSettings settings)
+        {
+
+            if (settings.Every is null or 0)
+            {
+                throw new ArgumentException(" Every must be counted on");
+            }
+            if (settings is { Occurrence: OccurrenceType.Weekly, WeeklySettingsSelectedDays: null })
+            {
+                throw new ArgumentException("the days allowed must be counted");
+            }
+
+            switch (settings.DailyFrequencyType)
+            {
+                case DailyFrecuencyType.Fixed when settings.DailyFrequencyFixedTime == null:
+                    throw new ArgumentException("The fixed time for each date must be defined");
+                case DailyFrecuencyType.Variable when settings.DailyFrequencyStartTime == null || settings.DailyFrequencyEndTime == null || settings.DailyFrequencyEvery == null:
+                    throw new ArgumentException("Invalid parameters for setting schedules by date");
+                case null:
+                    throw new ArgumentException("A frequency type must be defined for the generation of the next dates");
+            }
+
+        }
+
         private static DateTimeOffset GetReferenceDate(DateSettings settings)
         {
+            var type = settings.Type;
             var currentDate = settings.CurrentDate;
             var dateTimeSettings = settings.DateTimeSettings;
-            var referenceDate = dateTimeSettings > currentDate ? dateTimeSettings.Value : currentDate.AddDays(1);
+            DateTimeOffset referenceDate = type switch
+            {
+                EventType.Once => dateTimeSettings > currentDate ? dateTimeSettings.Value : currentDate.AddDays(1),
+                EventType.Recurring => currentDate,
+                _ => default
+            };
+
             return referenceDate;
         }
+
+
+
     }
 }
