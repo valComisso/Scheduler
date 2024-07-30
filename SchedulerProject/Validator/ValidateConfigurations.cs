@@ -43,10 +43,7 @@ namespace SchedulerProject.Validator
             {
                 throw new ArgumentException(" Every must be counted on");
             }
-            if (configurations is { Occurrence: OccurrenceType.Weekly, WeeklyConfigurations.SelectedDays: null })
-            {
-                throw new ArgumentException("the days allowed must be counted");
-            }
+
 
             var frequencyType = configurations.FrequencyConfigurations!.Type ?? null;
             var fixedTime = configurations.FrequencyConfigurations!.FixedTime ?? null;
@@ -60,6 +57,9 @@ namespace SchedulerProject.Validator
                     throw new ArgumentException("The fixed time for each date must be defined");
                 case DailyFrequencyType.Variable when startTime == null || endTime == null || every == null:
                     throw new ArgumentException("Invalid parameters for setting schedules by date");
+                case DailyFrequencyType.Variable when startTime > endTime :
+                    throw new ArgumentException("Invalid Time Limit Parameters");
+
                 case null:
                     throw new ArgumentException("A frequency type must be defined for the generation of the next dates");
             }

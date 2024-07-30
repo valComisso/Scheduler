@@ -44,6 +44,7 @@ namespace SchedulerProject.Services
         }
 
 
+
         public static List<DateResult> GenerateUpcomingResultsAvailableDates(List<DateTimeOffset> dates,
             DateTimeOffset referenceDate, DateConfigurations configurations)
         {

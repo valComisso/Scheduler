@@ -5,7 +5,7 @@ namespace SchedulerProject.Entity.DateConfigurations
     public class DateConfigurations(DateTimeOffset currentDate)
     {
         // Main configurations
-        public DateTimeOffset CurrentDate { get; set; } = currentDate;
+        public DateTimeOffset CurrentDate { get; } = currentDate;
         public bool StatusAvailableType { get; set; } = true;
         public EventType Type { get; set; } = EventType.Once;
         public OccurrenceType Occurrence { get; set; } = OccurrenceType.Daily;
