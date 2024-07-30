@@ -6,7 +6,7 @@ namespace SchedulerProject.UtilsDate
     {
         public static DateTimeOffset GetNextIntervalStart(DateTimeOffset currentDate, OccurrenceType occurrence, uint every)
         {
-            DateTimeOffset nextDate;
+            DateTimeOffset nextDate = currentDate;
 
             switch (occurrence)
             {
@@ -16,8 +16,6 @@ namespace SchedulerProject.UtilsDate
                 case OccurrenceType.Weekly:
                     nextDate = GetNextWeeklyInterval(currentDate, every);
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(occurrence), occurrence, null);
             }
 
             return TimeDate.ResetTimeDate(nextDate);
