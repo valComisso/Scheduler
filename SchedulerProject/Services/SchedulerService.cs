@@ -3,7 +3,6 @@ using SchedulerProject.Entity.Results;
 using SchedulerProject.Enums;
 using SchedulerProject.UtilsDate;
 using SchedulerProject.Validator;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SchedulerProject.Services
 {
@@ -44,7 +43,6 @@ namespace SchedulerProject.Services
             return nextDate;
         }
 
-       
 
 
         public static List<DateResult> GenerateUpcomingResultsAvailableDates(List<DateTimeOffset> dates,

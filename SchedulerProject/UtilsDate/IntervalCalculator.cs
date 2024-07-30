@@ -16,6 +16,7 @@ namespace SchedulerProject.UtilsDate
                 case OccurrenceType.Weekly:
                     nextDate = GetNextWeeklyInterval(currentDate, every);
                     break;
+
             }
 
             return TimeDate.ResetTimeDate(nextDate);
