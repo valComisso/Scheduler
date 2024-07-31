@@ -1,4 +1,5 @@
-﻿using SchedulerProject.Entity.DateConfigurations;
+﻿using FluentAssertions;
+using SchedulerProject.Entity.DateConfigurations;
 using SchedulerProject.Enums;
 using SchedulerProject.Services;
 
@@ -39,20 +40,24 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
 
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero), nextDates[3].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero), nextDates[4].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero), nextDates[5].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero), nextDates[6].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero), nextDates[7].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero), nextDates[8].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero), nextDates[9].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero), nextDates[10].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero), nextDates[11].NextDate);
 
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+            nextDates.Should().HaveCount(12);
+
+            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero));
+            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero));
+            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero));
+            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero));
+            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
+            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
+            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
+            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
+            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
+            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
+            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
+            nextDates[11].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
+
+            nextDates[0].Message.Should().Be(expectedMessage);
+
 
         }
 
@@ -88,18 +93,25 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
 
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero), nextDates[3].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero), nextDates[4].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero), nextDates[5].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero), nextDates[6].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero), nextDates[7].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero), nextDates[8].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero), nextDates[9].NextDate);
+            nextDates.Should().HaveCount(14);
 
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero));
+            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero));
+            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero));
+            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero));
+            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
+            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
+            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
+            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
+            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
+            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
+            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
+            nextDates[11].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
+            nextDates[12].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero));
+            nextDates[13].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero));
+
+            nextDates[0].Message.Should().Be(expectedMessage);
+
 
         }
 
@@ -135,24 +147,27 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
 
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero), nextDates[3].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero), nextDates[4].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero), nextDates[5].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero), nextDates[6].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero), nextDates[7].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero), nextDates[8].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero), nextDates[9].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero), nextDates[10].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero), nextDates[11].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero), nextDates[12].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero), nextDates[13].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero), nextDates[14].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero), nextDates[15].NextDate);
+            nextDates.Should().HaveCount(16);
 
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero));
+            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero));
+            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero));
+            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero));
+            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
+            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
+            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
+            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
+            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
+            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
+            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
+            nextDates[11].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
+            nextDates[12].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero));
+            nextDates[13].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero));
+            nextDates[14].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero));
+            nextDates[15].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero));
+
+            nextDates[0].Message.Should().Be(expectedMessage);
+
 
         }
 
@@ -188,21 +203,24 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
 
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero), nextDates[3].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero), nextDates[4].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero), nextDates[5].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero), nextDates[6].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero), nextDates[7].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero), nextDates[8].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero), nextDates[9].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero), nextDates[10].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero), nextDates[11].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero), nextDates[12].NextDate);
+            nextDates.Should().HaveCount(13);
 
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero));
+            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero));
+            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero));
+            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero));
+            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
+            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
+            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
+            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
+            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
+            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
+            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
+            nextDates[11].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
+            nextDates[12].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero));
+
+            nextDates[0].Message.Should().Be(expectedMessage);
+
 
         }
 
@@ -238,24 +256,27 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
 
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero), nextDates[3].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero), nextDates[4].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero), nextDates[5].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero), nextDates[6].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero), nextDates[7].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero), nextDates[8].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero), nextDates[9].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero), nextDates[10].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero), nextDates[11].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero), nextDates[12].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero), nextDates[13].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero), nextDates[14].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero), nextDates[15].NextDate);
+            nextDates.Should().HaveCount(16);
 
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero));
+            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero));
+            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero));
+            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero));
+            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
+            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
+            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
+            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
+            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
+            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
+            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
+            nextDates[11].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
+            nextDates[12].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero));
+            nextDates[13].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero));
+            nextDates[14].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero));
+            nextDates[15].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero));
+
+            nextDates[0].Message.Should().Be(expectedMessage);
+
 
         }
 
@@ -293,20 +314,23 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
 
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero), nextDates[3].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero), nextDates[4].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero), nextDates[5].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero), nextDates[6].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero), nextDates[7].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero), nextDates[8].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero), nextDates[9].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero), nextDates[10].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero), nextDates[11].NextDate);
+            nextDates.Should().HaveCount(12);
 
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero));
+            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero));
+            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero));
+            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero));
+            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
+            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
+            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
+            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
+            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
+            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
+            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
+            nextDates[11].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
+
+            nextDates[0].Message.Should().Be(expectedMessage);
+
 
         }
 
@@ -342,15 +366,22 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
 
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero), nextDates[3].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero), nextDates[4].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero), nextDates[5].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero), nextDates[6].NextDate);
+            nextDates.Should().HaveCount(11);
 
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero));
+            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
+            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
+            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
+            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
+            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
+            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
+            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
+            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
+            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero));
+            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero));
+
+            nextDates[0].Message.Should().Be(expectedMessage);
+
 
         }
 
@@ -386,20 +417,23 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
 
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero), nextDates[3].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero), nextDates[4].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero), nextDates[5].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero), nextDates[6].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero), nextDates[7].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero), nextDates[8].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero), nextDates[9].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero), nextDates[10].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero), nextDates[11].NextDate);
+            nextDates.Should().HaveCount(12);
 
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
+            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
+            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
+            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
+            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
+            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
+            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
+            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
+            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero));
+            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero));
+            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero));
+            nextDates[11].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero));
+
+            nextDates[0].Message.Should().Be(expectedMessage);
+
 
         }
 
@@ -435,23 +469,26 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
 
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero), nextDates[3].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero), nextDates[4].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero), nextDates[5].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero), nextDates[6].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero), nextDates[7].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero), nextDates[8].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero), nextDates[9].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero), nextDates[10].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero), nextDates[11].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero), nextDates[12].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero), nextDates[13].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero), nextDates[14].NextDate);
+            nextDates.Should().HaveCount(15);
 
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero));
+            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero));
+            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero));
+            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
+            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
+            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
+            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
+            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
+            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
+            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
+            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
+            nextDates[11].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero));
+            nextDates[12].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero));
+            nextDates[13].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero));
+            nextDates[14].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero));
+
+            nextDates[0].Message.Should().Be(expectedMessage);
+
 
         }
 
@@ -487,20 +524,24 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
 
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero), nextDates[3].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero), nextDates[4].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero), nextDates[5].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero), nextDates[6].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero), nextDates[7].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero), nextDates[8].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero), nextDates[9].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero), nextDates[10].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero), nextDates[11].NextDate);
+           
+            nextDates.Should().HaveCount(12);
 
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
+            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
+            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
+            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
+            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
+            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
+            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
+            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
+            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero));
+            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero));
+            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero));
+            nextDates[11].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero));
+
+            nextDates[0].Message.Should().Be(expectedMessage);
+
 
         }
 
@@ -538,11 +579,16 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
 
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
+          
+            nextDates.Should().HaveCount(3);
 
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero));
+            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
+            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
+
+           
+            nextDates[0].Message.Should().Be(expectedMessage);
+
 
         }
 
@@ -578,14 +624,17 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
 
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero), nextDates[3].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero), nextDates[4].NextDate);
-            Assert.Equal(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero), nextDates[5].NextDate);
+            nextDates.Should().HaveCount(6);
 
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero));
+            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero));
+            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
+            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
+            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
+            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
+
+            nextDates[0].Message.Should().Be(expectedMessage);
+
 
         }
     }

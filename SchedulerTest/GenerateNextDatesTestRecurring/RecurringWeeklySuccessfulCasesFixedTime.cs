@@ -1,11 +1,7 @@
 ﻿using SchedulerProject.Entity.DateConfigurations;
 using SchedulerProject.Enums;
 using SchedulerProject.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SchedulerTest.TestingUtilities;
 
 namespace SchedulerTest.GenerateNextDatesTestRecurring
 {
@@ -16,7 +12,6 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
         public void return_Upcoming_CurrentTime_Dates_At_Zero_Hours()
         {
             var currentDate = new DateTimeOffset(2024, 7, 2, 0, 0, 0, TimeSpan.Zero);
-
 
             var startDate = new DateTimeOffset(2024, 7, 1, 0, 0, 0, TimeSpan.Zero);
             var endDate = new DateTimeOffset(2024, 7, 23, 0, 0, 0, TimeSpan.Zero);
@@ -30,9 +25,10 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var weeklyConfigurations = new WeeklyConfigurations()
             {
-                SelectedDays = [
+                SelectedDays =
+                [
                     DayOfWeek.Monday,
-                    DayOfWeek.Wednesday,
+                    DayOfWeek.Wednesday
                 ]
             };
 
@@ -46,20 +42,23 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
                 WeeklyConfigurations = weeklyConfigurations
             };
 
-
-
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
+
+            // Define the expected dates and message
+            var expectedDates = new List<DateTimeOffset>
+    {
+        new DateTimeOffset(2024, 7, 3, 1, 0, 0, TimeSpan.Zero),
+        new DateTimeOffset(2024, 7, 8, 1, 0, 0, TimeSpan.Zero),
+        new DateTimeOffset(2024, 7, 10, 1, 0, 0, TimeSpan.Zero),
+        new DateTimeOffset(2024, 7, 15, 1, 0, 0, TimeSpan.Zero),
+        new DateTimeOffset(2024, 7, 17, 1, 0, 0, TimeSpan.Zero),
+        new DateTimeOffset(2024, 7, 22, 1, 0, 0, TimeSpan.Zero)
+    };
 
             var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
 
-            Assert.Equal(new DateTimeOffset(2024, 7, 3, 1, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 8, 1, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 10, 1, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 15, 1, 0, 0, TimeSpan.Zero), nextDates[3].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 17, 1, 0, 0, TimeSpan.Zero), nextDates[4].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 22, 1, 0, 0, TimeSpan.Zero), nextDates[5].NextDate);
-            Assert.Equal(expectedMessage, nextDates[0].Message);
 
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
         }
 
         [Fact]
