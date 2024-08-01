@@ -85,7 +85,8 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
             {
                 Type = DailyFrequencyType.Variable,
                 EndTime = new TimeSpan(12,0,0),
-                Every = new TimeSpan(3, 0, 0)
+                Every = 3,
+                EveryType = EveryType.Hours
             };
 
 
@@ -116,7 +117,8 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
             {
                 Type = DailyFrequencyType.Variable,
                 StartTime = new TimeSpan(12, 0, 0),
-                Every = new TimeSpan(3, 0, 0)
+                Every = 3,
+                EveryType = EveryType.Hours
             };
 
 
@@ -179,7 +181,8 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
                 Type = DailyFrequencyType.Variable,
                 StartTime = new TimeSpan(12, 0, 0),
                 EndTime = new TimeSpan(3, 0, 0),
-                Every = new TimeSpan(1,0,0)
+                Every = 1,
+                EveryType = EveryType.Hours
             };
 
 
@@ -210,7 +213,8 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
             {
                 StartTime = new TimeSpan(12, 0, 0),
                 EndTime = new TimeSpan(3, 0, 0),
-                Every = new TimeSpan(1, 0, 0)
+                Every = 1,
+                EveryType = EveryType.Hours
             };
 
 

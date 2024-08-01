@@ -2,6 +2,7 @@
 using SchedulerProject.Entity.DateConfigurations;
 using SchedulerProject.Enums;
 using SchedulerProject.Services;
+using SchedulerTest.TestingUtilities;
 
 namespace SchedulerTest.GenerateNextDatesTestRecurring
 {
@@ -23,7 +24,8 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
                 Type = DailyFrequencyType.Variable,
                 StartTime = new TimeSpan(12, 0, 0),
                 EndTime = new TimeSpan(15, 0, 0),
-                Every = new TimeSpan(1, 0, 0),
+                Every = 1,
+                EveryType = EveryType.Hours
             };
 
             var settings = new DateConfigurations(currentDate)
@@ -38,26 +40,27 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedDates = new List<DateTimeOffset>
+            { 
+                new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero),
+
+            };
+
+            var expectedMessage = $"Occurs every 1 day on all days. every 1 hour between 12:00:00 and 15:00:00. Starting on {startDate}.";
 
 
-            nextDates.Should().HaveCount(12);
-
-            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero));
-            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero));
-            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero));
-            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero));
-            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
-            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
-            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
-            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
-            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
-            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
-            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
-            nextDates[11].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
-
-            nextDates[0].Message.Should().Be(expectedMessage);
-
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
 
         }
 
@@ -76,7 +79,8 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
                 Type = DailyFrequencyType.Variable,
                 StartTime = new TimeSpan(12, 0, 0),
                 EndTime = new TimeSpan(15, 0, 0),
-                Every = new TimeSpan(1, 0, 0),
+                Every = 1,
+                EveryType = EveryType.Hours
             };
 
             var settings = new DateConfigurations(currentDate)
@@ -91,27 +95,29 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero),
 
-            nextDates.Should().HaveCount(14);
+            };
 
-            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero));
-            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero));
-            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero));
-            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero));
-            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
-            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
-            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
-            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
-            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
-            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
-            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
-            nextDates[11].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
-            nextDates[12].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero));
-            nextDates[13].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero));
+            var expectedMessage = $"Occurs every 1 day on all days. every 1 hour between 12:00:00 and 15:00:00. Starting on {startDate}.";
 
-            nextDates[0].Message.Should().Be(expectedMessage);
 
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
 
         }
 
@@ -130,7 +136,8 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
                 Type = DailyFrequencyType.Variable,
                 StartTime = new TimeSpan(12, 0, 0),
                 EndTime = new TimeSpan(15, 0, 0),
-                Every = new TimeSpan(1, 0, 0),
+                Every = 1,
+                EveryType = EveryType.Hours
             };
 
             var settings = new DateConfigurations(currentDate)
@@ -145,29 +152,30 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero),
 
-            nextDates.Should().HaveCount(16);
+            };
 
-            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero));
-            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero));
-            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero));
-            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero));
-            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
-            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
-            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
-            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
-            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
-            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
-            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
-            nextDates[11].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
-            nextDates[12].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero));
-            nextDates[13].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero));
-            nextDates[14].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero));
-            nextDates[15].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero));
+            var expectedMessage = $"Occurs every 1 day on all days. every 1 hour between 12:00:00 and 15:00:00. Starting on {startDate}.";
 
-            nextDates[0].Message.Should().Be(expectedMessage);
-
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
 
         }
 
@@ -186,7 +194,8 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
                 Type = DailyFrequencyType.Variable,
                 StartTime = new TimeSpan(12, 0, 0),
                 EndTime = new TimeSpan(15, 0, 0),
-                Every = new TimeSpan(1, 0, 0),
+                Every = 1,
+                EveryType = EveryType.Hours
             };
 
             var settings = new DateConfigurations(currentDate)
@@ -201,25 +210,27 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero),
 
-            nextDates.Should().HaveCount(13);
+            };
 
-            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero));
-            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero));
-            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero));
-            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero));
-            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
-            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
-            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
-            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
-            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
-            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
-            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
-            nextDates[11].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
-            nextDates[12].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero));
+            var expectedMessage = $"Occurs every 1 day on all days. every 1 hour between 12:00:00 and 15:00:00. Starting on {startDate}.";
 
-            nextDates[0].Message.Should().Be(expectedMessage);
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
 
 
         }
@@ -239,7 +250,8 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
                 Type = DailyFrequencyType.Variable,
                 StartTime = new TimeSpan(12, 0, 0),
                 EndTime = new TimeSpan(15, 0, 0),
-                Every = new TimeSpan(1, 0, 0),
+                Every = 1,
+                EveryType = EveryType.Hours
             };
 
             var settings = new DateConfigurations(currentDate)
@@ -254,29 +266,30 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero),
 
-            nextDates.Should().HaveCount(16);
+            };
 
-            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero));
-            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero));
-            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero));
-            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero));
-            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
-            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
-            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
-            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
-            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
-            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
-            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
-            nextDates[11].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
-            nextDates[12].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero));
-            nextDates[13].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero));
-            nextDates[14].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero));
-            nextDates[15].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero));
+            var expectedMessage = $"Occurs every 1 day on all days. every 1 hour between 12:00:00 and 15:00:00. Starting on {startDate}.";
 
-            nextDates[0].Message.Should().Be(expectedMessage);
-
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
 
         }
 
@@ -297,7 +310,8 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
                 Type = DailyFrequencyType.Variable,
                 StartTime = new TimeSpan(12, 0, 0),
                 EndTime = new TimeSpan(15, 0, 0),
-                Every = new TimeSpan(1, 0, 0),
+                Every = 1,
+                EveryType = EveryType.Hours
             };
 
             var settings = new DateConfigurations(currentDate)
@@ -312,24 +326,26 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero),
 
-            nextDates.Should().HaveCount(12);
+            };
 
-            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero));
-            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero));
-            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero));
-            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero));
-            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
-            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
-            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
-            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
-            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
-            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
-            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
-            nextDates[11].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
+            var expectedMessage = $"Occurs every 1 day on all days. every 1 hour between 12:00:00 and 15:00:00. Starting on {startDate}.";
 
-            nextDates[0].Message.Should().Be(expectedMessage);
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
 
 
         }
@@ -349,7 +365,8 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
                 Type = DailyFrequencyType.Variable,
                 StartTime = new TimeSpan(12, 0, 0),
                 EndTime = new TimeSpan(15, 0, 0),
-                Every = new TimeSpan(1, 0, 0),
+                Every = 1,
+                EveryType = EveryType.Hours
             };
 
             var settings = new DateConfigurations(currentDate)
@@ -364,23 +381,25 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero),
 
-            nextDates.Should().HaveCount(11);
+            };
 
-            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero));
-            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
-            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
-            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
-            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
-            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
-            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
-            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
-            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
-            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero));
-            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero));
+            var expectedMessage = $"Occurs every 1 day on all days. every 1 hour between 12:00:00 and 15:00:00. Starting on {startDate}.";
 
-            nextDates[0].Message.Should().Be(expectedMessage);
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
 
 
         }
@@ -400,7 +419,8 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
                 Type = DailyFrequencyType.Variable,
                 StartTime = new TimeSpan(12, 0, 0),
                 EndTime = new TimeSpan(15, 0, 0),
-                Every = new TimeSpan(1, 0, 0),
+                Every = 1,
+                EveryType = EveryType.Hours
             };
 
             var settings = new DateConfigurations(currentDate)
@@ -415,24 +435,26 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero),
 
-            nextDates.Should().HaveCount(12);
+            };
 
-            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
-            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
-            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
-            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
-            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
-            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
-            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
-            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
-            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero));
-            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero));
-            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero));
-            nextDates[11].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero));
+            var expectedMessage = $"Occurs every 1 day on all days. every 1 hour between 12:00:00 and 15:00:00. Starting on {startDate}.";
 
-            nextDates[0].Message.Should().Be(expectedMessage);
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
 
 
         }
@@ -452,7 +474,8 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
                 Type = DailyFrequencyType.Variable,
                 StartTime = new TimeSpan(12, 0, 0),
                 EndTime = new TimeSpan(15, 0, 0),
-                Every = new TimeSpan(1, 0, 0),
+                Every = 1,
+                EveryType = EveryType.Hours
             };
 
             var settings = new DateConfigurations(currentDate)
@@ -467,27 +490,29 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero),
 
-            nextDates.Should().HaveCount(15);
+            };
 
-            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 13, 0, 0, TimeSpan.Zero));
-            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero));
-            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 15, 0, 0, TimeSpan.Zero));
-            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
-            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
-            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
-            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
-            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
-            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
-            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
-            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
-            nextDates[11].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero));
-            nextDates[12].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero));
-            nextDates[13].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero));
-            nextDates[14].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero));
+            var expectedMessage = $"Occurs every 1 day on all days. every 1 hour between 12:00:00 and 15:00:00. Starting on {startDate}.";
 
-            nextDates[0].Message.Should().Be(expectedMessage);
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
 
 
         }
@@ -507,7 +532,8 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
                 Type = DailyFrequencyType.Variable,
                 StartTime = new TimeSpan(12, 0, 0),
                 EndTime = new TimeSpan(15, 0, 0),
-                Every = new TimeSpan(1, 0, 0),
+                Every = 1,
+                EveryType = EveryType.Hours
             };
 
             var settings = new DateConfigurations(currentDate)
@@ -522,25 +548,26 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero),
 
-           
-            nextDates.Should().HaveCount(12);
+            };
 
-            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
-            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 13, 0, 0, TimeSpan.Zero));
-            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
-            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 15, 0, 0, TimeSpan.Zero));
-            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
-            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 13, 0, 0, TimeSpan.Zero));
-            nextDates[6].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
-            nextDates[7].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 15, 0, 0, TimeSpan.Zero));
-            nextDates[8].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 12, 0, 0, TimeSpan.Zero));
-            nextDates[9].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 13, 0, 0, TimeSpan.Zero));
-            nextDates[10].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 14, 0, 0, TimeSpan.Zero));
-            nextDates[11].NextDate.Should().Be(new DateTimeOffset(2023, 7, 5, 15, 0, 0, TimeSpan.Zero));
+            var expectedMessage = $"Occurs every 1 day on all days. every 1 hour between 12:00:00 and 15:00:00. Starting on {startDate}.";
 
-            nextDates[0].Message.Should().Be(expectedMessage);
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
 
 
         }
@@ -562,7 +589,8 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
                 Type = DailyFrequencyType.Variable,
                 StartTime = new TimeSpan(12, 0, 0),
                 EndTime = new TimeSpan(12, 0, 0),
-                Every = new TimeSpan(1, 0, 0),
+                Every = 1,
+                EveryType = EveryType.Hours
             };
 
             var settings = new DateConfigurations(currentDate)
@@ -577,17 +605,17 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero),
 
-          
-            nextDates.Should().HaveCount(3);
+            };
 
-            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero));
-            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
-            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
+            var expectedMessage = $"Occurs every 1 day on all days. every 1 hour between 12:00:00 and 12:00:00. Starting on {startDate}.";
 
-           
-            nextDates[0].Message.Should().Be(expectedMessage);
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
 
 
         }
@@ -607,7 +635,8 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
                 Type = DailyFrequencyType.Variable,
                 StartTime = new TimeSpan(12, 0, 0),
                 EndTime = new TimeSpan(15, 0, 0),
-                Every = new TimeSpan(2, 0, 0),
+                Every = 2,
+                EveryType = EveryType.Hours
             };
 
             var settings = new DateConfigurations(currentDate)
@@ -622,18 +651,20 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero),
 
-            nextDates.Should().HaveCount(6);
+            };
 
-            nextDates[0].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 12, 0, 0, TimeSpan.Zero));
-            nextDates[1].NextDate.Should().Be(new DateTimeOffset(2023, 7, 2, 14, 0, 0, TimeSpan.Zero));
-            nextDates[2].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 12, 0, 0, TimeSpan.Zero));
-            nextDates[3].NextDate.Should().Be(new DateTimeOffset(2023, 7, 3, 14, 0, 0, TimeSpan.Zero));
-            nextDates[4].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 12, 0, 0, TimeSpan.Zero));
-            nextDates[5].NextDate.Should().Be(new DateTimeOffset(2023, 7, 4, 14, 0, 0, TimeSpan.Zero));
+            var expectedMessage = $"Occurs every 1 day on all days. every 2 hours between 12:00:00 and 15:00:00. Starting on {startDate}.";
 
-            nextDates[0].Message.Should().Be(expectedMessage);
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
 
 
         }

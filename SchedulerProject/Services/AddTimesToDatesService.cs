@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions.Primitives;
+using SchedulerProject.Enums;
 
 namespace SchedulerProject.Services
 {
@@ -44,7 +46,7 @@ namespace SchedulerProject.Services
         {
             var startTime = dailyFrequencyConf.StartTime ?? TimeSpan.MinValue;
             var endTime = dailyFrequencyConf.EndTime ?? TimeSpan.MaxValue;
-            var every = dailyFrequencyConf.Every ?? TimeSpan.Zero;
+            var every = GenerateEveryTimeSpan(dailyFrequencyConf);
             var targetDateTime = SetReferenceDateRecurrentVariableTime(endTime, startTime, date);
             var endTimeDate = TimeDate.ResetTimeDate(date).Add(endTime);
 
@@ -83,7 +85,32 @@ namespace SchedulerProject.Services
             var timeOfDay = targetDateTime.TimeOfDay;
             return timeOfDay >= startTime && timeOfDay <= endTime && targetDateTime > referenceDate;
         }
+        
+        private static TimeSpan GenerateEveryTimeSpan(DailyFrequencyConfigurations configurations)
+        {
+            
+            var every = configurations.Every ?? 1;
 
+          
+            TimeSpan time;
+
+             switch (configurations.EveryType)
+            {
+                case EveryType.Hours:
+                     time = new TimeSpan(every, 0, 0);
+                    break;
+                case EveryType.Minutes:
+                    time = new TimeSpan(0, every, 0);
+                    break;
+                case EveryType.Seconds:
+                    time = new TimeSpan(0, 0, every);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(configurations.EveryType), "Unsupported interval type");
+            }
+
+            return time;
+        }
 
     }
 }

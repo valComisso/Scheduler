@@ -43,19 +43,17 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
             };
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
-
-            // Define the expected dates and message
             var expectedDates = new List<DateTimeOffset>
-    {
-        new DateTimeOffset(2024, 7, 3, 1, 0, 0, TimeSpan.Zero),
-        new DateTimeOffset(2024, 7, 8, 1, 0, 0, TimeSpan.Zero),
-        new DateTimeOffset(2024, 7, 10, 1, 0, 0, TimeSpan.Zero),
-        new DateTimeOffset(2024, 7, 15, 1, 0, 0, TimeSpan.Zero),
-        new DateTimeOffset(2024, 7, 17, 1, 0, 0, TimeSpan.Zero),
-        new DateTimeOffset(2024, 7, 22, 1, 0, 0, TimeSpan.Zero)
-    };
+            {
+                new DateTimeOffset(2024, 7, 3, 1, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 8, 1, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 10, 1, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 15, 1, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 17, 1, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 22, 1, 0, 0, TimeSpan.Zero)
+            };
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedMessage = $"Occurs every 1 week on Monday and Wednesday at 01:00:00. Starting on {startDate}.";
 
 
             TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
@@ -99,12 +97,17 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2024, 7, 3, 1, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 15, 1, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 17, 1, 0, 0, TimeSpan.Zero),
+            };
 
-            Assert.Equal(new DateTimeOffset(2024, 7, 3, 1, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 15, 1, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 17, 1, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+            var expectedMessage = $"Occurs every 2 weeks on Monday and Wednesday at 01:00:00. Starting on {startDate}.";
+
+
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
 
         }
 
@@ -147,15 +150,22 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
 
-            Assert.Equal(new DateTimeOffset(2024, 7, 3, 12, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 8, 12, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 10, 12, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 15, 12, 0, 0, TimeSpan.Zero), nextDates[3].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 17, 12, 0, 0, TimeSpan.Zero), nextDates[4].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 22, 12, 0, 0, TimeSpan.Zero), nextDates[5].NextDate);
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2024, 7, 3, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 8, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 10, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 15, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 17, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 22, 12, 0, 0, TimeSpan.Zero),
+            };
+
+            var expectedMessage = $"Occurs every 1 week on Monday and Wednesday at 12:00:00. Starting on {startDate}.";
+
+
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
+
 
         }
 
@@ -197,14 +207,19 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2024, 7, 3, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 8, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 10, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 15, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 17, 12, 0, 0, TimeSpan.Zero),
+            };
 
-            Assert.Equal(new DateTimeOffset(2024, 7, 3, 12, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 8, 12, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 10, 12, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 15, 12, 0, 0, TimeSpan.Zero), nextDates[3].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 17, 12, 0, 0, TimeSpan.Zero), nextDates[4].NextDate);
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+            var expectedMessage = $"Occurs every 1 week on Monday and Wednesday at 12:00:00. Starting on {startDate}.";
+
+
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
         }
 
         [Fact]
@@ -244,16 +259,20 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2024, 7, 3, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 8, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 10, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 15, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 17, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 22, 12, 0, 0, TimeSpan.Zero),
+            };
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedMessage = $"Occurs every 1 week on Monday and Wednesday at 12:00:00. Starting on {startDate}.";
 
-            Assert.Equal(new DateTimeOffset(2024, 7, 3, 12, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 8, 12, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 10, 12, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 15, 12, 0, 0, TimeSpan.Zero), nextDates[3].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 17, 12, 0, 0, TimeSpan.Zero), nextDates[4].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 22, 12, 0, 0, TimeSpan.Zero), nextDates[5].NextDate);
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
         }
 
 
@@ -297,14 +316,19 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2024, 7, 8, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 10, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 15, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 17, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 22, 12, 0, 0, TimeSpan.Zero),
+            };
 
-            Assert.Equal(new DateTimeOffset(2024, 7, 8, 12, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 10, 12, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 15, 12, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 17, 12, 0, 0, TimeSpan.Zero), nextDates[3].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 22, 12, 0, 0, TimeSpan.Zero), nextDates[4].NextDate);
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+            var expectedMessage = $"Occurs every 1 week on Monday and Wednesday at 12:00:00. Starting on {startDate}.";
+
+
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
 
         }
 
@@ -346,15 +370,20 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2024, 7, 3, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 8, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 10, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 15, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 17, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 22, 12, 0, 0, TimeSpan.Zero),
+            };
 
-            Assert.Equal(new DateTimeOffset(2024, 7, 3, 12, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 8, 12, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 10, 12, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 15, 12, 0, 0, TimeSpan.Zero), nextDates[3].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 17, 12, 0, 0, TimeSpan.Zero), nextDates[4].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 22, 12, 0, 0, TimeSpan.Zero), nextDates[5].NextDate);
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+            var expectedMessage = $"Occurs every 1 week on Monday and Wednesday at 12:00:00. Starting on {startDate}.";
+
+
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
 
         }
 
@@ -396,15 +425,19 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
             var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
 
-            var expectedMessage = $"Occurs Recurring. Starting on {startDate}.";
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2024, 7, 8, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 10, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 15, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 17, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 22, 12, 0, 0, TimeSpan.Zero),
+            };
 
-            Assert.Equal(new DateTimeOffset(2024, 7, 8, 12, 0, 0, TimeSpan.Zero), nextDates[0].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 10, 12, 0, 0, TimeSpan.Zero), nextDates[1].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 15, 12, 0, 0, TimeSpan.Zero), nextDates[2].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 17, 12, 0, 0, TimeSpan.Zero), nextDates[3].NextDate);
-            Assert.Equal(new DateTimeOffset(2024, 7, 22, 12, 0, 0, TimeSpan.Zero), nextDates[4].NextDate);
-            Assert.Equal(expectedMessage, nextDates[0].Message);
+            var expectedMessage = $"Occurs every 1 week on Monday and Wednesday at 12:00:00. Starting on {startDate}.";
 
+
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
         }
 
 
