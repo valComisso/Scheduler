@@ -54,7 +54,7 @@ namespace SchedulerProject.Services
 
             var message = configurations.Type switch
             {
-                EventType.Recurring => $"Occurs {type}. Starting on {startDate}.",
+                EventType.Recurring => GenerateDescriptionService.GenerateRecurringMessage(configurations, startDate),
                 EventType.Once =>
                     $"Occurs {type}. Schedule will be used on {referenceDate} starting on {startDate}.",
                 _ => ""

@@ -97,8 +97,6 @@ namespace SchedulerTest.GenerateNextDateTestOnce
             Assert.Throws<ArgumentException>(() => SchedulerService.GetUpcomingAvailableDates(settings));
         }
 
-
-
         [Fact]
         public void return_Exception_Because_EndDate_Is_Less_Than_StartDate()
         {

@@ -1,8 +1,6 @@
 ﻿using SchedulerProject.Entity.DateConfigurations;
 using SchedulerProject.Enums;
 using SchedulerProject.Services;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Security.Principal;
 
 namespace SchedulerTest.GenerateNextDateTestOnce
 {
@@ -103,7 +101,6 @@ namespace SchedulerTest.GenerateNextDateTestOnce
             Assert.Equal(expectedNextDates, nextDates[0].NextDate);
             Assert.Equal(expectedMessage, nextDates[0].Message);
         }
-
 
 
     }
