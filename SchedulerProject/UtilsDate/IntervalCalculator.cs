@@ -1,11 +1,15 @@
-﻿using SchedulerProject.Enums;
+﻿using SchedulerProject.Entity.DateConfigurations;
+using SchedulerProject.Enums;
 
 namespace SchedulerProject.UtilsDate
 {
     public class IntervalCalculator
     {
-        public static DateTimeOffset GetNextIntervalStart(DateTimeOffset currentDate, OccurrenceType occurrence, uint every)
+        public static DateTimeOffset GetNextIntervalStart(DateTimeOffset currentDate, DateConfigurations configurations)
         {
+            var every = configurations.Every ?? 1;
+            var occurrence = configurations.Occurrence;
+
             DateTimeOffset nextDate = currentDate;
 
             switch (occurrence)

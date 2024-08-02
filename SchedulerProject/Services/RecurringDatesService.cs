@@ -12,14 +12,12 @@ namespace SchedulerProject.Services
             var referenceDate = startDate;
             var count = 0;
             var limit = limitOccurrences ?? int.MaxValue;
-            var requiredDaysList = SetAllowedDays.DefineAllowedDaysOfTheWeek(configurations.WeeklyConfigurations.SelectedDays);
-            var weeksIntervalInt = configurations.Every ?? 1;
             var endDate = configurations.Limits.EndDate ?? DateTimeOffset.MaxValue;
 
             while (count < limit && referenceDate <= endDate)
             {
-                referenceDate = ProcessInterval(referenceDate, requiredDaysList, ref count, availableDates, limit, configurations);
-                referenceDate = IntervalCalculator.GetNextIntervalStart(referenceDate, configurations.Occurrence, weeksIntervalInt);
+                referenceDate = ProcessInterval(referenceDate,ref count, availableDates, limit, configurations);
+                referenceDate = IntervalCalculator.GetNextIntervalStart(referenceDate, configurations);
             }
 
             return availableDates;
@@ -27,13 +25,14 @@ namespace SchedulerProject.Services
 
         private static DateTimeOffset ProcessInterval(
             DateTimeOffset referenceDate,
-            List<DayOfWeek> requiredDaysList,
             ref int count,
             List<DateTimeOffset> availableDates,
             int limit,
             DateConfigurations configurations
         )
         {
+            var requiredDaysList = SetAllowedDays.DefineAllowedDaysOfTheWeek(configurations.WeeklyConfigurations.SelectedDays);
+
             var daysProcess = GetDaysToProcess(referenceDate, configurations.Occurrence);
             var endOfProcess = referenceDate.AddDays(daysProcess);
 
