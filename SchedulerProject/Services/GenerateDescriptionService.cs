@@ -48,18 +48,21 @@ namespace SchedulerProject.Services
                 {
                     if (i > 0 && i == days.Count - 1)
                     {
-                        messageSelectedDays.Append($"and {days[i]} ");
+                        messageSelectedDays.Append($"and {days[i]}");
                     }
                     else
                     {
-                        messageSelectedDays.Append($"{days[i]} ");
+                       
+                        messageSelectedDays.Append($"{days[i]}");
                     }
-
 
                     if (i < days.Count - 2)
                     {
-                        messageSelectedDays.Append(", ");
+                        messageSelectedDays.Append(",");
                     }
+
+                    messageSelectedDays.Append(" ");
+
                 }
             }
 
@@ -102,14 +105,10 @@ namespace SchedulerProject.Services
                 { EveryType.Seconds, ("second", "seconds") }
             };
 
-            if (eventTypes.TryGetValue(type, out var eventType))
-            {
-                return every == 1 ? eventType.singular : eventType.plural;
-            }
+            var eventType = eventTypes[type];
 
-            throw new ArgumentOutOfRangeException(nameof(type), $"The type '{type}' is not recognized.");
-
-
+            return every == 1 ? eventType.singular : eventType.plural;
         }
+
     }
 }

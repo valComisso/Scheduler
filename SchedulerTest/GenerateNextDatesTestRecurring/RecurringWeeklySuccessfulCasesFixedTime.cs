@@ -111,6 +111,63 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
         }
 
+        [Fact]
+        public void return_Upcoming_CurrentTime_Dates_ThreeDaysAWeeke()
+        {
+            var currentDate = new DateTimeOffset(2024, 7, 3, 12, 0, 0, TimeSpan.Zero);
+
+
+            var startDate = new DateTimeOffset(2024, 7, 1, 0, 0, 0, TimeSpan.Zero);
+            var endDate = new DateTimeOffset(2024, 7, 22, 12, 0, 0, TimeSpan.Zero);
+            var limits = new LimitsConfigurations(startDate, endDate);
+
+            var frequencyConfigurations = new DailyFrequencyConfigurations()
+            {
+                Type = DailyFrequencyType.Fixed,
+                FixedTime = new TimeSpan(12, 0, 0)
+            };
+
+            var weeklyConfigurations = new WeeklyConfigurations()
+            {
+                SelectedDays = [
+                    DayOfWeek.Monday,
+                    DayOfWeek.Tuesday,
+                    DayOfWeek.Wednesday,
+                ]
+            };
+
+            var settings = new DateConfigurations(currentDate)
+            {
+                Type = EventType.Recurring,
+                Occurrence = OccurrenceType.Weekly,
+                Every = 1,
+                Limits = limits,
+                FrequencyConfigurations = frequencyConfigurations,
+                WeeklyConfigurations = weeklyConfigurations
+            };
+
+
+
+            var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
+
+            var expectedDates = new List<DateTimeOffset>
+            {
+                new DateTimeOffset(2024, 7, 8, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 9, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 10, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 15, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 16, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 17, 12, 0, 0, TimeSpan.Zero),
+                new DateTimeOffset(2024, 7, 22, 12, 0, 0, TimeSpan.Zero),
+            };
+
+            var expectedMessage = $"Occurs every 1 week on Monday, Tuesday and Wednesday at 12:00:00. Starting on {startDate}.";
+
+
+            TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
+        }
+
+
         // tests with different End dates
         [Fact]
         public void return_Upcoming_CurrentTime_Dates_At_Specific_Time_EndTime_Greater_Than_Fixed_Time()

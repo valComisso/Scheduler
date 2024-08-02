@@ -85,19 +85,17 @@ namespace SchedulerProject.Services
             var timeOfDay = targetDateTime.TimeOfDay;
             return timeOfDay >= startTime && timeOfDay <= endTime && targetDateTime > referenceDate;
         }
-        
+
         private static TimeSpan GenerateEveryTimeSpan(DailyFrequencyConfigurations configurations)
         {
-            
             var every = configurations.Every ?? 1;
 
-          
-            TimeSpan time;
+            TimeSpan time = TimeSpan.Zero;
 
-             switch (configurations.EveryType)
+            switch (configurations.EveryType)
             {
                 case EveryType.Hours:
-                     time = new TimeSpan(every, 0, 0);
+                    time = new TimeSpan(every, 0, 0);
                     break;
                 case EveryType.Minutes:
                     time = new TimeSpan(0, every, 0);
@@ -105,12 +103,11 @@ namespace SchedulerProject.Services
                 case EveryType.Seconds:
                     time = new TimeSpan(0, 0, every);
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(configurations.EveryType), "Unsupported interval type");
             }
 
             return time;
         }
+
 
     }
 }
