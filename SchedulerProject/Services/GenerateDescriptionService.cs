@@ -21,56 +21,15 @@ namespace SchedulerProject.Services
             var occurrence = configurations.Occurrence;
             var days = configurations.WeeklyConfigurations.SelectedDays;
 
+            var messageOccurs = occurrence == OccurrenceType.Daily
+                ? $"Occurs every {every} day{(every > 1 ? "s" : string.Empty)}"
+                : $"Occurs every {every} week{(every > 1 ? "s" : string.Empty)}";
 
-            var messageOccurs = "";
+            var messageSelectedDays = days.Count == 7
+                ? "all days."
+                : string.Join(", ", days.Take(days.Count - 1)) + (days.Count > 1 ? " and " : string.Empty) + days.Last();
 
-            if (occurrence == OccurrenceType.Daily)
-            {
-                messageOccurs = every == 1 ? "Occurs every 1 day" : $"Occurs every {every} days";
-            }
-            else if (occurrence == OccurrenceType.Weekly)
-            {
-                messageOccurs = every == 1 ? "Occurs every 1 week" : $"Occurs every {every} weeks";
-            }
-
-
-
-            var messageSelectedDays = new StringBuilder();
-
-
-            if (days.Count == 7)
-            {
-                messageSelectedDays.Append("all days. ");
-            }
-            else
-            {
-                for (var i = 0; i < days.Count; i++)
-                {
-                    if (i > 0 && i == days.Count - 1)
-                    {
-                        messageSelectedDays.Append($"and {days[i]}");
-                    }
-                    else
-                    {
-                       
-                        messageSelectedDays.Append($"{days[i]}");
-                    }
-
-                    if (i < days.Count - 2)
-                    {
-                        messageSelectedDays.Append(",");
-                    }
-
-                    messageSelectedDays.Append(" ");
-
-                }
-            }
-
-
-            return messageOccurs + " on " + messageSelectedDays;
-
-
-
+            return $"{messageOccurs} on {messageSelectedDays}";
         }
 
         private static StringBuilder FrequencyDailyText(DateConfigurations configurations)
@@ -79,7 +38,7 @@ namespace SchedulerProject.Services
             var message = new StringBuilder();
             if (type == DailyFrequencyType.Fixed)
             {
-                message.Append($"at {configurations.FrequencyConfigurations.FixedTime}");
+                message.Append($" at {configurations.FrequencyConfigurations.FixedTime}");
             }
             else if (type == DailyFrequencyType.Variable)
             {
@@ -88,7 +47,7 @@ namespace SchedulerProject.Services
                 var end = configurations.FrequencyConfigurations.EndTime;
                 var every = configurations.FrequencyConfigurations.Every;
                 var everyType = GetEventTypeText(configurations.FrequencyConfigurations.EveryType, every);
-                message.Append($"every {every} {everyType} between {start} and {end}");
+                message.Append($" every {every} {everyType} between {start} and {end}");
 
             }
 
