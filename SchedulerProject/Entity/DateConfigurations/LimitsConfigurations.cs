@@ -2,8 +2,8 @@
 {
     public class LimitsConfigurations
     {
-        public DateTimeOffset StartDate { get; set; }
-        public DateTimeOffset? EndDate { get; set; }
+        public DateTimeOffset StartDate { get;}
+        public DateTimeOffset? EndDate { get;}
 
         public LimitsConfigurations(DateTimeOffset startDate, DateTimeOffset? endDate = null)
         {

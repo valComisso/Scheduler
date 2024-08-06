@@ -16,7 +16,7 @@ namespace SchedulerProject.Services
 
             while (count < limit && referenceDate <= endDate)
             {
-                referenceDate = ProcessInterval(referenceDate,ref count, availableDates, limit, configurations);
+                referenceDate = ProcessInterval(referenceDate, ref count, availableDates, limit, configurations);
                 referenceDate = IntervalCalculator.GetNextIntervalStart(referenceDate, configurations);
             }
 
@@ -38,8 +38,8 @@ namespace SchedulerProject.Services
 
             for (var date = referenceDate; date <= endOfProcess; date = TimeDate.ResetTimeDate(date).AddDays(1))
             {
-                if (!requiredDaysList.Contains(date.DayOfWeek)) continue;
-                AddAvailableTimesForDay(date, ref count, availableDates, limit, configurations, referenceDate);
+                if ((!requiredDaysList.Contains(date.DayOfWeek)) && count < limit) continue;
+                AddAvailableTimesForDay(date, ref count, availableDates, configurations, referenceDate);
             }
 
             return endOfProcess;
@@ -59,7 +59,6 @@ namespace SchedulerProject.Services
             DateTimeOffset date,
             ref int count,
             List<DateTimeOffset> availableDates,
-            int limit,
             DateConfigurations configurations,
             DateTimeOffset referenceDate
         )
@@ -67,15 +66,13 @@ namespace SchedulerProject.Services
             var dailyFrequencyConf = configurations.FrequencyConfigurations;
             if (dailyFrequencyConf == null) return;
 
-            var endDate = configurations.Limits.EndDate ?? DateTimeOffset.MaxValue;
-
             if (dailyFrequencyConf.Type == DailyFrequencyType.Fixed)
             {
-                AddTimesToDatesService.AddFixedTime(date, ref count, availableDates, limit, dailyFrequencyConf, endDate);
+                AddTimesToDatesService.AddFixedTime(date, ref count, availableDates, configurations);
             }
             else if (dailyFrequencyConf.Type == DailyFrequencyType.Variable)
             {
-                AddTimesToDatesService.AddVariableTimes(date, ref count, availableDates, limit, dailyFrequencyConf, endDate, referenceDate);
+                AddTimesToDatesService.AddVariableTimes(date, ref count, availableDates, configurations, referenceDate);
             }
         }
 

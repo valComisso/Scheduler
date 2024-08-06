@@ -1,12 +1,6 @@
 ﻿using SchedulerProject.Entity.DateConfigurations;
-using SchedulerProject.UtilsDate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentAssertions.Primitives;
 using SchedulerProject.Enums;
+using SchedulerProject.UtilsDate;
 
 namespace SchedulerProject.Services
 {
@@ -16,17 +10,20 @@ namespace SchedulerProject.Services
             DateTimeOffset date,
             ref int count,
             List<DateTimeOffset> availableDates,
-            int limit,
-            DailyFrequencyConfigurations dailyFrequencyConf,
-            DateTimeOffset endDate
+            DateConfigurations configurations
         )
         {
+
+            var dailyFrequencyConf = configurations.FrequencyConfigurations;
+            if (dailyFrequencyConf == null) return;
+            var endDate = configurations.Limits.EndDate ?? DateTimeOffset.MaxValue;
             var timeFixed = dailyFrequencyConf.FixedTime ?? TimeSpan.Zero;
+
             if (date.TimeOfDay >= timeFixed) return;
 
             var targetDateTime = TimeDate.ResetTimeDate(date).Add(timeFixed);
 
-            if (targetDateTime <= endDate && count < limit)
+            if (targetDateTime <= endDate)
             {
                 availableDates.Add(targetDateTime);
                 count++;
@@ -38,19 +35,20 @@ namespace SchedulerProject.Services
             DateTimeOffset date,
             ref int count,
             List<DateTimeOffset> availableDates,
-            int limit,
-            DailyFrequencyConfigurations dailyFrequencyConf,
-            DateTimeOffset endDate,
+            DateConfigurations configurations,
             DateTimeOffset referenceDate
         )
         {
+            var dailyFrequencyConf = configurations.FrequencyConfigurations;
+            if (dailyFrequencyConf == null) return;
+            var endDate = configurations.Limits.EndDate ?? DateTimeOffset.MaxValue;
             var startTime = dailyFrequencyConf.StartTime ?? TimeSpan.MinValue;
             var endTime = dailyFrequencyConf.EndTime ?? TimeSpan.MaxValue;
             var every = GenerateEveryTimeSpan(dailyFrequencyConf);
             var targetDateTime = SetReferenceDateRecurrentVariableTime(endTime, startTime, date);
             var endTimeDate = TimeDate.ResetTimeDate(date).Add(endTime);
 
-            while (targetDateTime <= endTimeDate && count < limit && targetDateTime <= endDate)
+            while (targetDateTime <= endTimeDate && targetDateTime <= endDate)
             {
 
                 if (CheckIfWithinTheAllowedTime(targetDateTime, startTime, endTime, referenceDate))
@@ -80,6 +78,7 @@ namespace SchedulerProject.Services
             return date;
 
         }
+        
         private static bool CheckIfWithinTheAllowedTime(DateTimeOffset targetDateTime, TimeSpan startTime, TimeSpan endTime, DateTimeOffset referenceDate)
         {
             var timeOfDay = targetDateTime.TimeOfDay;
