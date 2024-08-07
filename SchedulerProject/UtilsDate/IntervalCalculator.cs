@@ -3,7 +3,7 @@ using SchedulerProject.Enums;
 
 namespace SchedulerProject.UtilsDate
 {
-    public class IntervalCalculator
+    public static class IntervalCalculator
     {
         public static DateTimeOffset GetNextIntervalStart(DateTimeOffset currentDate, DateConfigurations configurations)
         {

@@ -7,7 +7,7 @@ using SchedulerProject.Entity.DateConfigurations;
 
 namespace SchedulerProject.UtilsDate
 {
-    public class DateValidator
+    public static class DateValidator
     {
         public static bool DateRangeValidator(DateTimeOffset date, LimitsConfigurations limits)
         {

@@ -4,7 +4,7 @@ using SchedulerProject.UtilsDate;
 
 namespace SchedulerProject.Services
 {
-    public class RecurringDatesService
+    public static class RecurringDatesService
     {
         public static List<DateTimeOffset> GetNextAvailableDates(DateConfigurations configurations, DateTimeOffset startDate, int? limitOccurrences = null)
         {

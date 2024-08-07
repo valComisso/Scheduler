@@ -4,7 +4,7 @@ using SchedulerProject.UtilsDate;
 
 namespace SchedulerProject.Services
 {
-    public class AddTimesToDatesService
+    public static class AddTimesToDatesService
     {
         public static void AddFixedTime(
             DateTimeOffset date,
