@@ -65,18 +65,7 @@ namespace SchedulerProject.Services
         private static DateTimeOffset SetReferenceDateRecurrentVariableTime(TimeSpan endTime, TimeSpan startTime, DateTimeOffset date)
         {
             var timeDate = date.TimeOfDay;
-            if (timeDate < startTime)
-            {
-                return TimeDate.ResetTimeDate(date).Add(startTime);
-            }
-            else if (timeDate <= endTime && timeDate >= startTime)
-            {
-                return date;
-
-            }
-
-            return date;
-
+            return timeDate < startTime ? TimeDate.ResetTimeDate(date).Add(startTime) : date;
         }
         
         private static bool CheckIfWithinTheAllowedTime(DateTimeOffset targetDateTime, TimeSpan startTime, TimeSpan endTime, DateTimeOffset referenceDate)

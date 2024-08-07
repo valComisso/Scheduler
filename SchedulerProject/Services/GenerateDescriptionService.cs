@@ -18,12 +18,10 @@ namespace SchedulerProject.Services
         private static string WeeklyConfigurationText(DateConfigurations configurations)
         {
             var every = configurations.Every;
-            var occurrence = configurations.Occurrence;
+            var occurrence = configurations.Occurrence == OccurrenceType.Daily? "day": "week";
             var days = configurations.WeeklyConfigurations.SelectedDays;
 
-            var messageOccurs = occurrence == OccurrenceType.Daily
-                ? $"Occurs every {every} day{(every > 1 ? "s" : string.Empty)}"
-                : $"Occurs every {every} week{(every > 1 ? "s" : string.Empty)}";
+            var messageOccurs = $"Occurs every {every} {occurrence}{(every > 1 ? "s" : string.Empty)}";
 
             var messageSelectedDays = days.Count == 7
                 ? "all days."
