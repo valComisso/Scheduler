@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SchedulerProject.Services
 {
-    public class GenerateDescriptionService
+    public static class GenerateDescriptionService
     {
         public static string GenerateRecurringMessage(DateConfigurations configurations, DateTimeOffset date)
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SchedulerProject.UtilsDate
 {
-    public class SetAllowedDays
+    public static class SetAllowedDays
     {
         public static List<DayOfWeek> DefineAllowedDaysOfTheWeek(List<DayOfWeek>? days)
         {
