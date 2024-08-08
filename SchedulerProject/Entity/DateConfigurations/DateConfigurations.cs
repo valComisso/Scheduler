@@ -10,7 +10,6 @@ namespace SchedulerProject.Entity.DateConfigurations
         public EventType Type { get; set; } = EventType.Once;
         public OccurrenceType Occurrence { get; set; } = OccurrenceType.Daily;
         public DateTimeOffset? DateTimeSettings { get; set; }
-
         public uint? Every { get; set; } = 1;
 
         // limits

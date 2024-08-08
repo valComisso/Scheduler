@@ -8,12 +8,10 @@ namespace SchedulerProject.Services
     {
         public static string GenerateRecurringMessage(DateConfigurations configurations, DateTimeOffset date)
         {
-
             var message = WeeklyConfigurationText(configurations) + FrequencyDailyText(configurations) + $". Starting on {date}.";
 
             return message;
         }
-
 
         private static string WeeklyConfigurationText(DateConfigurations configurations)
         {
@@ -30,27 +28,25 @@ namespace SchedulerProject.Services
             return $"{messageOccurs} on {messageSelectedDays}";
         }
 
-        private static StringBuilder FrequencyDailyText(DateConfigurations configurations)
+        private static string FrequencyDailyText(DateConfigurations configurations)
         {
             var type = configurations.FrequencyConfigurations!.Type;
-            var message = new StringBuilder();
-            if (type == DailyFrequencyType.Fixed)
+     
+            switch (type)
             {
-                message.Append($" at {configurations.FrequencyConfigurations.FixedTime}");
+                case DailyFrequencyType.Fixed:
+                    return $" at {configurations.FrequencyConfigurations.FixedTime}";
+                case DailyFrequencyType.Variable:
+                {
+                    var start = configurations.FrequencyConfigurations.StartTime;
+                    var end = configurations.FrequencyConfigurations.EndTime;
+                    var every = configurations.FrequencyConfigurations.Every;
+                    var everyType = GetEventTypeText(configurations.FrequencyConfigurations.EveryType, every);
+                    return $" every {every} {everyType} between {start} and {end}";
+                }
+                default:
+                    return string.Empty;
             }
-            else if (type == DailyFrequencyType.Variable)
-            {
-
-                var start = configurations.FrequencyConfigurations.StartTime;
-                var end = configurations.FrequencyConfigurations.EndTime;
-                var every = configurations.FrequencyConfigurations.Every;
-                var everyType = GetEventTypeText(configurations.FrequencyConfigurations.EveryType, every);
-                message.Append($" every {every} {everyType} between {start} and {end}");
-
-            }
-
-            return message;
-
         }
 
         private static string GetEventTypeText(EveryType type, int? every)

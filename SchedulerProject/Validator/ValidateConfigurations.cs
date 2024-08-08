@@ -8,10 +8,7 @@ namespace SchedulerProject.Validator
     {
         public static void ValidateTheCompleteConfiguration(DateConfigurations configurations)
         {
-            if (!configurations.StatusAvailableType)
-            {
-                throw new ArgumentException("It is not possible to calculate the next day");
-            }
+            if (!configurations.StatusAvailableType)  throw new ArgumentException("It is not possible to calculate the next day");
 
             if (configurations.Type == EventType.Once)
             {
@@ -59,7 +56,6 @@ namespace SchedulerProject.Validator
                     throw new ArgumentException("Invalid parameters for setting schedules by date");
                 case DailyFrequencyType.Variable when startTime > endTime :
                     throw new ArgumentException("Invalid Time Limit Parameters");
-
                 case null:
                     throw new ArgumentException("A frequency type must be defined for the generation of the next dates");
             }

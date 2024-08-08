@@ -40,6 +40,5 @@ namespace SchedulerProject.UtilsDate
             return currentDate.AddDays(totalDaysToAdd);
         }
 
-
     }
 }

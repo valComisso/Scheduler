@@ -105,6 +105,10 @@ namespace SchedulerTest.GenerateNextDateTestOnce
             Assert.Throws<ArgumentException>(() => new LimitsConfigurations(startDate, endDate));
         }
 
-
+        [Fact]
+        public void return_Exception_Because_The_Date_Doesnt_Exist()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new DateTimeOffset(2024, 2, 30, 0, 0, 0, TimeSpan.Zero));
+        }
     }
 }

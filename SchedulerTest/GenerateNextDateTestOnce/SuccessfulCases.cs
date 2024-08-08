@@ -1,6 +1,7 @@
 ﻿using SchedulerProject.Entity.DateConfigurations;
 using SchedulerProject.Enums;
 using SchedulerProject.Services;
+using System.Diagnostics.Metrics;
 
 namespace SchedulerTest.GenerateNextDateTestOnce
 {
@@ -97,6 +98,36 @@ namespace SchedulerTest.GenerateNextDateTestOnce
             var expectedNextDates = new DateTimeOffset(2023, 7, 2, 0, 0, 0, TimeSpan.Zero);
             var expectedMessage =
                 $"Occurs Once. Schedule will be used on {new DateTimeOffset(2023, 7, 2, 0, 0, 0, TimeSpan.Zero)} starting on {new DateTimeOffset(2023, 7, 1, 0, 0, 0, TimeSpan.Zero)}.";
+
+            Assert.Equal(expectedNextDates, nextDates[0].NextDate);
+            Assert.Equal(expectedMessage, nextDates[0].Message);
+        }
+
+        [Fact]
+        public void Return_The_Day_After_The_29th_Of_File ()
+        {
+            var currentDate = new DateTimeOffset(2024, 2, 29, 0, 0, 0, TimeSpan.Zero);
+
+
+            var startDate = new DateTimeOffset(2024, 2, 1, 0, 0, 0, TimeSpan.Zero);
+            var endDate = new DateTimeOffset(2024, 3, 10, 0, 0, 0, TimeSpan.Zero);
+            var limits = new LimitsConfigurations(startDate, endDate);
+
+            var settings = new DateConfigurations(currentDate)
+            {
+                Type = EventType.Once,
+                Occurrence = OccurrenceType.Daily,
+                Every = 1,
+                Limits = limits
+
+            };
+
+
+            var nextDates = SchedulerService.GetUpcomingAvailableDates(settings);
+
+            var expectedNextDates = new DateTimeOffset(2024, 3, 1, 0, 0, 0, TimeSpan.Zero);
+            var expectedMessage =
+                $"Occurs Once. Schedule will be used on {new DateTimeOffset(2024, 3, 1, 0, 0, 0, TimeSpan.Zero)} starting on {new DateTimeOffset(2024, 2, 1, 0, 0, 0, TimeSpan.Zero)}.";
 
             Assert.Equal(expectedNextDates, nextDates[0].NextDate);
             Assert.Equal(expectedMessage, nextDates[0].Message);
