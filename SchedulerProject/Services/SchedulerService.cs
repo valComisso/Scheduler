@@ -43,8 +43,6 @@ namespace SchedulerProject.Services
             return nextDate;
         }
 
-
-
         public static List<DateResult> GenerateUpcomingResultsAvailableDates(List<DateTimeOffset> dates,
             DateTimeOffset referenceDate, DateConfigurations configurations)
         {

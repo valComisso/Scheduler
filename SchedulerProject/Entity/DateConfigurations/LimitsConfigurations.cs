@@ -11,11 +11,9 @@
             {
                 throw new ArgumentException("startDate cannot be greater than endDate.");
             }
-
             StartDate = startDate;
             EndDate = endDate;
         }
-
         public LimitsConfigurations() : this(DateTimeOffset.Now, null)
         {
         }

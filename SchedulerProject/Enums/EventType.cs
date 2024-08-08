@@ -5,5 +5,4 @@
         Once,
         Recurring
     }
-
 }

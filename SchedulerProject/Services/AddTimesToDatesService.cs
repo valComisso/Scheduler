@@ -30,7 +30,6 @@ namespace SchedulerProject.Services
             }
         }
 
-
         public static void AddVariableTimes(
             DateTimeOffset date,
             ref int count,
@@ -45,7 +44,7 @@ namespace SchedulerProject.Services
             var startTime = dailyFrequencyConf.StartTime ?? TimeSpan.MinValue;
             var endTime = dailyFrequencyConf.EndTime ?? TimeSpan.MaxValue;
             var every = GenerateEveryTimeSpan(dailyFrequencyConf);
-            var targetDateTime = SetReferenceDateRecurrentVariableTime(endTime, startTime, date);
+            var targetDateTime = SetReferenceDateRecurrentVariableTime(startTime, date);
             var endTimeDate = TimeDate.ResetTimeDate(date).Add(endTime);
 
             while (targetDateTime <= endTimeDate && targetDateTime <= endDate)
@@ -60,9 +59,7 @@ namespace SchedulerProject.Services
             }
         }
 
-
-
-        private static DateTimeOffset SetReferenceDateRecurrentVariableTime(TimeSpan endTime, TimeSpan startTime, DateTimeOffset date)
+        private static DateTimeOffset SetReferenceDateRecurrentVariableTime(TimeSpan startTime, DateTimeOffset date)
         {
             var timeDate = date.TimeOfDay;
             return timeDate < startTime ? TimeDate.ResetTimeDate(date).Add(startTime) : date;
@@ -95,7 +92,6 @@ namespace SchedulerProject.Services
 
             return time;
         }
-
 
     }
 }
