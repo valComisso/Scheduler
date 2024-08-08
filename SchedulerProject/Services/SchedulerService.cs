@@ -55,7 +55,7 @@ namespace SchedulerProject.Services
                 EventType.Recurring => GenerateDescriptionService.GenerateRecurringMessage(configurations, startDate),
                 EventType.Once =>
                     $"Occurs {type}. Schedule will be used on {referenceDate} starting on {startDate}.",
-                _ => ""
+                _ => string.Empty
             };
 
             return dates.Select(date => new DateResult(message, date)).ToList();

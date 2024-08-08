@@ -8,26 +8,52 @@ namespace SchedulerProject.Services
     {
         public static string GenerateRecurringMessage(DateConfigurations configurations, DateTimeOffset date)
         {
-            var message = WeeklyConfigurationText(configurations) + FrequencyDailyText(configurations) + $". Starting on {date}.";
+            StringBuilder messageBuilder = new StringBuilder();
 
-            return message;
+            messageBuilder.Append(WeeklyConfigurationText(configurations));
+            messageBuilder.Append(FrequencyDailyText(configurations));
+            messageBuilder.Append($". Starting on {date}.");
+
+            return messageBuilder.ToString();
         }
 
         private static string WeeklyConfigurationText(DateConfigurations configurations)
         {
-            var every = configurations.Every;
-            var occurrence = configurations.Occurrence == OccurrenceType.Daily? "day": "week";
-            var days = configurations.WeeklyConfigurations.SelectedDays;
+            var messageBuilder = new StringBuilder();
 
-            var messageOccurs = $"Occurs every {every} {occurrence}{(every > 1 ? "s" : string.Empty)}";
+            AppendOccurrence(messageBuilder, configurations.Every, configurations.Occurrence);
+            AppendDays(messageBuilder, configurations.WeeklyConfigurations.SelectedDays);
 
-            var messageSelectedDays = days.Count == 7
-                ? "all days."
-                : string.Join(", ", days.Take(days.Count - 1)) + (days.Count > 1 ? " and " : string.Empty) + days.Last();
-
-            return $"{messageOccurs} on {messageSelectedDays}";
+            return messageBuilder.ToString();
         }
 
+        private static void AppendOccurrence(StringBuilder messageBuilder, uint? every, OccurrenceType occurrenceType)
+        {
+            var occurrence = occurrenceType == OccurrenceType.Daily ? "day" : "week";
+            messageBuilder.Append($"Occurs every {every} {occurrence}");
+            if (every > 1)
+            {
+                messageBuilder.Append("s");
+            }
+        }
+        private static void AppendDays(StringBuilder messageBuilder, List<DayOfWeek> days)
+        {
+            messageBuilder.Append(" on ");
+
+            if (days.Count == 7)
+            {
+                messageBuilder.Append("all days.");
+            }
+            else
+            {
+                messageBuilder.Append(string.Join(", ", days.Take(days.Count - 1)));
+                if (days.Count > 1)
+                {
+                    messageBuilder.Append(" and ");
+                }
+                messageBuilder.Append(days.Last());
+            }
+        }
         private static string FrequencyDailyText(DateConfigurations configurations)
         {
             var type = configurations.FrequencyConfigurations!.Type;
@@ -48,7 +74,6 @@ namespace SchedulerProject.Services
                     return string.Empty;
             }
         }
-
         private static string GetEventTypeText(EveryType type, int? every)
         {
             var eventTypes = new Dictionary<EveryType, (string singular, string plural)>
