@@ -1,10 +1,6 @@
 ﻿using SchedulerProject.Entity.DateConfigurations;
 using SchedulerProject.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SchedulerProject.Services.Descriptions
 {
@@ -12,27 +8,71 @@ namespace SchedulerProject.Services.Descriptions
     {
         public static string GenerateMessage(DateConfigurations configurations, DateTimeOffset date)
         {
-            StringBuilder messageBuilder = new StringBuilder();
+            var message = new StringBuilder();
 
-            messageBuilder.Append(WeeklyConfigurationText(configurations));
-            messageBuilder.Append(FrequencyDailyText(configurations));
-            messageBuilder.Append($". Starting on {date}.");
+            message.Append("Occurs");
 
-            return messageBuilder.ToString();
+            AppendMonthlyConfigurationText(message, configurations);
+            AppendOccurrenceText(message, configurations);
+            AppendDaysIfNotMonthly(message, configurations);
+            AppendFrequencyDailyText(message, configurations);
+
+            message.Append($". Starting on {date}.");
+
+            return message.ToString();
+        }
+        private static void AppendMonthlyConfigurationText(StringBuilder message, DateConfigurations configurations)
+        {
+            if (configurations.Occurrence == OccurrenceType.Monthly)
+            {
+                message.Append(MonthlyConfigurationText(configurations));
+            }
         }
 
-        private static string WeeklyConfigurationText(DateConfigurations configurations)
+        private static void AppendOccurrenceText(StringBuilder message, DateConfigurations configurations)
         {
+            var occurrenceText = AppendOccurrence(configurations.Every, configurations.Occurrence);
+            message.Append(occurrenceText);
+        }
+
+        private static void AppendDaysIfNotMonthly(StringBuilder message, DateConfigurations configurations)
+        {
+            if (configurations.Occurrence != OccurrenceType.Monthly)
+            {
+                var daysText = AppendDays(configurations.WeeklyConfigurations.SelectedDays);
+                message.Append(daysText);
+            }
+        }
+
+        private static void AppendFrequencyDailyText(StringBuilder message, DateConfigurations configurations)
+        {
+            var frequencyText = FrequencyDailyText(configurations);
+            message.Append(frequencyText);
+        }
+
+
+        private static string MonthlyConfigurationText(DateConfigurations configurations)
+        {
+            var type = configurations.MonthlyConfigurations!.Type;
+
+            if (type == MonthlyConfigurationsType.The)
+            {
+                var frequency = configurations.MonthlyConfigurations!.Frequency;
+                var dayType = configurations.MonthlyConfigurations!.DayType;
+
+                return $" the {frequency} {dayType}";
+            }
+
+            var day = configurations.MonthlyConfigurations.DayNumber;
+            
+            return $" on the {day}th";
+        }
+
+        private static string AppendOccurrence(uint? every, OccurrenceType occurrenceType)
+        {
+
             var messageBuilder = new StringBuilder();
 
-            AppendOccurrence(messageBuilder, configurations.Every, configurations.Occurrence);
-            AppendDays(messageBuilder, configurations.WeeklyConfigurations.SelectedDays);
-
-            return messageBuilder.ToString();
-        }
-
-        private static void AppendOccurrence(StringBuilder messageBuilder, uint? every, OccurrenceType occurrenceType)
-        {
             var occurrenceMapping = new Dictionary<OccurrenceType, string>
             {
                 { OccurrenceType.Daily, "day" },
@@ -45,30 +85,24 @@ namespace SchedulerProject.Services.Descriptions
                 throw new ArgumentException("Unsupported occurrence type");
             }
 
-            messageBuilder.Append($"Occurs every {every} {occurrence}");
+            messageBuilder.Append($" every {every} {occurrence}");
 
             if (every > 1)
             {
                 messageBuilder.Append("s");
             }
-        }
-        private static void AppendDays(StringBuilder messageBuilder, List<DayOfWeek> days)
-        {
-            messageBuilder.Append(" on ");
 
-            if (days.Count == 7)
+            return messageBuilder.ToString();
+        }
+
+        private static string AppendDays(List<DayOfWeek> days)
+        {
+            return days.Count switch
             {
-                messageBuilder.Append("all days.");
-            }
-            else
-            {
-                messageBuilder.Append(string.Join(", ", days.Take(days.Count - 1)));
-                if (days.Count > 1)
-                {
-                    messageBuilder.Append(" and ");
-                }
-                messageBuilder.Append(days.Last());
-            }
+                7 => " on all days.",
+                _ => $" on {string.Join(", ", days.Take(days.Count - 1))}" +
+                     (days.Count > 1 ? " and " : string.Empty) + days.Last()
+            };
         }
 
         private static string FrequencyDailyText(DateConfigurations configurations)
@@ -91,6 +125,7 @@ namespace SchedulerProject.Services.Descriptions
                     return string.Empty;
             }
         }
+       
         private static string GetEventTypeText(EveryType type, int? every)
         {
             var eventTypes = new Dictionary<EveryType, (string singular, string plural)>

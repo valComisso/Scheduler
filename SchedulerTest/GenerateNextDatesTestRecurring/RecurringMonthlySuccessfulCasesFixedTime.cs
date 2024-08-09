@@ -1,7 +1,10 @@
-﻿using SchedulerProject.Entity.DateConfigurations;
+﻿using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+using SchedulerProject.Entity.DateConfigurations;
 using SchedulerProject.Enums;
 using SchedulerProject.Services;
 using SchedulerTest.TestingUtilities;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Text.RegularExpressions;
 
 namespace SchedulerTest.GenerateNextDatesTestRecurring
 {
@@ -47,13 +50,9 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
                 new DateTimeOffset(2023, 7, 8, 1, 0, 0, TimeSpan.Zero),
                 new DateTimeOffset(2023, 9, 8, 1, 0, 0, TimeSpan.Zero),
                 new DateTimeOffset(2023, 11, 8, 1, 0, 0, TimeSpan.Zero),
-
             };
-
-            var expectedMessage = $"Occurs every 2 months on all days. at 01:00:00. Starting on {startDate}.";
-
+            var expectedMessage = $"Occurs on the 8th every 2 months at 01:00:00. Starting on {startDate}.";
             TestAssertions.AssertUpcomingDates(nextDates, expectedDates, expectedMessage);
-
         }
 
     }

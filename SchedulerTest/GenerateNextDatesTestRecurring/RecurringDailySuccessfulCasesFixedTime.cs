@@ -181,7 +181,6 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
         }
 
-
         // tests with different Start dates
 
         [Fact]
