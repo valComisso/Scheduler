@@ -20,7 +20,9 @@ namespace SchedulerProject.UtilsDate
                 case OccurrenceType.Weekly:
                     nextDate = GetNextWeeklyInterval(currentDate, every);
                     break;
-
+                case OccurrenceType.Monthly:
+                    nextDate = GetNextMonthlyInterval(currentDate, every);
+                    break;
             }
 
             return TimeDate.ResetTimeDate(nextDate);
@@ -38,6 +40,13 @@ namespace SchedulerProject.UtilsDate
             var totalDaysToAdd = daysUntilNextMonday + daysUntilStartNextInterval;
 
             return currentDate.AddDays(totalDaysToAdd);
+        }
+
+
+        private static DateTimeOffset GetNextMonthlyInterval(DateTimeOffset currentDate, uint every)
+        {
+          var newDate = new DateTimeOffset(currentDate.Year, currentDate.Month, 1, 0, 0, 0, currentDate.Offset);
+          return newDate.AddMonths((int)every);
         }
 
     }

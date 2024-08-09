@@ -3,6 +3,7 @@
     public enum OccurrenceType
     {
         Daily,
-        Weekly
+        Weekly,
+        Monthly
     }
 }

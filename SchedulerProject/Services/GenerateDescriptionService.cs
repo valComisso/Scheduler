@@ -29,8 +29,20 @@ namespace SchedulerProject.Services
 
         private static void AppendOccurrence(StringBuilder messageBuilder, uint? every, OccurrenceType occurrenceType)
         {
-            var occurrence = occurrenceType == OccurrenceType.Daily ? "day" : "week";
+            var occurrenceMapping = new Dictionary<OccurrenceType, string>
+            {
+                { OccurrenceType.Daily, "day" },
+                { OccurrenceType.Weekly, "week" },
+                { OccurrenceType.Monthly, "month" }
+            };
+
+            if (!occurrenceMapping.TryGetValue(occurrenceType, out var occurrence))
+            {
+                throw new ArgumentException("Unsupported occurrence type");
+            }
+
             messageBuilder.Append($"Occurs every {every} {occurrence}");
+
             if (every > 1)
             {
                 messageBuilder.Append("s");
@@ -54,6 +66,7 @@ namespace SchedulerProject.Services
                 messageBuilder.Append(days.Last());
             }
         }
+       
         private static string FrequencyDailyText(DateConfigurations configurations)
         {
             var type = configurations.FrequencyConfigurations!.Type;

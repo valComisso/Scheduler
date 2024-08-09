@@ -21,6 +21,8 @@ namespace SchedulerProject.Entity.DateConfigurations
         // Weekly Configurations
         public WeeklyConfigurations WeeklyConfigurations { get; set; } = new WeeklyConfigurations();
 
+        // Monthly Configurations
+        public MonthlyConfigurations? MonthlyConfigurations { get; set; }
 
     }
 }

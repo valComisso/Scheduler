@@ -34,8 +34,7 @@ namespace SchedulerProject.Services
             DateTimeOffset date,
             ref int count,
             List<DateTimeOffset> availableDates,
-            DateConfigurations configurations,
-            DateTimeOffset referenceDate
+            DateConfigurations configurations
         )
         {
             var dailyFrequencyConf = configurations.FrequencyConfigurations;
@@ -50,7 +49,7 @@ namespace SchedulerProject.Services
             while (targetDateTime <= endTimeDate && targetDateTime <= endDate)
             {
 
-                if (CheckIfWithinTheAllowedTime(targetDateTime, startTime, endTime, referenceDate))
+                if (CheckIfWithinTheAllowedTime(targetDateTime, startTime, endTime, date))
                 {
                     availableDates.Add(targetDateTime);
                     count++;
