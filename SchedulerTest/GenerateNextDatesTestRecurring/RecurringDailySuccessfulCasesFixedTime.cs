@@ -1,5 +1,4 @@
-﻿using FluentAssertions;
-using SchedulerProject.Entity.DateConfigurations;
+﻿using SchedulerProject.Entity.DateConfigurations;
 using SchedulerProject.Enums;
 using SchedulerProject.Services;
 using SchedulerTest.TestingUtilities;
@@ -181,7 +180,6 @@ namespace SchedulerTest.GenerateNextDatesTestRecurring
 
 
         }
-
 
         // tests with different Start dates
 

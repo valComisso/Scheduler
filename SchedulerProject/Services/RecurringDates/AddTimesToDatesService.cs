@@ -2,11 +2,31 @@
 using SchedulerProject.Enums;
 using SchedulerProject.UtilsDate;
 
-namespace SchedulerProject.Services
+namespace SchedulerProject.Services.RecurringDates
 {
     public static class AddTimesToDatesService
     {
-        public static void AddFixedTime(
+        public static void AddAvailableTimesForDay(
+            DateTimeOffset date,
+            ref int count,
+            List<DateTimeOffset> availableDates,
+            DateConfigurations configurations
+        )
+        {
+            var dailyFrequencyConf = configurations.FrequencyConfigurations;
+            if (dailyFrequencyConf == null) return;
+
+            if (dailyFrequencyConf.Type == DailyFrequencyType.Fixed)
+            {
+                AddFixedTime(date, ref count, availableDates, configurations);
+            }
+            else if (dailyFrequencyConf.Type == DailyFrequencyType.Variable)
+            {
+                AddVariableTimes(date, ref count, availableDates, configurations);
+            }
+        }
+
+        private static void AddFixedTime(
             DateTimeOffset date,
             ref int count,
             List<DateTimeOffset> availableDates,
@@ -30,12 +50,11 @@ namespace SchedulerProject.Services
             }
         }
 
-        public static void AddVariableTimes(
+        private static void AddVariableTimes(
             DateTimeOffset date,
             ref int count,
             List<DateTimeOffset> availableDates,
-            DateConfigurations configurations,
-            DateTimeOffset referenceDate
+            DateConfigurations configurations
         )
         {
             var dailyFrequencyConf = configurations.FrequencyConfigurations;
@@ -50,7 +69,7 @@ namespace SchedulerProject.Services
             while (targetDateTime <= endTimeDate && targetDateTime <= endDate)
             {
 
-                if (CheckIfWithinTheAllowedTime(targetDateTime, startTime, endTime, referenceDate))
+                if (CheckIfWithinTheAllowedTime(targetDateTime, startTime, endTime, date))
                 {
                     availableDates.Add(targetDateTime);
                     count++;
@@ -64,7 +83,7 @@ namespace SchedulerProject.Services
             var timeDate = date.TimeOfDay;
             return timeDate < startTime ? TimeDate.ResetTimeDate(date).Add(startTime) : date;
         }
-        
+
         private static bool CheckIfWithinTheAllowedTime(DateTimeOffset targetDateTime, TimeSpan startTime, TimeSpan endTime, DateTimeOffset referenceDate)
         {
             var timeOfDay = targetDateTime.TimeOfDay;

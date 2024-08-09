@@ -1,6 +1,8 @@
 ﻿using SchedulerProject.Entity.DateConfigurations;
 using SchedulerProject.Entity.Results;
 using SchedulerProject.Enums;
+using SchedulerProject.Services.Descriptions;
+using SchedulerProject.Services.RecurringDates;
 using SchedulerProject.UtilsDate;
 using SchedulerProject.Validator;
 
@@ -14,10 +16,11 @@ namespace SchedulerProject.Services
 
             var nextDateAvailable = GetReferenceDate(configurations);
 
-            if (configurations.Type == EventType.Once) return GenerateUpcomingResultsAvailableDates([nextDateAvailable], nextDateAvailable, configurations);
+            if (configurations.Type == EventType.Once) return GenerateDescriptionService.AddMessages([nextDateAvailable], nextDateAvailable, configurations);
 
             var nextDates = RecurringDatesService.GetNextAvailableDates(configurations, nextDateAvailable, limitOccurrences);
-            return GenerateUpcomingResultsAvailableDates(nextDates, nextDateAvailable, configurations);
+
+            return GenerateDescriptionService.AddMessages(nextDates, nextDateAvailable, configurations);
 
         }
 
@@ -43,22 +46,5 @@ namespace SchedulerProject.Services
             return nextDate;
         }
 
-        public static List<DateResult> GenerateUpcomingResultsAvailableDates(List<DateTimeOffset> dates,
-            DateTimeOffset referenceDate, DateConfigurations configurations)
-        {
-
-            var type = configurations.Type;
-            var startDate = configurations.Limits.StartDate;
-
-            var message = configurations.Type switch
-            {
-                EventType.Recurring => GenerateDescriptionService.GenerateRecurringMessage(configurations, startDate),
-                EventType.Once =>
-                    $"Occurs {type}. Schedule will be used on {referenceDate} starting on {startDate}.",
-                _ => string.Empty
-            };
-
-            return dates.Select(date => new DateResult(message, date)).ToList();
-        }
     }
 }

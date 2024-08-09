@@ -1,8 +1,9 @@
 ﻿using SchedulerProject.Entity.DateConfigurations;
 using SchedulerProject.Enums;
+using SchedulerProject.Services.RecurringDates.ProcessInterval;
 using SchedulerProject.UtilsDate;
 
-namespace SchedulerProject.Services
+namespace SchedulerProject.Services.RecurringDates
 {
     public static class RecurringDatesService
     {
@@ -16,7 +17,7 @@ namespace SchedulerProject.Services
 
             while (count < limit && referenceDate <= endDate)
             {
-                referenceDate = ProcessInterval(referenceDate, ref count, availableDates, limit, configurations);
+                referenceDate = ProcessInterval(referenceDate, ref count, availableDates, configurations);
                 referenceDate = IntervalCalculator.GetNextIntervalStart(referenceDate, configurations);
             }
 
@@ -27,21 +28,26 @@ namespace SchedulerProject.Services
             DateTimeOffset referenceDate,
             ref int count,
             List<DateTimeOffset> availableDates,
-            int limit,
             DateConfigurations configurations
         )
         {
-            var requiredDaysList = SetAllowedDays.DefineAllowedDaysOfTheWeek(configurations.WeeklyConfigurations.SelectedDays);
-
             var daysProcess = GetDaysToProcess(referenceDate, configurations.Occurrence);
             var endOfProcess = referenceDate.AddDays(daysProcess);
 
-            for (var date = referenceDate; date <= endOfProcess; date = TimeDate.ResetTimeDate(date).AddDays(1))
-            {
-                if ((!requiredDaysList.Contains(date.DayOfWeek)) && count < limit) continue;
-                AddAvailableTimesForDay(date, ref count, availableDates, configurations, referenceDate);
-            }
 
+            switch (configurations.Occurrence)
+            {
+                case OccurrenceType.Daily:
+                    ProcessIntervalDaily.ProcessInterval(ref count, availableDates, configurations, referenceDate, endOfProcess);
+                    break;
+                case OccurrenceType.Weekly:
+                    ProcessIntervalWeekly.ProcessInterval(ref count, availableDates, configurations, referenceDate, endOfProcess);
+                    break;
+                case OccurrenceType.Monthly:
+                default:
+                    ProcessIntervalMonthly.ProcessInterval(ref count, availableDates, configurations, referenceDate);
+                    break;
+            }
             return endOfProcess;
         }
 
@@ -51,30 +57,12 @@ namespace SchedulerProject.Services
             {
                 OccurrenceType.Daily => 0,
                 OccurrenceType.Weekly => 7 - (int)referenceDate.DayOfWeek,
+                OccurrenceType.Monthly => DateTime.DaysInMonth(referenceDate.Year, referenceDate.Month) - referenceDate.Day,
                 _ => 0
             };
         }
 
-        private static void AddAvailableTimesForDay(
-            DateTimeOffset date,
-            ref int count,
-            List<DateTimeOffset> availableDates,
-            DateConfigurations configurations,
-            DateTimeOffset referenceDate
-        )
-        {
-            var dailyFrequencyConf = configurations.FrequencyConfigurations;
-            if (dailyFrequencyConf == null) return;
 
-            if (dailyFrequencyConf.Type == DailyFrequencyType.Fixed)
-            {
-                AddTimesToDatesService.AddFixedTime(date, ref count, availableDates, configurations);
-            }
-            else if (dailyFrequencyConf.Type == DailyFrequencyType.Variable)
-            {
-                AddTimesToDatesService.AddVariableTimes(date, ref count, availableDates, configurations, referenceDate);
-            }
-        }
 
     }
 }
