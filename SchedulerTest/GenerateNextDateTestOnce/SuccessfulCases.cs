@@ -1,7 +1,6 @@
 ﻿using SchedulerProject.Entity.DateConfigurations;
 using SchedulerProject.Enums;
 using SchedulerProject.Services;
-using System.Diagnostics.Metrics;
 
 namespace SchedulerTest.GenerateNextDateTestOnce
 {
@@ -104,7 +103,7 @@ namespace SchedulerTest.GenerateNextDateTestOnce
         }
 
         [Fact]
-        public void Return_The_Day_After_The_29th_Of_File ()
+        public void Return_The_Day_After_The_29th_Of_File()
         {
             var currentDate = new DateTimeOffset(2024, 2, 29, 0, 0, 0, TimeSpan.Zero);
 

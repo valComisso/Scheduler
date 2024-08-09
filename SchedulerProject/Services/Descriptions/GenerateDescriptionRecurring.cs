@@ -1,12 +1,16 @@
 ﻿using SchedulerProject.Entity.DateConfigurations;
 using SchedulerProject.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace SchedulerProject.Services
+namespace SchedulerProject.Services.Descriptions
 {
-    public static class GenerateDescriptionService
+    public static class GenerateDescriptionRecurring
     {
-        public static string GenerateRecurringMessage(DateConfigurations configurations, DateTimeOffset date)
+        public static string GenerateMessage(DateConfigurations configurations, DateTimeOffset date)
         {
             StringBuilder messageBuilder = new StringBuilder();
 
@@ -66,23 +70,23 @@ namespace SchedulerProject.Services
                 messageBuilder.Append(days.Last());
             }
         }
-       
+
         private static string FrequencyDailyText(DateConfigurations configurations)
         {
             var type = configurations.FrequencyConfigurations!.Type;
-     
+
             switch (type)
             {
                 case DailyFrequencyType.Fixed:
                     return $" at {configurations.FrequencyConfigurations.FixedTime}";
                 case DailyFrequencyType.Variable:
-                {
-                    var start = configurations.FrequencyConfigurations.StartTime;
-                    var end = configurations.FrequencyConfigurations.EndTime;
-                    var every = configurations.FrequencyConfigurations.Every;
-                    var everyType = GetEventTypeText(configurations.FrequencyConfigurations.EveryType, every);
-                    return $" every {every} {everyType} between {start} and {end}";
-                }
+                    {
+                        var start = configurations.FrequencyConfigurations.StartTime;
+                        var end = configurations.FrequencyConfigurations.EndTime;
+                        var every = configurations.FrequencyConfigurations.Every;
+                        var everyType = GetEventTypeText(configurations.FrequencyConfigurations.EveryType, every);
+                        return $" every {every} {everyType} between {start} and {end}";
+                    }
                 default:
                     return string.Empty;
             }

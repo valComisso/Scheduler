@@ -5,4 +5,11 @@
         Fixed,
         Variable
     }
+
+    public enum EveryType
+    {
+        Hours,
+        Minutes,
+        Seconds
+    }
 }
