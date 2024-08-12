@@ -10,9 +10,9 @@ namespace SchedulerProject.UtilsDate
         public static LimitsConfigurations GetWeek(MonthlyFrequency frequency, DateTimeOffset date)
         {
 
-            var firstDayMonth = new DateTime(date.Year, date.Month, 1);
+            var firstDayMonth = new DateTimeOffset(date.Year, date.Month, 1, 0, 0, 0, date.Offset);
 
-            var firstMondayIdentifier = firstDayMonth.DayOfWeek == DayOfWeek.Sunday ? 1 : 8 - (int)firstDayMonth.DayOfWeek;
+            var firstMondayIdentifier = firstDayMonth.DayOfWeek == DayOfWeek.Monday ? 0 : 8 - (int)firstDayMonth.DayOfWeek;
             var firstMonday = firstDayMonth.AddDays(firstMondayIdentifier);
 
             var startWeek = frequency switch
@@ -25,7 +25,7 @@ namespace SchedulerProject.UtilsDate
                 _ => throw new ArgumentOutOfRangeException(nameof(frequency), frequency, null)
             };
 
-            var endWeek = startWeek.AddDays(6);
+            var endWeek = startWeek.AddDays(7);
 
             if (endWeek.Month != date.Month)
             {
@@ -36,7 +36,7 @@ namespace SchedulerProject.UtilsDate
 
         }
 
-        private static DateTime CalculateLastWeek(DateTime firstMonday, DateTimeOffset referenceDate)
+        private static DateTime CalculateLastWeek(DateTimeOffset firstMonday, DateTimeOffset referenceDate)
         {
             var lastDayOfMonth = new DateTime(referenceDate.Year, referenceDate.Month, DateTime.DaysInMonth(referenceDate.Year, referenceDate.Month));
 
