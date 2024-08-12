@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
 using SchedulerProject.Entity.DateConfigurations;
 using SchedulerProject.Enums;
 using SchedulerProject.UtilsDate;
@@ -71,7 +72,8 @@ namespace SchedulerProject.Services.RecurringDates.ProcessInterval
             var limits = GetAvailableWeeksOfTheMonth.GetWeek(frequency, referenceDate);
             if (!DateValidator.DateRangeValidator(referenceDate, limits)) return;
 
-            for (var date = referenceDate; date <= limits.EndDate; date = TimeDate.ResetTimeDate(date).AddDays(1))
+            var startDate = referenceDate > limits.StartDate ? referenceDate : limits.StartDate;
+            for (var date = startDate; date <= limits.EndDate; date = TimeDate.ResetTimeDate(date).AddDays(1))
             {
                 if (!requiredDaysList.Contains(date.DayOfWeek)) continue;
                 AddTimesToDatesService.AddAvailableTimesForDay(date, ref count, availableDates, configurations);
